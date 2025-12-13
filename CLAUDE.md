@@ -24,10 +24,12 @@ docs/
 
 ## Development
 
+This is a **bun** project. Always prefer `bun` over `npm`/`node`.
+
 ```bash
-npm run dev      # Start dev server
-npm run build    # Build for production
-npm run preview  # Preview production build
+bun run dev      # Start dev server
+bun run build    # Build for production
+bun run preview  # Preview production build
 ```
 
 ## Content
@@ -54,3 +56,42 @@ See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for the complete design langu
 
 - Twitter: [@lastgoodhandle](https://twitter.com/lastgoodhandle)
 - GitHub: [@brettimus](https://github.com/brettimus)
+
+## Visual Inspection (for Claude)
+
+Use Playwright screenshots to verify visual changes. The dev server must be running (`bun run dev`).
+
+### Quick Usage
+
+```bash
+# Screenshot homepage and blog
+bun run screenshot / /blog
+
+# Screenshot specific route
+bun run screenshot /blog/markdown-style-guide
+
+# Screenshot all main routes with mobile viewport
+bun run screenshot --all --mobile
+```
+
+### Slash Command
+
+Use `/screenshot [routes]` to capture and inspect pages:
+- `/screenshot` - Captures homepage and /blog
+- `/screenshot /about` - Captures specific route
+- `/screenshot --all --mobile` - All routes, desktop + mobile
+
+### When to Use
+
+- After making CSS/layout changes
+- After modifying components that affect multiple pages
+- To verify responsive design (use `--mobile` flag)
+- Before completing design-related tasks
+
+### How It Works
+
+1. Auto-detects the running Astro dev server port
+2. Captures full-page screenshots to `/tmp/screenshots/`
+3. Read the output PNG files to visually verify changes
+
+The script looks for "blog.boots.lol" or "Brett Beutell" in the HTML to find the correct dev server among multiple running servers.
