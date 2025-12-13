@@ -2,12 +2,18 @@
 id: f1bdb750-37b2-4183-ade2-c9b5a9fe8bd9
 short_id: BBB-25
 title: Improve boot icon with AI-generated design
-status: todo
+status: done
 parent: null
 branch: ""
-range: null
+range:
+  base:
+    _tag: git
+    sha: 0e473fe2dbe167730be815ca5b8237df8cc04060
+  tip:
+    _tag: git
+    sha: 0e473fe2dbe167730be815ca5b8237df8cc04060
 created_at: 2025-12-13T12:08:13.783Z
-updated_at: 2025-12-13T12:08:13.783Z
+updated_at: 2025-12-13T12:33:52.338Z
 ---
 
 The current boot icon is a simple hand-coded SVG. It works but could be much more distinctive and charming.
