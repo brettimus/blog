@@ -181,3 +181,24 @@
 {"at":"2025-12-13T12:50:54.560Z","author":"unfair-amphibian","issue":"BBB-31","action":"comment_added","data":{"commentId":"b343bc8e-bf6c-417b-b1bc-2a51e70b19a1"}}
 {"at":"2025-12-13T12:56:35.715Z","author":"unfair-amphibian","issue":"BBB-31","action":"status_changed","data":{"from":"in-progress","to":"done"}}
 {"at":"2025-12-13T12:56:35.719Z","author":"unfair-amphibian","issue":"BBB-31","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to 4d363de5"]}}
+{"at":"2025-12-13T15:33:09.834Z","author":"unfair-amphibian","issue":"BBB-32","action":"issue_created","data":{"title":"Fix page titles in HTML head","parent":null}}
+{"at":"2025-12-13T15:33:11.590Z","author":"unfair-amphibian","issue":"BBB-33","action":"issue_created","data":{"title":"Change domain to boots.lol","parent":null}}
+{"at":"2025-12-13T15:33:13.503Z","author":"unfair-amphibian","issue":"BBB-34","action":"issue_created","data":{"title":"Improve blog page heading","parent":null}}
+{"at":"2025-12-13T15:34:44.009Z","author":"unfair-amphibian","issue":"BBB-32","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T15:34:44.014Z","author":"unfair-amphibian","issue":"BBB-32","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to 8f36f96d"]}}
+{"at":"2025-12-13T15:34:45.639Z","author":"unfair-amphibian","issue":"BBB-34","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T15:34:45.643Z","author":"unfair-amphibian","issue":"BBB-34","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to 8f36f96d"]}}
+{"at":"2025-12-13T15:36:27.476Z","author":"unfair-amphibian","issue":"BBB-32","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T15:36:27.480Z","author":"unfair-amphibian","issue":"BBB-32","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to ec4fe8d6"]}}
+{"at":"2025-12-13T15:36:27.668Z","author":"unfair-amphibian","issue":"BBB-34","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T15:36:27.672Z","author":"unfair-amphibian","issue":"BBB-34","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to ec4fe8d6"]}}
+{"at":"2025-12-13T15:36:33.998Z","author":"unfair-amphibian","issue":"BBB-35","action":"issue_created","data":{"title":"Create favicon","parent":null}}
+{"at":"2025-12-13T15:38:17.677Z","action":"session_started","data":{"agentName":"puny-boar"}}
+{"at":"2025-12-13T15:39:23.469Z","author":"glorious-snail","issue":"BBB-25","action":"status_changed","data":{"from":"done","to":"done"}}
+{"at":"2025-12-13T15:39:23.473Z","author":"glorious-snail","issue":"BBB-25","action":"issue_updated","data":{"changes":["status: done → done","range: tip set to ec4fe8d6"]}}
+{"at":"2025-12-13T15:39:23.628Z","author":"glorious-snail","issue":"BBB-25","action":"comment_added","data":{"commentId":"3a0bc0d7-c8b4-42a0-a519-557f574ea074"}}
+{"at":"2025-12-13T15:39:33.136Z","author":"glorious-snail","issue":"BBB-35","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T15:39:33.140Z","author":"glorious-snail","issue":"BBB-35","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to ec4fe8d6"]}}
+{"at":"2025-12-13T15:39:53.007Z","author":"glorious-snail","issue":"BBB-35","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T15:39:53.011Z","author":"glorious-snail","issue":"BBB-35","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to ec4fe8d6"]}}
+{"at":"2025-12-13T15:39:53.166Z","author":"glorious-snail","issue":"BBB-35","action":"comment_added","data":{"commentId":"d89ec4d7-895b-4f5f-a6af-294dd9d3f8ed"}}

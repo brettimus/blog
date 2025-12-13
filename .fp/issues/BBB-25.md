@@ -11,9 +11,9 @@ range:
     sha: 0e473fe2dbe167730be815ca5b8237df8cc04060
   tip:
     _tag: git
-    sha: 0e473fe2dbe167730be815ca5b8237df8cc04060
+    sha: ec4fe8d67cdca02bed9d1f01d34255a8bdc84f78
 created_at: 2025-12-13T12:08:13.783Z
-updated_at: 2025-12-13T12:33:52.338Z
+updated_at: 2025-12-13T15:39:23.471Z
 ---
 
 The current boot icon is a simple hand-coded SVG. It works but could be much more distinctive and charming.
