@@ -18,6 +18,8 @@ src/
 ├── pages/          # Route pages
 ├── styles/         # Global CSS
 └── assets/         # Images and static assets
+docs/
+└── DESIGN_SYSTEM.md  # Design language reference
 ```
 
 ## Development
@@ -40,6 +42,13 @@ pubDate: "Dec 13 2024"
 heroImage: "/blog-placeholder.jpg"
 ---
 ```
+
+## Design System
+
+See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for the complete design language:
+- Mid-century Scandinavian aesthetic
+- Color palette: warm cream, burnt sienna, muted teal
+- Typography: Fraunces (headings), Source Serif 4 (body), JetBrains Mono (code)
 
 ## Social Links
 
