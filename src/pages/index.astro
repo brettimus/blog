@@ -1,133 +1,138 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getCollection } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
-const posts = (await getCollection('blog'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 5);
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5);
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			.intro {
-				margin-bottom: var(--space-3xl);
-			}
-			.intro h1 {
-				font-size: var(--font-size-2xl);
-				margin-bottom: var(--space-md);
-			}
-			.intro p {
-				font-size: var(--font-size-md);
-				color: var(--deep-charcoal);
-				line-height: 1.6;
-				max-width: 600px;
-			}
-			.section {
-				margin-bottom: var(--space-3xl);
-			}
-			.section-title {
-				font-family: var(--font-body);
-				font-size: var(--font-size-sm);
-				font-weight: 600;
-				text-transform: uppercase;
-				letter-spacing: 0.1em;
-				color: var(--warm-stone);
-				margin-bottom: var(--space-lg);
-				padding-bottom: var(--space-sm);
-				border-bottom: 1px solid var(--pale-birch);
-			}
-			.post-list {
-				list-style: none;
-				margin: 0;
-				padding: 0;
-			}
-			.post-item {
-				padding: var(--space-md) 0;
-				border-bottom: 1px solid var(--pale-birch);
-			}
-			.post-item:first-child {
-				padding-top: 0;
-			}
-			.post-item:last-child {
-				border-bottom: none;
-			}
-			.post-link {
-				display: flex;
-				justify-content: space-between;
-				align-items: baseline;
-				gap: var(--space-md);
-				text-decoration: none;
-			}
-			.post-title {
-				font-family: var(--font-display);
-				font-size: var(--font-size-md);
-				font-weight: 500;
-				color: var(--deep-charcoal);
-				transition: color var(--transition-base);
-			}
-			.post-link:hover .post-title {
-				color: var(--burnt-sienna);
-			}
-			.post-date {
-				font-size: var(--font-size-sm);
-				color: var(--warm-stone);
-				white-space: nowrap;
-			}
-			.view-all {
-				display: inline-block;
-				margin-top: var(--space-lg);
-				font-size: var(--font-size-sm);
-				color: var(--burnt-sienna);
-			}
-			.view-all:hover {
-				color: var(--dusty-rose);
-			}
-			@media (max-width: 720px) {
-				.post-link {
-					flex-direction: column;
-					gap: var(--space-xs);
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section class="intro">
-				<h1>Brett Beutell</h1>
-				<p>
-					Fullstack TypeScript engineer writing about AI, web development,
-					and the craft of building software. Currently exploring the intersection
-					of language models and developer tools.
-				</p>
-			</section>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      .intro {
+        margin-bottom: var(--space-3xl);
+      }
+      .intro h1 {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--space-md);
+      }
+      .intro p {
+        font-size: var(--font-size-md);
+        color: var(--deep-charcoal);
+        line-height: 1.6;
+        max-width: 600px;
+      }
+      .section {
+        margin-bottom: var(--space-3xl);
+      }
+      .section-title {
+        font-family: var(--font-body);
+        font-size: var(--font-size-sm);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--warm-stone);
+        margin-bottom: var(--space-lg);
+        padding-bottom: var(--space-sm);
+        border-bottom: 1px solid var(--pale-birch);
+      }
+      .post-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .post-item {
+        padding: var(--space-md) 0;
+        border-bottom: 1px solid var(--pale-birch);
+      }
+      .post-item:first-child {
+        padding-top: 0;
+      }
+      .post-item:last-child {
+        border-bottom: none;
+      }
+      .post-link {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: var(--space-md);
+        text-decoration: none;
+      }
+      .post-title {
+        font-family: var(--font-display);
+        font-size: var(--font-size-md);
+        font-weight: 500;
+        color: var(--deep-charcoal);
+        transition: color var(--transition-base);
+      }
+      .post-link:hover .post-title {
+        color: var(--burnt-sienna);
+      }
+      .post-date {
+        font-size: var(--font-size-sm);
+        color: var(--warm-stone);
+        white-space: nowrap;
+      }
+      .view-all {
+        display: inline-block;
+        margin-top: var(--space-lg);
+        font-size: var(--font-size-sm);
+        color: var(--burnt-sienna);
+      }
+      .view-all:hover {
+        color: var(--dusty-rose);
+      }
+      @media (max-width: 720px) {
+        .post-link {
+          flex-direction: column;
+          gap: var(--space-xs);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section class="intro">
+        <h1>people call me boots</h1>
+        <p>
+          i work at a developer tooling startup called <a
+            href="https://fiberplane.com">Fiberplane</a
+          >.
+        </p>
+        <p>
+          feel free to say hi on <a href="https://twitter.com/lastgoodhandle"
+            >twitter</a
+          >.
+        </p>
+      </section>
 
-			<section class="section">
-				<h2 class="section-title">Recent Posts</h2>
-				<ul class="post-list">
-					{
-						posts.map((post) => (
-							<li class="post-item">
-								<a href={`/blog/${post.id}/`} class="post-link">
-									<span class="post-title">{post.data.title}</span>
-									<span class="post-date">
-										<FormattedDate date={post.data.pubDate} />
-									</span>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-				<a href="/blog" class="view-all">View all posts &rarr;</a>
-			</section>
-		</main>
-		<Footer />
-	</body>
+      <section class="section">
+        <h2 class="section-title">Recent Posts</h2>
+        <ul class="post-list">
+          {
+            posts.map((post) => (
+              <li class="post-item">
+                <a href={`/blog/${post.id}/`} class="post-link">
+                  <span class="post-title">{post.data.title}</span>
+                  <span class="post-date">
+                    <FormattedDate date={post.data.pubDate} />
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <a href="/blog" class="view-all">View all posts &rarr;</a>
+      </section>
+    </main>
+    <Footer />
+  </body>
 </html>

@@ -53,3 +53,20 @@
 {"at":"2025-12-13T09:25:34.748Z","author":"glorious-snail","issue":"BBB-4","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to 70e0060e"]}}
 {"at":"2025-12-13T09:25:36.186Z","author":"glorious-snail","issue":"BBB-4","action":"comment_added","data":{"commentId":"22c7a181-4f9e-4f70-a5bb-7a78ac6decb2"}}
 {"at":"2025-12-13T09:25:46.003Z","author":"angry-gibbon","issue":"BBB-11","action":"issue_created","data":{"title":"Set up Playwright visual inspection for Claude","parent":null}}
+{"at":"2025-12-13T09:28:32.117Z","author":"angry-gibbon","issue":"BBB-11","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T09:28:32.121Z","author":"angry-gibbon","issue":"BBB-11","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to f73eabd0"]}}
+{"at":"2025-12-13T09:28:49.097Z","action":"session_started","data":{"agentName":"corresponding-mosquito"}}
+{"at":"2025-12-13T09:32:17.291Z","author":"angry-gibbon","issue":"BBB-11","action":"comment_added","data":{"commentId":"85687e8a-0684-4686-9323-f17101d69b66"}}
+{"at":"2025-12-13T09:32:18.771Z","author":"angry-gibbon","issue":"BBB-11","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T09:32:18.776Z","author":"angry-gibbon","issue":"BBB-11","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to f73eabd0"]}}
+{"at":"2025-12-13T09:33:26.220Z","author":"glorious-snail","issue":"BBB-12","action":"issue_created","data":{"title":"Convert to Bun monorepo","parent":null}}
+{"at":"2025-12-13T09:33:36.063Z","author":"glorious-snail","issue":"BBB-13","action":"issue_created","data":{"title":"Set up Bun workspace structure","parent":"BBB-12"}}
+{"at":"2025-12-13T09:33:43.622Z","author":"glorious-snail","issue":"BBB-14","action":"issue_created","data":{"title":"Update blog paths and scripts","parent":"BBB-12"}}
+{"at":"2025-12-13T09:33:59.865Z","author":"glorious-snail","issue":"BBB-15","action":"issue_created","data":{"title":"Move blog docs to apps/blog/docs","parent":"BBB-12"}}
+{"at":"2025-12-13T09:34:01.845Z","author":"glorious-snail","issue":"BBB-16","action":"issue_created","data":{"title":"Create apps/blog/CLAUDE.md with blog-specific instructions","parent":"BBB-12"}}
+{"at":"2025-12-13T09:34:03.611Z","author":"glorious-snail","issue":"BBB-17","action":"issue_created","data":{"title":"Rewrite root CLAUDE.md for monorepo","parent":"BBB-12"}}
+{"at":"2025-12-13T09:34:11.428Z","author":"glorious-snail","issue":"BBB-18","action":"issue_created","data":{"title":"Verify blog builds and deploys correctly","parent":"BBB-12"}}
+{"at":"2025-12-13T09:35:04.685Z","author":"glorious-snail","issue":"BBB-12","action":"comment_added","data":{"commentId":"321f830f-283f-4737-8d1e-a82b4621c236"}}
+{"at":"2025-12-13T09:38:56.582Z","action":"session_started","data":{"agentName":"disturbed-bass"}}
+{"at":"2025-12-13T09:45:57.132Z","author":"glorious-snail","issue":"BBB-19","action":"issue_created","data":{"title":"Update screenshot command for monorepo structure","parent":"BBB-12"}}
+{"at":"2025-12-13T09:46:06.747Z","author":"glorious-snail","issue":"BBB-12","action":"comment_added","data":{"commentId":"abd9891a-cfc1-46f6-9326-59533056d7ed"}}
