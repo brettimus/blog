@@ -21,3 +21,35 @@
 {"at":"2025-12-13T08:36:28.323Z","author":"angry-gibbon","issue":"BBB-7","action":"issue_created","data":{"title":"Fix footer social links (still showing Astro defaults)","parent":"BBB-1"}}
 {"at":"2025-12-13T08:38:39.179Z","author":"angry-gibbon","issue":"BBB-7","action":"issue_updated","data":{"changes":["description updated"]}}
 {"at":"2025-12-13T08:38:44.766Z","author":"angry-gibbon","issue":"BBB-7","action":"issue_updated","data":{"changes":["title: \"Fix footer: update social links and remove placeholder text\""]}}
+{"at":"2025-12-13T08:40:14.748Z","action":"session_started","data":{"agentName":"glorious-snail"}}
+{"at":"2025-12-13T08:40:17.029Z","author":"angry-gibbon","issue":"BBB-7","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T08:40:17.032Z","author":"angry-gibbon","issue":"BBB-7","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to 4c034d36"]}}
+{"at":"2025-12-13T08:41:09.055Z","author":"angry-gibbon","issue":"BBB-7","action":"comment_added","data":{"commentId":"e8c89d89-a8e5-4c68-9f3a-d36de6665c9f"}}
+{"at":"2025-12-13T08:41:10.411Z","author":"angry-gibbon","issue":"BBB-7","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T08:41:10.415Z","author":"angry-gibbon","issue":"BBB-7","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to 4c034d36"]}}
+{"at":"2025-12-13T08:42:52.424Z","author":"glorious-snail","issue":"BBB-4","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T08:42:52.428Z","author":"glorious-snail","issue":"BBB-4","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to 4c034d36"]}}
+{"at":"2025-12-13T09:16:25.766Z","author":"glorious-snail","issue":"BBB-8","action":"issue_created","data":{"title":"Document Design System Choices","parent":"BBB-4"}}
+{"at":"2025-12-13T09:16:34.126Z","author":"glorious-snail","issue":"BBB-9","action":"issue_created","data":{"title":"Implement Font and Color Foundation","parent":"BBB-4"}}
+{"at":"2025-12-13T09:16:44.424Z","author":"glorious-snail","issue":"BBB-10","action":"issue_created","data":{"title":"Implement Structure and Layout Changes","parent":"BBB-4"}}
+{"at":"2025-12-13T09:16:52.163Z","author":"glorious-snail","issue":"BBB-4","action":"comment_added","data":{"commentId":"4cbb369a-7ac0-4f77-a46e-9b92b763fadc"}}
+{"at":"2025-12-13T09:18:45.799Z","author":"glorious-snail","issue":"BBB-8","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T09:18:45.803Z","author":"glorious-snail","issue":"BBB-8","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to 3d4f968b"]}}
+{"at":"2025-12-13T09:19:53.082Z","author":"glorious-snail","issue":"BBB-8","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T09:19:53.086Z","author":"glorious-snail","issue":"BBB-8","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to 3d4f968b"]}}
+{"at":"2025-12-13T09:19:54.771Z","author":"glorious-snail","issue":"BBB-8","action":"comment_added","data":{"commentId":"3488de63-ad4c-44f9-8caa-d1d3187efa28"}}
+{"at":"2025-12-13T09:20:48.169Z","author":"glorious-snail","issue":"BBB-9","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T09:20:48.173Z","author":"glorious-snail","issue":"BBB-9","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to 70e0060e"]}}
+{"at":"2025-12-13T09:21:48.328Z","author":"glorious-snail","issue":"BBB-9","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T09:21:48.332Z","author":"glorious-snail","issue":"BBB-9","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to 70e0060e"]}}
+{"at":"2025-12-13T09:21:50.121Z","author":"glorious-snail","issue":"BBB-9","action":"comment_added","data":{"commentId":"1a03a253-986d-4fb4-8ed2-d8d1aa51988b"}}
+{"at":"2025-12-13T09:23:26.043Z","author":"glorious-snail","issue":"BBB-10","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T09:23:26.047Z","author":"glorious-snail","issue":"BBB-10","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to 70e0060e"]}}
+{"at":"2025-12-13T09:23:28.978Z","action":"session_started","data":{"agentName":"central-lungfish"}}
+{"at":"2025-12-13T09:25:24.172Z","author":"glorious-snail","issue":"BBB-10","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T09:25:24.176Z","author":"glorious-snail","issue":"BBB-10","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to 70e0060e"]}}
+{"at":"2025-12-13T09:25:25.661Z","author":"glorious-snail","issue":"BBB-10","action":"comment_added","data":{"commentId":"11fca2db-2b03-4dd0-ac8c-2cfce0431308"}}
+{"at":"2025-12-13T09:25:34.744Z","author":"glorious-snail","issue":"BBB-4","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T09:25:34.748Z","author":"glorious-snail","issue":"BBB-4","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to 70e0060e"]}}
+{"at":"2025-12-13T09:25:36.186Z","author":"glorious-snail","issue":"BBB-4","action":"comment_added","data":{"commentId":"22c7a181-4f9e-4f70-a5bb-7a78ac6decb2"}}
+{"at":"2025-12-13T09:25:46.003Z","author":"angry-gibbon","issue":"BBB-11","action":"issue_created","data":{"title":"Set up Playwright visual inspection for Claude","parent":null}}
