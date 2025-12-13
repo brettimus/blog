@@ -2,12 +2,18 @@
 id: 898ce015-c8c3-4fdb-8421-2931e949aa01
 short_id: BBB-12
 title: Convert to Bun monorepo
-status: todo
+status: done
 parent: null
 branch: ""
-range: null
+range:
+  base:
+    _tag: git
+    sha: 6b7bd73ce5b886eb132a9db8d1105b5f1e0ff526
+  tip:
+    _tag: git
+    sha: 6b7bd73ce5b886eb132a9db8d1105b5f1e0ff526
 created_at: 2025-12-13T09:33:26.218Z
-updated_at: 2025-12-13T09:33:26.218Z
+updated_at: 2025-12-13T09:52:50.090Z
 ---
 
 Convert this repository into a Bun monorepo structure where the blog is one of multiple apps.

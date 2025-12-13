@@ -2,12 +2,18 @@
 id: 60629539-8b9f-4ea1-a743-4604bcde08bf
 short_id: BBB-15
 title: Move blog docs to apps/blog/docs
-status: todo
+status: done
 parent: BBB-12
 branch: ""
-range: null
+range:
+  base:
+    _tag: git
+    sha: 6b7bd73ce5b886eb132a9db8d1105b5f1e0ff526
+  tip:
+    _tag: git
+    sha: 6b7bd73ce5b886eb132a9db8d1105b5f1e0ff526
 created_at: 2025-12-13T09:33:59.862Z
-updated_at: 2025-12-13T09:33:59.862Z
+updated_at: 2025-12-13T09:51:16.902Z
 ---
 
 Relocate blog-specific documentation:

@@ -2,12 +2,18 @@
 id: 99ce273d-a560-4efa-aba2-e5ec3b7ba950
 short_id: BBB-14
 title: Update blog paths and scripts
-status: todo
+status: done
 parent: BBB-12
 branch: ""
-range: null
+range:
+  base:
+    _tag: git
+    sha: 6b7bd73ce5b886eb132a9db8d1105b5f1e0ff526
+  tip:
+    _tag: git
+    sha: 6b7bd73ce5b886eb132a9db8d1105b5f1e0ff526
 created_at: 2025-12-13T09:33:43.620Z
-updated_at: 2025-12-13T09:33:43.620Z
+updated_at: 2025-12-13T09:51:16.713Z
 ---
 
 Update the blog app after moving to apps/blog/:

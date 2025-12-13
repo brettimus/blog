@@ -17,13 +17,13 @@ $ARGUMENTS (default: / /blog if empty)
 Run the following command to capture screenshots:
 
 ```bash
-npm run screenshot -- $ARGUMENTS
+bun --cwd apps/blog run screenshot -- $ARGUMENTS
 ```
 
 If $ARGUMENTS is empty, run:
 
 ```bash
-npm run screenshot -- / /blog
+bun --cwd apps/blog run screenshot -- / /blog
 ```
 
 After capturing, read each screenshot file listed in the output under "--- SCREENSHOT PATHS ---" using the Read tool to visually inspect them.

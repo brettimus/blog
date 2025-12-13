@@ -2,12 +2,18 @@
 id: 66540381-e93f-4c16-a287-6db3873b4224
 short_id: BBB-17
 title: Rewrite root CLAUDE.md for monorepo
-status: todo
+status: done
 parent: BBB-12
 branch: ""
-range: null
+range:
+  base:
+    _tag: git
+    sha: 6b7bd73ce5b886eb132a9db8d1105b5f1e0ff526
+  tip:
+    _tag: git
+    sha: 6b7bd73ce5b886eb132a9db8d1105b5f1e0ff526
 created_at: 2025-12-13T09:34:03.607Z
-updated_at: 2025-12-13T09:34:03.607Z
+updated_at: 2025-12-13T09:52:42.189Z
 ---
 
 Update root CLAUDE.md with monorepo instructions:

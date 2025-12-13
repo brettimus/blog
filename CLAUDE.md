@@ -1,97 +1,124 @@
-# Brett's Blog
+# Brett's Monorepo
 
-Personal blog site for Brett Beutell (@brettimus), a fullstack TypeScript software engineer writing about AI and web development.
+Bun monorepo for Brett Beutell's projects.
 
-## Tech Stack
-
-- **Framework**: Astro
-- **Deployment**: Cloudflare Workers
-- **Domain**: blog.boots.lol (pending configuration)
-
-## Project Structure
+## Structure
 
 ```
-src/
-├── components/     # Astro components (Header, Footer, etc.)
-├── content/blog/   # Markdown/MDX blog posts
-├── layouts/        # Page layouts (BlogPost)
-├── pages/          # Route pages
-├── styles/         # Global CSS
-└── assets/         # Images and static assets
-docs/
-└── DESIGN_SYSTEM.md  # Design language reference
+.
+├── apps/           # Deployable applications
+│   └── blog/       # Personal blog (blog.boots.lol)
+├── packages/       # Shared packages
+├── .claude/        # Claude Code commands
+└── .fp/            # Fiberplane issue tracking
 ```
 
 ## Development
 
-This is a **bun** project. Always prefer `bun` over `npm`/`node`.
+```bash
+bun install        # Install all dependencies
+bun run dev        # Run blog dev server
+bun run build      # Build blog for production
+```
+
+## Apps
+
+Applications live in `apps/`. Each app is independently deployable.
+
+### Blog (`apps/blog/`)
+
+Personal blog site. See [apps/blog/CLAUDE.md](apps/blog/CLAUDE.md) for blog-specific instructions.
 
 ```bash
-bun run dev      # Start dev server
-bun run build    # Build for production
-bun run preview  # Preview production build
+bun --cwd apps/blog run dev      # Start dev server
+bun --cwd apps/blog run build    # Build for production
+bun --cwd apps/blog run deploy   # Deploy to Cloudflare
 ```
 
-## Content
+## Adding a New App
 
-Blog posts go in `src/content/blog/` as `.md` or `.mdx` files with frontmatter:
+1. Create the app directory:
+   ```bash
+   mkdir apps/my-app
+   cd apps/my-app
+   ```
 
-```md
----
-title: "Post Title"
-description: "Brief description"
-pubDate: "Dec 13 2024"
-heroImage: "/blog-placeholder.jpg"
----
-```
+2. Initialize with a `package.json`:
+   ```json
+   {
+     "name": "my-app",
+     "private": true,
+     "scripts": {
+       "dev": "...",
+       "build": "...",
+       "lint": "biome lint .",
+       "format": "biome format . --write"
+     }
+   }
+   ```
 
-## Design System
+3. Set up Biome for linting/formatting:
+   ```bash
+   bun add -d @biomejs/biome
+   ```
 
-See [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) for the complete design language:
-- Mid-century Scandinavian aesthetic
-- Color palette: warm cream, burnt sienna, muted teal
-- Typography: Fraunces (headings), Source Serif 4 (body), JetBrains Mono (code)
+4. Create `biome.json`:
+   ```json
+   {
+     "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+     "organizeImports": { "enabled": true },
+     "linter": { "enabled": true },
+     "formatter": { "enabled": true }
+   }
+   ```
 
-## Social Links
+5. Create app-specific `CLAUDE.md` with instructions for working on that app.
 
-- Twitter: [@lastgoodhandle](https://twitter.com/lastgoodhandle)
-- GitHub: [@brettimus](https://github.com/brettimus)
+6. Run `bun install` from monorepo root.
 
-## Visual Inspection (for Claude)
+## Adding a New Package
 
-Use Playwright screenshots to verify visual changes. The dev server must be running (`bun run dev`).
+1. Create the package directory:
+   ```bash
+   mkdir packages/my-package
+   cd packages/my-package
+   ```
 
-### Quick Usage
+2. Initialize with a `package.json`:
+   ```json
+   {
+     "name": "@brett/my-package",
+     "version": "0.0.1",
+     "main": "src/index.ts",
+     "types": "src/index.ts",
+     "scripts": {
+       "lint": "biome lint .",
+       "format": "biome format . --write"
+     }
+   }
+   ```
 
-```bash
-# Screenshot homepage and blog
-bun run screenshot / /blog
+3. Set up Biome (same as apps).
 
-# Screenshot specific route
-bun run screenshot /blog/markdown-style-guide
+4. Run `bun install` from monorepo root.
 
-# Screenshot all main routes with mobile viewport
-bun run screenshot --all --mobile
-```
+5. Use in apps:
+   ```bash
+   # In an app's directory
+   bun add @brett/my-package
+   ```
 
-### Slash Command
+## Standards
 
-Use `/screenshot [routes]` to capture and inspect pages:
-- `/screenshot` - Captures homepage and /blog
-- `/screenshot /about` - Captures specific route
-- `/screenshot --all --mobile` - All routes, desktop + mobile
+### Required for New Apps/Packages
 
-### When to Use
+- **Biome** for linting and formatting (unless app framework specifies otherwise)
+- **Scripts**: Must include `bun lint` and `bun format`
+- **CLAUDE.md**: Apps should have their own CLAUDE.md with app-specific instructions
 
-- After making CSS/layout changes
-- After modifying components that affect multiple pages
-- To verify responsive design (use `--mobile` flag)
-- Before completing design-related tasks
+### Conventions
 
-### How It Works
-
-1. Auto-detects the running Astro dev server port
-2. Captures full-page screenshots to `/tmp/screenshots/`
-3. Read the output PNG files to visually verify changes
-
-The script looks for "blog.boots.lol" or "Brett Beutell" in the HTML to find the correct dev server among multiple running servers.
+- Apps in `apps/` are deployable applications
+- Packages in `packages/` are shared libraries
+- Use `@brett/` namespace for internal packages
+- Each app manages its own deployment config

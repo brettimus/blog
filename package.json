@@ -1,27 +1,9 @@
 {
-	"name": "brett-blog",
-	"type": "module",
-	"version": "0.0.1",
+	"name": "brett-monorepo",
+	"private": true,
+	"workspaces": ["apps/*", "packages/*"],
 	"scripts": {
-		"dev": "astro dev",
-		"build": "astro build",
-		"preview": "astro build && wrangler dev",
-		"astro": "astro",
-		"deploy": "astro build && wrangler deploy",
-		"cf-typegen": "wrangler types",
-		"screenshot": "bun scripts/screenshot.ts"
-	},
-	"dependencies": {
-		"@astrojs/cloudflare": "^12.6.12",
-		"@astrojs/mdx": "^4.3.13",
-		"@astrojs/rss": "^4.0.14",
-		"@astrojs/sitemap": "^3.6.0",
-		"astro": "^5.16.5",
-		"sharp": "^0.34.3"
-	},
-	"devDependencies": {
-		"@playwright/test": "^1.57.0",
-		"@types/node": "^25.0.1",
-		"wrangler": "^4.54.0"
+		"dev": "bun --cwd apps/blog run dev",
+		"build": "bun --cwd apps/blog run build"
 	}
 }
