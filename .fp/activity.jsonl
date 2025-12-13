@@ -1,0 +1,18 @@
+{"at":"2025-12-13T08:07:46.253Z","action":"session_started","data":{"agentName":"implicit-lynx"}}
+{"at":"2025-12-13T08:23:54.118Z","author":"implicit-lynx","issue":"BBB-1","action":"issue_created","data":{"title":"blog.boots.lol setup","parent":null}}
+{"at":"2025-12-13T08:24:14.960Z","author":"implicit-lynx","issue":"BBB-2","action":"issue_created","data":{"title":"Configure blog.boots.lol domain in Cloudflare","parent":"BBB-1"}}
+{"at":"2025-12-13T08:24:16.545Z","author":"implicit-lynx","issue":"BBB-3","action":"issue_created","data":{"title":"Wire up social links in nav","parent":"BBB-1"}}
+{"at":"2025-12-13T08:24:18.414Z","author":"implicit-lynx","issue":"BBB-4","action":"issue_created","data":{"title":"Design: Select color scheme and font","parent":"BBB-1"}}
+{"at":"2025-12-13T08:24:20.008Z","author":"implicit-lynx","issue":"BBB-5","action":"issue_created","data":{"title":"Install and configure Shiki for syntax highlighting","parent":"BBB-1"}}
+{"at":"2025-12-13T08:24:21.662Z","author":"implicit-lynx","issue":"BBB-6","action":"issue_created","data":{"title":"Remove boilerplate content, preserve Astro docs","parent":"BBB-1"}}
+{"at":"2025-12-13T08:29:23.288Z","author":"implicit-lynx","issue":"BBB-3","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T08:29:23.292Z","author":"implicit-lynx","issue":"BBB-3","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to df5fd179"]}}
+{"at":"2025-12-13T08:30:19.718Z","author":"implicit-lynx","issue":"BBB-3","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T08:30:19.722Z","author":"implicit-lynx","issue":"BBB-3","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to 613ae7fd"]}}
+{"at":"2025-12-13T08:30:26.867Z","author":"implicit-lynx","issue":"BBB-5","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T08:30:26.871Z","author":"implicit-lynx","issue":"BBB-5","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to 613ae7fd"]}}
+{"at":"2025-12-13T08:30:48.682Z","author":"implicit-lynx","issue":"BBB-5","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T08:30:48.686Z","author":"implicit-lynx","issue":"BBB-5","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to 701c8534"]}}
+{"at":"2025-12-13T08:34:30.530Z","author":"implicit-lynx","issue":"BBB-6","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T08:34:30.534Z","author":"implicit-lynx","issue":"BBB-6","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to 7b713dc5"]}}
+{"at":"2025-12-13T08:35:22.670Z","action":"session_started","data":{"agentName":"angry-gibbon"}}
