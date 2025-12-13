@@ -21,7 +21,7 @@ import { join } from 'path';
 import { createConnection } from 'net';
 
 const DEFAULT_OUTPUT = '/tmp/screenshots';
-const PORT_RANGE = [4321, 4322, 4323, 4324, 4325, 3000, 3001, 5173, 5174];
+const PORT_RANGE = [8007, 8008, 8009, 4321, 4322, 4323, 3000, 3001, 5173, 5174];
 
 // Main routes to capture with --all
 const ALL_ROUTES = ['/', '/blog', '/about'];

@@ -1,11 +1,13 @@
 ---
-import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
+import BootIcon from './BootIcon.astro';
 ---
 
 <header>
 	<nav>
-		<a href="/" class="site-title">{SITE_TITLE}</a>
+		<a href="/" class="site-title" aria-label="Home">
+			<BootIcon size={28} class="boot-icon" />
+		</a>
 		<div class="nav-links">
 			<HeaderLink href="/blog">Blog</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
@@ -28,6 +30,9 @@ import HeaderLink from './HeaderLink.astro';
 		padding: var(--space-md) 0;
 	}
 	.site-title {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
 		font-family: var(--font-display);
 		font-size: var(--font-size-md);
 		font-weight: 600;
@@ -37,6 +42,12 @@ import HeaderLink from './HeaderLink.astro';
 	}
 	.site-title:hover {
 		color: var(--burnt-sienna);
+	}
+	.site-title :global(.boot-icon) {
+		transition: transform var(--transition-base);
+	}
+	.site-title:hover :global(.boot-icon) {
+		transform: rotate(-8deg);
 	}
 	.nav-links {
 		display: flex;

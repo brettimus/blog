@@ -108,3 +108,41 @@
 {"at":"2025-12-13T09:52:49.898Z","author":"glorious-snail","issue":"BBB-12","action":"comment_added","data":{"commentId":"d9ee01d5-ce07-46f5-bd22-c8bb16f553d7"}}
 {"at":"2025-12-13T09:52:50.088Z","author":"glorious-snail","issue":"BBB-12","action":"status_changed","data":{"from":"in-progress","to":"done"}}
 {"at":"2025-12-13T09:52:50.093Z","author":"glorious-snail","issue":"BBB-12","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to 6b7bd73c"]}}
+{"at":"2025-12-13T09:56:25.273Z","action":"session_started","data":{"agentName":"alternative-booby"}}
+{"at":"2025-12-13T11:48:06.208Z","author":"glorious-snail","issue":"BBB-2","action":"status_changed","data":{"from":"todo","to":"done"}}
+{"at":"2025-12-13T11:48:06.212Z","author":"glorious-snail","issue":"BBB-2","action":"issue_updated","data":{"changes":["status: todo → done"]}}
+{"at":"2025-12-13T11:48:06.390Z","author":"glorious-snail","issue":"BBB-1","action":"status_changed","data":{"from":"todo","to":"done"}}
+{"at":"2025-12-13T11:48:06.394Z","author":"glorious-snail","issue":"BBB-1","action":"issue_updated","data":{"changes":["status: todo → done"]}}
+{"at":"2025-12-13T11:52:25.678Z","author":"glorious-snail","issue":"BBB-20","action":"issue_created","data":{"title":"Launch blog.boots.lol","parent":null}}
+{"at":"2025-12-13T11:52:36.023Z","author":"glorious-snail","issue":"BBB-21","action":"issue_created","data":{"title":"Create custom nav icon/branding","parent":"BBB-20"}}
+{"at":"2025-12-13T11:52:51.641Z","author":"glorious-snail","issue":"BBB-22","action":"issue_created","data":{"title":"Remove Astro placeholder posts","parent":"BBB-20"}}
+{"at":"2025-12-13T11:52:53.691Z","author":"glorious-snail","issue":"BBB-23","action":"issue_created","data":{"title":"Add first post: Plan Mode Considered Harmful?","parent":"BBB-20"}}
+{"at":"2025-12-13T11:52:55.573Z","author":"glorious-snail","issue":"BBB-24","action":"issue_created","data":{"title":"Change dev port to something bootsy","parent":"BBB-20"}}
+{"at":"2025-12-13T11:53:07.787Z","author":"glorious-snail","issue":"BBB-20","action":"comment_added","data":{"commentId":"e06a2358-472a-4bbc-95da-c8b0e937dcc4"}}
+{"at":"2025-12-13T11:56:06.937Z","action":"session_started","data":{"agentName":"sexual-marten"}}
+{"at":"2025-12-13T11:58:29.033Z","author":"glorious-snail","issue":"BBB-20","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T11:58:29.037Z","author":"glorious-snail","issue":"BBB-20","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to dc7cae68"]}}
+{"at":"2025-12-13T11:58:30.551Z","author":"glorious-snail","issue":"BBB-20","action":"comment_added","data":{"commentId":"406f0d07-31f6-4a9d-a726-198261cd1d4f"}}
+{"at":"2025-12-13T11:58:57.675Z","author":"glorious-snail","issue":"BBB-21","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T11:58:57.681Z","author":"glorious-snail","issue":"BBB-21","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to dc7cae68"]}}
+{"at":"2025-12-13T12:00:23.033Z","author":"glorious-snail","issue":"BBB-21","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T12:00:23.038Z","author":"glorious-snail","issue":"BBB-21","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to dc7cae68"]}}
+{"at":"2025-12-13T12:00:23.195Z","author":"glorious-snail","issue":"BBB-21","action":"comment_added","data":{"commentId":"f95218d2-c1b7-453c-af6e-5fc39f6dc0b5"}}
+{"at":"2025-12-13T12:00:29.993Z","author":"glorious-snail","issue":"BBB-22","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T12:00:29.997Z","author":"glorious-snail","issue":"BBB-22","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to dc7cae68"]}}
+{"at":"2025-12-13T12:00:57.102Z","author":"glorious-snail","issue":"BBB-22","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T12:00:57.106Z","author":"glorious-snail","issue":"BBB-22","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to dc7cae68"]}}
+{"at":"2025-12-13T12:00:57.265Z","author":"glorious-snail","issue":"BBB-22","action":"comment_added","data":{"commentId":"9ae80528-d68b-438b-b635-d40dd5b97fdc"}}
+{"at":"2025-12-13T12:01:05.236Z","author":"glorious-snail","issue":"BBB-23","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T12:01:05.240Z","author":"glorious-snail","issue":"BBB-23","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to dc7cae68"]}}
+{"at":"2025-12-13T12:01:59.343Z","author":"glorious-snail","issue":"BBB-23","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T12:01:59.348Z","author":"glorious-snail","issue":"BBB-23","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to dc7cae68"]}}
+{"at":"2025-12-13T12:01:59.502Z","author":"glorious-snail","issue":"BBB-23","action":"comment_added","data":{"commentId":"52c3f369-b27f-4bfe-941f-ce45a94c59a3"}}
+{"at":"2025-12-13T12:02:07.749Z","author":"glorious-snail","issue":"BBB-24","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T12:02:07.753Z","author":"glorious-snail","issue":"BBB-24","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to dc7cae68"]}}
+{"at":"2025-12-13T12:03:19.216Z","author":"glorious-snail","issue":"BBB-24","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T12:03:19.220Z","author":"glorious-snail","issue":"BBB-24","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to dc7cae68"]}}
+{"at":"2025-12-13T12:03:19.378Z","author":"glorious-snail","issue":"BBB-24","action":"comment_added","data":{"commentId":"7849d0a6-9e5b-48b9-a8d7-5bad087a3b73"}}
+{"at":"2025-12-13T12:03:21.254Z","author":"glorious-snail","issue":"BBB-20","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T12:03:21.258Z","author":"glorious-snail","issue":"BBB-20","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to dc7cae68"]}}
+{"at":"2025-12-13T12:03:21.416Z","author":"glorious-snail","issue":"BBB-20","action":"comment_added","data":{"commentId":"4d71b4e8-e26d-419a-ba9c-a40c12c838ed"}}
