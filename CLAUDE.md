@@ -108,6 +108,26 @@ bun --cwd apps/blog run deploy   # Deploy to Cloudflare
    bun add @brett/my-package
    ```
 
+## Deployment
+
+Uses direnv for per-project Cloudflare credentials. This avoids needing to switch between `wrangler login` sessions for personal vs work accounts.
+
+### Setup (first time)
+
+1. Install direnv: `brew install direnv`
+2. Add shell hook to ~/.zshrc: `eval "$(direnv hook zsh)"`
+3. Copy `.envrc.example` to `.envrc`
+4. Fill in your Cloudflare API token and account ID
+5. Run `direnv allow`
+
+### Deploy
+
+```bash
+bun --cwd apps/blog run deploy  # Deploys blog to Cloudflare
+```
+
+Wrangler automatically uses `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` from the environment.
+
 ## Standards
 
 ### Required for New Apps/Packages

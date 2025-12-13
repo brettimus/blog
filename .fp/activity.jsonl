@@ -146,3 +146,22 @@
 {"at":"2025-12-13T12:03:21.254Z","author":"glorious-snail","issue":"BBB-20","action":"status_changed","data":{"from":"in-progress","to":"done"}}
 {"at":"2025-12-13T12:03:21.258Z","author":"glorious-snail","issue":"BBB-20","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to dc7cae68"]}}
 {"at":"2025-12-13T12:03:21.416Z","author":"glorious-snail","issue":"BBB-20","action":"comment_added","data":{"commentId":"4d71b4e8-e26d-419a-ba9c-a40c12c838ed"}}
+{"at":"2025-12-13T12:08:13.785Z","author":"glorious-snail","issue":"BBB-25","action":"issue_created","data":{"title":"Improve boot icon with AI-generated design","parent":null}}
+{"at":"2025-12-13T12:09:02.604Z","author":"glorious-snail","issue":"BBB-26","action":"issue_created","data":{"title":"Set up direnv for per-project Cloudflare credentials","parent":null}}
+{"at":"2025-12-13T12:09:10.454Z","author":"glorious-snail","issue":"BBB-27","action":"issue_created","data":{"title":"Install and configure direnv","parent":"BBB-26"}}
+{"at":"2025-12-13T12:09:12.177Z","author":"glorious-snail","issue":"BBB-28","action":"issue_created","data":{"title":"Create Cloudflare API token for personal account","parent":"BBB-26"}}
+{"at":"2025-12-13T12:09:13.845Z","author":"glorious-snail","issue":"BBB-29","action":"issue_created","data":{"title":"Set up .envrc with Cloudflare credentials","parent":"BBB-26"}}
+{"at":"2025-12-13T12:09:15.610Z","author":"glorious-snail","issue":"BBB-30","action":"issue_created","data":{"title":"Add .envrc to .gitignore and document setup","parent":"BBB-26"}}
+{"at":"2025-12-13T12:11:59.136Z","action":"session_started","data":{"agentName":"xenogeneic-elk"}}
+{"at":"2025-12-13T12:12:38.286Z","author":"glorious-snail","issue":"BBB-26","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
+{"at":"2025-12-13T12:12:38.290Z","author":"glorious-snail","issue":"BBB-26","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to 068638e9"]}}
+{"at":"2025-12-13T12:13:45.961Z","author":"glorious-snail","issue":"BBB-27","action":"status_changed","data":{"from":"todo","to":"done"}}
+{"at":"2025-12-13T12:13:45.966Z","author":"glorious-snail","issue":"BBB-27","action":"issue_updated","data":{"changes":["status: todo → done"]}}
+{"at":"2025-12-13T12:15:18.605Z","author":"glorious-snail","issue":"BBB-28","action":"status_changed","data":{"from":"todo","to":"done"}}
+{"at":"2025-12-13T12:15:18.609Z","author":"glorious-snail","issue":"BBB-28","action":"issue_updated","data":{"changes":["status: todo → done"]}}
+{"at":"2025-12-13T12:17:52.601Z","author":"glorious-snail","issue":"BBB-29","action":"status_changed","data":{"from":"todo","to":"done"}}
+{"at":"2025-12-13T12:17:52.605Z","author":"glorious-snail","issue":"BBB-29","action":"issue_updated","data":{"changes":["status: todo → done"]}}
+{"at":"2025-12-13T12:18:17.433Z","author":"glorious-snail","issue":"BBB-30","action":"status_changed","data":{"from":"todo","to":"done"}}
+{"at":"2025-12-13T12:18:17.438Z","author":"glorious-snail","issue":"BBB-30","action":"issue_updated","data":{"changes":["status: todo → done"]}}
+{"at":"2025-12-13T12:18:18.064Z","author":"glorious-snail","issue":"BBB-26","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T12:18:18.068Z","author":"glorious-snail","issue":"BBB-26","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to 068638e9"]}}

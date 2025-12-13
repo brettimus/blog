@@ -1,0 +1,11 @@
+# Cloudflare credentials for personal account
+# Used by wrangler for deployments
+#
+# Copy to .envrc and fill in your values:
+#   cp .envrc.example .envrc
+#
+# Then allow direnv to load it:
+#   direnv allow
+
+export CLOUDFLARE_API_TOKEN="your-api-token-here"
+export CLOUDFLARE_ACCOUNT_ID="your-account-id-here"
