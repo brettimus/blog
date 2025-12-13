@@ -16,3 +16,8 @@
 {"at":"2025-12-13T08:34:30.530Z","author":"implicit-lynx","issue":"BBB-6","action":"status_changed","data":{"from":"todo","to":"in-progress"}}
 {"at":"2025-12-13T08:34:30.534Z","author":"implicit-lynx","issue":"BBB-6","action":"issue_updated","data":{"changes":["status: todo → in-progress","range: base set to 7b713dc5"]}}
 {"at":"2025-12-13T08:35:22.670Z","action":"session_started","data":{"agentName":"angry-gibbon"}}
+{"at":"2025-12-13T08:35:39.153Z","author":"implicit-lynx","issue":"BBB-6","action":"status_changed","data":{"from":"in-progress","to":"done"}}
+{"at":"2025-12-13T08:35:39.157Z","author":"implicit-lynx","issue":"BBB-6","action":"issue_updated","data":{"changes":["status: in-progress → done","range: tip set to d26bc88a"]}}
+{"at":"2025-12-13T08:36:28.323Z","author":"angry-gibbon","issue":"BBB-7","action":"issue_created","data":{"title":"Fix footer social links (still showing Astro defaults)","parent":"BBB-1"}}
+{"at":"2025-12-13T08:38:39.179Z","author":"angry-gibbon","issue":"BBB-7","action":"issue_updated","data":{"changes":["description updated"]}}
+{"at":"2025-12-13T08:38:44.766Z","author":"angry-gibbon","issue":"BBB-7","action":"issue_updated","data":{"changes":["title: \"Fix footer: update social links and remove placeholder text\""]}}
