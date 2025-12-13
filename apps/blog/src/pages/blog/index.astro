@@ -14,7 +14,7 @@ const posts = (await getCollection('blog')).sort(
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={`Blog | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<BaseHead title={`Thoughts | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 		<style>
 			.page-title {
 				margin-bottom: var(--space-2xl);
@@ -70,7 +70,7 @@ const posts = (await getCollection('blog')).sort(
 		<Header />
 		<main>
 			<div class="page-title">
-				<h1>Blog</h1>
+				<h1>Thoughts</h1>
 			</div>
 			<ul class="post-list">
 				{
