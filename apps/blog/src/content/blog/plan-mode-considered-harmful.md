@@ -10,15 +10,19 @@ Six months later, it was in every ai coding tool.
 
 Frickin' everyone has "plan mode".
 
-But I'm
+Going into 2026, I think we can do better.
 
 ## Asterisk
 
-I love planning.
+I love planning. I'm not over planning.
 
-I'm not over planning.
+Planning is great.
 
 What I don't like is the "Mode".
+
+These AIs are so good. And you're telling me I still need to tell them when to plan and when to exectue?
+
+It's weird.
 
 ## Context
 

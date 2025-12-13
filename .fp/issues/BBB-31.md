@@ -2,12 +2,18 @@
 id: cfb86eca-3f60-494f-be54-b2d3b34e73d1
 short_id: BBB-31
 title: Improve blog post typography
-status: todo
+status: done
 parent: null
 branch: ""
-range: null
+range:
+  base:
+    _tag: git
+    sha: ee70115bf470bdb96290093fd6a27195c853d3bf
+  tip:
+    _tag: git
+    sha: 4d363de51f25f268ba31c1ccc1416556dae3a85a
 created_at: 2025-12-13T12:30:28.600Z
-updated_at: 2025-12-13T12:30:28.600Z
+updated_at: 2025-12-13T12:56:35.717Z
 ---
 
 Typography adjustments needed for better readability:
