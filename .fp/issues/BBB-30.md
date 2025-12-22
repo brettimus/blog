@@ -3,15 +3,12 @@ id: aa9e0403-7aa7-4a27-8b72-aa06201dbce8
 short_id: BBB-30
 title: Add .envrc to .gitignore and document setup
 status: done
-parent: BBB-26
+parent: "8fab119b-f046-4796-8dde-1a9277bfba46"
+dependencies: []
 branch: ""
-range:
-  base: &a1
-    _tag: git
-    sha: 068638e9bbb58c06250a7164bb5d63cdc86c45bf
-  tip: *a1
-created_at: 2025-12-13T12:09:15.608Z
-updated_at: 2025-12-13T12:18:17.435Z
+revisions: null
+created_at: "2025-12-13T12:09:15.608Z"
+updated_at: "2025-12-13T12:18:17.435Z"
 ---
 
 Ensure .envrc is not committed and document the setup for future reference.

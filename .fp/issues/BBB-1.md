@@ -1,17 +1,14 @@
 ---
-id: 5de63065-835b-45b0-9107-71103b811509
+id: "5de63065-835b-45b0-9107-71103b811509"
 short_id: BBB-1
 title: blog.boots.lol setup
 status: done
 parent: null
+dependencies: []
 branch: ""
-range:
-  base: &a1
-    _tag: git
-    sha: dc7cae682cd97bfc4deda534efb58125d71deaa9
-  tip: *a1
-created_at: 2025-12-13T08:23:54.115Z
-updated_at: 2025-12-13T11:48:06.392Z
+revisions: null
+created_at: "2025-12-13T08:23:54.115Z"
+updated_at: "2025-12-13T11:48:06.392Z"
 ---
 
 Parent issue for initial setup of Brett's personal blog site.

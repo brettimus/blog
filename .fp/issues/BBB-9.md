@@ -1,19 +1,14 @@
 ---
-id: 4d76c584-26a4-4f9d-9a94-1954842e0e52
+id: "4d76c584-26a4-4f9d-9a94-1954842e0e52"
 short_id: BBB-9
 title: Implement Font and Color Foundation
 status: done
-parent: BBB-4
+parent: "82c87688-0f97-4ef2-b652-50cc8a1d64e1"
+dependencies: []
 branch: ""
-range:
-  base:
-    _tag: git
-    sha: 70e0060ec67ee6a091b6140c1da530d523691515
-  tip:
-    _tag: git
-    sha: 70e0060ec67ee6a091b6140c1da530d523691515
-created_at: 2025-12-13T09:16:34.124Z
-updated_at: 2025-12-13T09:21:48.330Z
+revisions: null
+created_at: "2025-12-13T09:16:34.124Z"
+updated_at: "2025-12-13T09:21:48.330Z"
 ---
 
 Update the CSS foundation with the new design tokens:

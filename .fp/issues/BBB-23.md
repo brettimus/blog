@@ -3,17 +3,12 @@ id: a9abc619-e8f8-4bd3-8dd2-6bccf67e7bdf
 short_id: BBB-23
 title: "Add first post: Plan Mode Considered Harmful?"
 status: done
-parent: BBB-20
+parent: "4f250b2e-aada-4f53-9094-18f4dcebf83c"
+dependencies: []
 branch: ""
-range:
-  base:
-    _tag: git
-    sha: dc7cae682cd97bfc4deda534efb58125d71deaa9
-  tip:
-    _tag: git
-    sha: dc7cae682cd97bfc4deda534efb58125d71deaa9
-created_at: 2025-12-13T11:52:53.689Z
-updated_at: 2025-12-13T12:01:59.345Z
+revisions: null
+created_at: "2025-12-13T11:52:53.689Z"
+updated_at: "2025-12-13T12:01:59.345Z"
 ---
 
 Create the first real blog post with a draft.

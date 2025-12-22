@@ -1,19 +1,14 @@
 ---
-id: 4d3ff4dd-db9c-459f-ab9d-ca77e1180625
+id: "4d3ff4dd-db9c-459f-ab9d-ca77e1180625"
 short_id: BBB-11
 title: Set up Playwright visual inspection for Claude
 status: done
 parent: null
+dependencies: []
 branch: ""
-range:
-  base:
-    _tag: git
-    sha: f73eabd00a55ee957d5372c61760a493f7a11f41
-  tip:
-    _tag: git
-    sha: f73eabd00a55ee957d5372c61760a493f7a11f41
-created_at: 2025-12-13T09:25:46.001Z
-updated_at: 2025-12-13T09:32:18.773Z
+revisions: null
+created_at: "2025-12-13T09:25:46.001Z"
+updated_at: "2025-12-13T09:32:18.773Z"
 ---
 
 Create a system for Claude to visually inspect and verify work on the Astro site using Playwright screenshots.

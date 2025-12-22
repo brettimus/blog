@@ -3,15 +3,12 @@ id: bbff23e6-77be-4002-a383-a3b9846fadb7
 short_id: BBB-28
 title: Create Cloudflare API token for personal account
 status: done
-parent: BBB-26
+parent: "8fab119b-f046-4796-8dde-1a9277bfba46"
+dependencies: []
 branch: ""
-range:
-  base: &a1
-    _tag: git
-    sha: 068638e9bbb58c06250a7164bb5d63cdc86c45bf
-  tip: *a1
-created_at: 2025-12-13T12:09:12.175Z
-updated_at: 2025-12-13T12:15:18.607Z
+revisions: null
+created_at: "2025-12-13T12:09:12.175Z"
+updated_at: "2025-12-13T12:15:18.607Z"
 ---
 
 Create a scoped API token in Cloudflare for personal account deployments.

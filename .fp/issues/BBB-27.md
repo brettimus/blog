@@ -1,17 +1,14 @@
 ---
-id: 752c8172-59cd-4e25-8208-554f1e1e6211
+id: "752c8172-59cd-4e25-8208-554f1e1e6211"
 short_id: BBB-27
 title: Install and configure direnv
 status: done
-parent: BBB-26
+parent: "8fab119b-f046-4796-8dde-1a9277bfba46"
+dependencies: []
 branch: ""
-range:
-  base: &a1
-    _tag: git
-    sha: 068638e9bbb58c06250a7164bb5d63cdc86c45bf
-  tip: *a1
-created_at: 2025-12-13T12:09:10.452Z
-updated_at: 2025-12-13T12:13:45.963Z
+revisions: null
+created_at: "2025-12-13T12:09:10.452Z"
+updated_at: "2025-12-13T12:13:45.963Z"
 ---
 
 Install direnv and hook it into your shell.

@@ -1,17 +1,14 @@
 ---
-id: 9d26fde1-8261-4214-b0a6-adab044d9488
+id: "9d26fde1-8261-4214-b0a6-adab044d9488"
 short_id: BBB-2
 title: Configure blog.boots.lol domain in Cloudflare
 status: done
-parent: BBB-1
+parent: "5de63065-835b-45b0-9107-71103b811509"
+dependencies: []
 branch: ""
-range:
-  base: &a1
-    _tag: git
-    sha: dc7cae682cd97bfc4deda534efb58125d71deaa9
-  tip: *a1
-created_at: 2025-12-13T08:24:14.957Z
-updated_at: 2025-12-13T11:48:06.209Z
+revisions: null
+created_at: "2025-12-13T08:24:14.957Z"
+updated_at: "2025-12-13T11:48:06.209Z"
 ---
 
 Manual task: Configure the custom domain blog.boots.lol in Cloudflare dashboard.

@@ -1,19 +1,14 @@
 ---
-id: 8fab119b-f046-4796-8dde-1a9277bfba46
+id: "8fab119b-f046-4796-8dde-1a9277bfba46"
 short_id: BBB-26
 title: Set up direnv for per-project Cloudflare credentials
 status: done
 parent: null
+dependencies: []
 branch: ""
-range:
-  base:
-    _tag: git
-    sha: 068638e9bbb58c06250a7164bb5d63cdc86c45bf
-  tip:
-    _tag: git
-    sha: 068638e9bbb58c06250a7164bb5d63cdc86c45bf
-created_at: 2025-12-13T12:09:02.601Z
-updated_at: 2025-12-13T12:18:18.066Z
+revisions: null
+created_at: "2025-12-13T12:09:02.601Z"
+updated_at: "2025-12-13T12:18:18.066Z"
 ---
 
 Set up per-project Cloudflare credentials using direnv to avoid "logout/login" thrash between personal and work accounts.

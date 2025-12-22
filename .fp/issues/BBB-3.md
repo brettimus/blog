@@ -1,19 +1,14 @@
 ---
-id: 7c2343c4-3a63-420b-9ca2-1c843cf4b288
+id: "7c2343c4-3a63-420b-9ca2-1c843cf4b288"
 short_id: BBB-3
 title: Wire up social links in nav
 status: done
-parent: BBB-1
+parent: "5de63065-835b-45b0-9107-71103b811509"
+dependencies: []
 branch: ""
-range:
-  base:
-    _tag: git
-    sha: df5fd179cca31d2b591aa83c33275b56c2683312
-  tip:
-    _tag: git
-    sha: 613ae7fdde3666aa1e4efb822fba36177a4a8daf
-created_at: 2025-12-13T08:24:16.543Z
-updated_at: 2025-12-13T08:30:19.720Z
+revisions: null
+created_at: "2025-12-13T08:24:16.543Z"
+updated_at: "2025-12-13T08:30:19.720Z"
 ---
 
 Replace boilerplate Astro social links with Brett's personal accounts:

@@ -4,16 +4,11 @@ short_id: BBB-31
 title: Improve blog post typography
 status: done
 parent: null
+dependencies: []
 branch: ""
-range:
-  base:
-    _tag: git
-    sha: ee70115bf470bdb96290093fd6a27195c853d3bf
-  tip:
-    _tag: git
-    sha: 4d363de51f25f268ba31c1ccc1416556dae3a85a
-created_at: 2025-12-13T12:30:28.600Z
-updated_at: 2025-12-13T12:56:35.717Z
+revisions: null
+created_at: "2025-12-13T12:30:28.600Z"
+updated_at: "2025-12-13T12:56:35.717Z"
 ---
 
 Typography adjustments needed for better readability:

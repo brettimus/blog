@@ -1,19 +1,14 @@
 ---
-id: 4f250b2e-aada-4f53-9094-18f4dcebf83c
+id: "4f250b2e-aada-4f53-9094-18f4dcebf83c"
 short_id: BBB-20
 title: Launch blog.boots.lol
 status: done
 parent: null
+dependencies: []
 branch: ""
-range:
-  base:
-    _tag: git
-    sha: dc7cae682cd97bfc4deda534efb58125d71deaa9
-  tip:
-    _tag: git
-    sha: dc7cae682cd97bfc4deda534efb58125d71deaa9
-created_at: 2025-12-13T11:52:25.674Z
-updated_at: 2025-12-13T12:03:21.256Z
+revisions: null
+created_at: "2025-12-13T11:52:25.674Z"
+updated_at: "2025-12-13T12:03:21.256Z"
 ---
 
 Final tasks to launch the blog publicly.

@@ -3,17 +3,12 @@ id: fdfb15ad-a99e-4c4e-94c1-e891a78a46d1
 short_id: BBB-16
 title: Create apps/blog/CLAUDE.md with blog-specific instructions
 status: done
-parent: BBB-12
+parent: "898ce015-c8c3-4fdb-8421-2931e949aa01"
+dependencies: []
 branch: ""
-range:
-  base:
-    _tag: git
-    sha: 6b7bd73ce5b886eb132a9db8d1105b5f1e0ff526
-  tip:
-    _tag: git
-    sha: 6b7bd73ce5b886eb132a9db8d1105b5f1e0ff526
-created_at: 2025-12-13T09:34:01.843Z
-updated_at: 2025-12-13T09:51:54.536Z
+revisions: null
+created_at: "2025-12-13T09:34:01.843Z"
+updated_at: "2025-12-13T09:51:54.536Z"
 ---
 
 Extract blog-specific instructions to apps/blog/CLAUDE.md:

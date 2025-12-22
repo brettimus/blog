@@ -3,17 +3,12 @@ id: d7fae78b-d282-402d-8732-b07d3595c4e5
 short_id: BBB-8
 title: Document Design System Choices
 status: done
-parent: BBB-4
+parent: "82c87688-0f97-4ef2-b652-50cc8a1d64e1"
+dependencies: []
 branch: ""
-range:
-  base:
-    _tag: git
-    sha: 3d4f968be1ec320e110471b3a316074c577c5654
-  tip:
-    _tag: git
-    sha: 3d4f968be1ec320e110471b3a316074c577c5654
-created_at: 2025-12-13T09:16:25.764Z
-updated_at: 2025-12-13T09:19:53.084Z
+revisions: null
+created_at: "2025-12-13T09:16:25.764Z"
+updated_at: "2025-12-13T09:19:53.084Z"
 ---
 
 Create a design system reference document (docs/DESIGN_SYSTEM.md) that codifies:

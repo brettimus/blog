@@ -3,17 +3,12 @@ id: fff2c34f-d16a-4579-b213-dee12b0f7ff0
 short_id: BBB-10
 title: Implement Structure and Layout Changes
 status: done
-parent: BBB-4
+parent: "82c87688-0f97-4ef2-b652-50cc8a1d64e1"
+dependencies: []
 branch: ""
-range:
-  base:
-    _tag: git
-    sha: 70e0060ec67ee6a091b6140c1da530d523691515
-  tip:
-    _tag: git
-    sha: 70e0060ec67ee6a091b6140c1da530d523691515
-created_at: 2025-12-13T09:16:44.422Z
-updated_at: 2025-12-13T09:25:24.173Z
+revisions: null
+created_at: "2025-12-13T09:16:44.422Z"
+updated_at: "2025-12-13T09:25:24.173Z"
 ---
 
 Transform the visual structure of the blog:

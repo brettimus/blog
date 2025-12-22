@@ -3,17 +3,12 @@ id: fb84219f-5c6a-42b8-8302-498998a96251
 short_id: BBB-6
 title: Remove boilerplate content, preserve Astro docs
 status: done
-parent: BBB-1
+parent: "5de63065-835b-45b0-9107-71103b811509"
+dependencies: []
 branch: ""
-range:
-  base:
-    _tag: git
-    sha: 7b713dc51ceca785224556374da52b7eb6b78143
-  tip:
-    _tag: git
-    sha: d26bc88aef24db9200986047a4ac05f8ed9b011a
-created_at: 2025-12-13T08:24:21.660Z
-updated_at: 2025-12-13T08:35:39.155Z
+revisions: null
+created_at: "2025-12-13T08:24:21.660Z"
+updated_at: "2025-12-13T08:35:39.155Z"
 ---
 
 Clean up starter template content while preserving useful documentation.

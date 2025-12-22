@@ -1,19 +1,14 @@
 ---
-id: 8ae40d4e-39ff-453d-8fb2-c2ce44fb5273
+id: "8ae40d4e-39ff-453d-8fb2-c2ce44fb5273"
 short_id: BBB-19
 title: Update screenshot command for monorepo structure
 status: done
-parent: BBB-12
+parent: "898ce015-c8c3-4fdb-8421-2931e949aa01"
+dependencies: []
 branch: ""
-range:
-  base:
-    _tag: git
-    sha: 6b7bd73ce5b886eb132a9db8d1105b5f1e0ff526
-  tip:
-    _tag: git
-    sha: 6b7bd73ce5b886eb132a9db8d1105b5f1e0ff526
-created_at: 2025-12-13T09:45:57.130Z
-updated_at: 2025-12-13T09:51:17.090Z
+revisions: null
+created_at: "2025-12-13T09:45:57.130Z"
+updated_at: "2025-12-13T09:51:17.090Z"
 ---
 
 Update the /screenshot slash command and scripts for the monorepo structure.
