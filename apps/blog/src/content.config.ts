@@ -13,6 +13,8 @@ const blog = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: image().optional(),
+			// Draft posts are hidden in production but visible in dev
+			draft: z.boolean().optional().default(false),
 		}),
 });
 
