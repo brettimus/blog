@@ -27,13 +27,64 @@ Applications live in `apps/`. Each app is independently deployable.
 
 ### Blog (`apps/blog/`)
 
-Personal blog site. See [apps/blog/CLAUDE.md](apps/blog/CLAUDE.md) for blog-specific instructions.
+Personal blog for Brett Beutell (@brettimus). Fullstack TypeScript, AI, and web development.
+
+**Tech Stack**: Astro, Cloudflare Workers, blog.boots.lol
+
+**Social**: [@lastgoodhandle](https://twitter.com/lastgoodhandle) / [@brettimus](https://github.com/brettimus)
 
 ```bash
 bun --cwd apps/blog run dev      # Start dev server
 bun --cwd apps/blog run build    # Build for production
 bun --cwd apps/blog run deploy   # Deploy to Cloudflare
 ```
+
+#### Blog Structure
+
+```
+apps/blog/
+├── src/
+│   ├── components/     # Astro components (Header, Footer, etc.)
+│   ├── content/blog/   # Markdown/MDX blog posts
+│   ├── layouts/        # Page layouts (BlogPost)
+│   ├── pages/          # Route pages
+│   ├── styles/         # Global CSS
+│   └── assets/         # Images and static assets
+├── docs/
+│   └── DESIGN_SYSTEM.md  # Design language reference
+├── public/             # Static files served as-is
+└── scripts/            # Utility scripts (screenshot.ts)
+```
+
+#### Writing Blog Posts
+
+Posts go in `src/content/blog/` as `.md` or `.mdx` files:
+
+```md
+---
+title: "Post Title"
+description: "Brief description"
+pubDate: "Dec 13 2024"
+heroImage: "/blog-placeholder.jpg"
+draft: true
+---
+```
+
+Set `draft: true` to hide from production. Drafts are visible in dev but excluded from builds.
+
+#### Design System
+
+See [apps/blog/docs/DESIGN_SYSTEM.md](apps/blog/docs/DESIGN_SYSTEM.md):
+- Mid-century Scandinavian aesthetic
+- Colors: warm cream, burnt sienna, muted teal
+- Fonts: Fraunces (headings), Source Serif 4 (body), JetBrains Mono (code)
+
+#### Visual Inspection
+
+Use `/screenshot [routes]` to capture pages (dev server must be running):
+- `/screenshot` - Homepage and /blog
+- `/screenshot /about` - Specific route
+- `/screenshot --all --mobile` - All routes with mobile
 
 ## Adding a New App
 
