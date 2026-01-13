@@ -1,10 +1,8 @@
 # FP Sync State (local only)
 # Do not edit manually - managed by fp sync engine
 
-client_id = "01KD2JR9PCPYWJ1MGC5XH6XWGS"
+client_id = "01KEW7R7GX4FPN5PXZCC5HHFT5"
 client_seq = 135
-last_pulled_seq = 135
-last_pushed_client_seq = 135
-project_id = "YLIgqjykM9Nb-XWCMgm15"
-server_url = "https://console.fiberplane.com"
-workspace_slug = "brettimus-LSnq"
+last_pulled_seq = 0
+last_pushed_client_seq = 0
+next_local_seq = 1
