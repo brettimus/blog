@@ -1,0 +1,60 @@
+---
+const topics = [
+  "methods for managing context in long running agent loops",
+  "how to make code review more pleasant for humans",
+  "tmux workflows",
+  "local first sync engines (event sourcing vs crdts)",
+];
+---
+
+<div class="empty-blog">
+  <p class="message">
+    i haven't finished any posts yet, but i'm currently thinking about:
+  </p>
+  <ul class="topics">
+    {topics.map((topic) => (
+      <li>{topic}</li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .empty-blog {
+    padding: var(--space-xl) 0;
+  }
+
+  .message {
+    font-size: var(--font-size-md);
+    color: var(--deep-charcoal);
+    line-height: 1.6;
+    margin-bottom: var(--space-lg);
+  }
+
+  .topics {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .topics li {
+    position: relative;
+    padding-left: var(--space-lg);
+    padding-top: var(--space-sm);
+    padding-bottom: var(--space-sm);
+    color: var(--warm-stone);
+    font-size: var(--font-size-base);
+    border-bottom: 1px solid var(--pale-birch);
+  }
+
+  .topics li:last-child {
+    border-bottom: none;
+  }
+
+  .topics li::before {
+    content: "~";
+    position: absolute;
+    left: 0;
+    color: var(--burnt-sienna);
+    font-family: var(--font-mono);
+  }
+</style>
