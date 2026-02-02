@@ -2,6 +2,7 @@
 title: "A Few Shell Tricks I Learned from Watching Claude Work"
 description: "Useful shell patterns I picked up from observing AI coding assistants."
 pubDate: "Jan 12 2026"
+draft: true
 ---
 
 I've been using Claude Code for a while now. You learn things by watching.

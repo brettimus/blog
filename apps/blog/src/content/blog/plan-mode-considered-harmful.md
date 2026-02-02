@@ -2,6 +2,7 @@
 title: "(WIP) I'm over Plan Mode"
 description: "Plan mode. So hot right now. Plan mode."
 pubDate: "Dec 13 2025"
+draft: true
 ---
 
 Beginning of 2025, I remember reading a post ((Find this!)) by an engineer who advocated a planning stage (with o1 or o3), then passing the plan to your ai assistant (cursor, vscode, aider) to get it done.
