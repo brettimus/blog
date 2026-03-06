@@ -1,0 +1,14 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "brett-share",
+	"compatibility_date": "2025-01-01",
+	"routes": [
+		{ "pattern": "share.boots.lol", "custom_domain": true }
+	],
+	"assets": {
+		"directory": "./public"
+	},
+	"observability": {
+		"enabled": true
+	}
+}

@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Single-Writer SQLite/Yjs Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+    --bg: #f6f4f1;
+    --surface: #ffffff;
+    --surface2: #efecea;
+    --surface-elevated: #fffdf9;
+    --border: rgba(0, 0, 0, 0.07);
+    --border-bright: rgba(0, 0, 0, 0.14);
+    --text: #1e1b16;
+    --text-dim: #807668;
+
+    --navy: #1e3a5f;
+    --navy-dim: rgba(30, 58, 95, 0.08);
+    --gold: #b5761a;
+    --gold-dim: rgba(181, 118, 26, 0.08);
+    --teal: #0e7c6b;
+    --teal-dim: rgba(14, 124, 107, 0.08);
+    --rust: #9e3a1a;
+    --rust-dim: rgba(158, 58, 26, 0.08);
+    --sage: #4a7c3f;
+    --sage-dim: rgba(74, 124, 63, 0.08);
+    --plum: #6e3a6e;
+    --plum-dim: rgba(110, 58, 110, 0.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141210;
+      --surface: #1c1a17;
+      --surface2: #252320;
+      --surface-elevated: #2a2722;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-bright: rgba(255, 255, 255, 0.12);
+      --text: #e8e2d9;
+      --text-dim: #9e9588;
+
+      --navy: #7aafdb;
+      --navy-dim: rgba(122, 175, 219, 0.12);
+      --gold: #d4a73a;
+      --gold-dim: rgba(212, 167, 58, 0.12);
+      --teal: #5ec5b3;
+      --teal-dim: rgba(94, 197, 179, 0.1);
+      --rust: #e07a5a;
+      --rust-dim: rgba(224, 122, 90, 0.1);
+      --sage: #8cc47a;
+      --sage-dim: rgba(140, 196, 122, 0.1);
+      --plum: #c08ac0;
+      --plum-dim: rgba(192, 138, 192, 0.1);
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse at 15% 0%, var(--navy-dim) 0%, transparent 45%),
+      radial-gradient(ellipse at 85% 100%, var(--gold-dim) 0%, transparent 35%);
+    color: var(--text);
+    font-family: var(--font-body);
+    padding: 40px;
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeScale {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .anim { animation: fadeUp 0.45s ease-out both; animation-delay: calc(var(--i, 0) * 0.06s); }
+  .anim-scale { animation: fadeScale 0.4s ease-out both; animation-delay: calc(var(--i, 0) * 0.06s); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ===== NAV ===== */
+  .wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 0 40px;
+  }
+  .main { min-width: 0; }
+
+  .toc {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    padding: 14px 0;
+    grid-row: 1 / -1;
+    max-height: calc(100dvh - 48px);
+    overflow-y: auto;
+  }
+  .toc::-webkit-scrollbar { width: 3px; }
+  .toc::-webkit-scrollbar-thumb { background: var(--surface-elevated); border-radius: 2px; }
+
+  .toc-title {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    padding: 0 0 10px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .toc a {
+    display: block;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 5px;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+    line-height: 1.4;
+    margin-bottom: 1px;
+  }
+  .toc a:hover { color: var(--text); background: var(--surface2); }
+  .toc a.active { color: var(--text); border-left-color: var(--gold); }
+
+  @media (max-width: 1000px) {
+    .wrap { grid-template-columns: 1fr; padding-top: 0; }
+    body { padding-top: 0; }
+    .toc {
+      position: sticky; top: 0; z-index: 200;
+      max-height: none; display: flex; gap: 4px; align-items: center;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 10px 0; margin: 0 -40px; padding-left: 40px; padding-right: 40px;
+      grid-row: auto;
+    }
+    .toc::-webkit-scrollbar { display: none; }
+    .toc-title { display: none; }
+    .toc a {
+      white-space: nowrap; flex-shrink: 0; border-left: none;
+      border-bottom: 2px solid transparent; border-radius: 4px 4px 0 0;
+      padding: 6px 10px; font-size: 10px;
+    }
+    .toc a.active { border-left: none; border-bottom-color: var(--gold); background: var(--surface); }
+    .main { padding-top: 20px; }
+    .sec-head { scroll-margin-top: 52px; }
+  }
+
+  /* ===== TYPOGRAPHY ===== */
+  h1 {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin-bottom: 6px;
+    text-wrap: balance;
+  }
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-bottom: 12px;
+    font-family: var(--font-mono);
+  }
+  .lead {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--text-dim);
+    max-width: 680px;
+    margin-bottom: 40px;
+  }
+  .lead strong { color: var(--text); }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+
+  /* ===== SECTION HEADS ===== */
+  .sec-head {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 32px 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sec-head .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 5px;
+    font-size: 10px; font-weight: 700;
+  }
+
+  /* ===== CARDS ===== */
+  .ve-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .ve-card--hero {
+    background: var(--surface-elevated);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    padding: 28px 32px;
+  }
+  .ve-card--recessed {
+    background: var(--surface2);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .card-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%; display: inline-block;
+  }
+
+  /* Color families */
+  .c-navy { color: var(--navy); }
+  .c-gold { color: var(--gold); }
+  .c-teal { color: var(--teal); }
+  .c-rust { color: var(--rust); }
+  .c-sage { color: var(--sage); }
+  .c-plum { color: var(--plum); }
+
+  .bg-navy { background: var(--navy-dim); }
+  .bg-gold { background: var(--gold-dim); }
+  .bg-teal { background: var(--teal-dim); }
+  .bg-rust { background: var(--rust-dim); }
+  .bg-sage { background: var(--sage-dim); }
+
+  .b-navy { border-color: color-mix(in srgb, var(--border) 50%, var(--navy) 30%); }
+  .b-gold { border-color: color-mix(in srgb, var(--border) 50%, var(--gold) 30%); }
+  .b-teal { border-color: color-mix(in srgb, var(--border) 50%, var(--teal) 30%); }
+  .b-rust { border-color: color-mix(in srgb, var(--border) 50%, var(--rust) 30%); }
+  .b-sage { border-color: color-mix(in srgb, var(--border) 50%, var(--sage) 30%); }
+  .b-plum { border-color: color-mix(in srgb, var(--border) 50%, var(--plum) 30%); }
+
+  /* ===== INNER GRIDS ===== */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+
+  @media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-2-1 { grid-template-columns: 1fr; }
+  }
+
+  .inner-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    min-width: 0;
+  }
+  .inner-card .title {
+    font-weight: 600; font-size: 13px; margin-bottom: 4px;
+  }
+  .inner-card .desc {
+    color: var(--text-dim); font-size: 12px; line-height: 1.55;
+    overflow-wrap: break-word;
+  }
+  .inner-card code {
+    font-family: var(--font-mono); font-size: 10.5px;
+    background: var(--gold-dim); color: var(--gold);
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ===== FLOW ARROWS ===== */
+  .flow-arrow {
+    display: flex; justify-content: center; align-items: center; gap: 8px;
+    color: var(--text-dim); font-family: var(--font-mono); font-size: 11px;
+    padding: 6px 0;
+  }
+  .flow-arrow svg {
+    width: 18px; height: 18px; fill: none;
+    stroke: var(--border-bright); stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* ===== LISTS ===== */
+  .step-list { list-style: none; font-size: 13px; }
+  .step-list li {
+    padding: 8px 0 8px 26px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+    overflow-wrap: break-word;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list .step-num {
+    position: absolute; left: 0; top: 8px;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+    color: var(--gold); width: 18px; text-align: right;
+  }
+  .step-list code {
+    font-family: var(--font-mono); font-size: 11px;
+    background: var(--navy-dim); color: var(--navy);
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ===== CALLOUT ===== */
+  .callout {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+  .callout strong { color: var(--text); font-weight: 600; }
+  .callout code {
+    font-family: var(--font-mono); font-size: 11px;
+    background: var(--gold-dim); color: var(--gold);
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ===== MERMAID ===== */
+  .mermaid-wrap {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .mermaid-viewport {
+    overflow: auto;
+    cursor: grab;
+    min-height: 200px;
+  }
+  .mermaid-viewport:active { cursor: grabbing; }
+  .mermaid-viewport .mermaid {
+    display: flex;
+    justify-content: center;
+    transform-origin: 0 0;
+  }
+  .zoom-controls {
+    position: absolute; top: 10px; right: 10px;
+    display: flex; gap: 4px; z-index: 10;
+  }
+  .zoom-controls button {
+    width: 28px; height: 28px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; cursor: pointer;
+    font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+    color: var(--text-dim); display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .zoom-controls button:hover { background: var(--surface-elevated); color: var(--text); }
+
+  .mermaid .nodeLabel { color: var(--text) !important; }
+  .mermaid .edgeLabel { color: var(--text-dim) !important; background-color: var(--bg) !important; }
+  .mermaid .edgeLabel rect { fill: var(--bg) !important; }
+  .mermaid .edgeLabel { font-family: var(--font-mono) !important; font-size: 12px !important; }
+  .mermaid .nodeLabel { font-family: var(--font-body) !important; font-size: 15px !important; }
+  .mermaid .node rect, .mermaid .node circle, .mermaid .node polygon { stroke-width: 1.5px; }
+  .mermaid .edge-pattern-solid { stroke-width: 1.5px; }
+
+  /* ===== CODE BLOCKS ===== */
+  .code-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+  .code-block .hl { color: var(--gold); font-weight: 600; }
+  .code-block .cm { color: var(--text-dim); opacity: 0.6; }
+  .code-block .fn { color: var(--navy); }
+  .code-block .kw { color: var(--teal); }
+
+  /* ===== LEGEND ===== */
+  .legend {
+    display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 16px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--text-dim); font-family: var(--font-mono);
+  }
+  .legend-swatch {
+    width: 12px; height: 12px; border-radius: 3px;
+  }
+
+  /* ===== PIPELINE ===== */
+  .pipeline {
+    display: flex; gap: 0; align-items: stretch;
+    overflow-x: auto; padding-bottom: 4px;
+  }
+  .pipeline-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    min-width: 110px;
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .pipeline-step .step-name {
+    font-size: 12px; font-weight: 600; margin-bottom: 3px;
+  }
+  .pipeline-step .step-detail {
+    font-size: 10px; color: var(--text-dim); line-height: 1.4;
+  }
+  .pipeline-arrow {
+    display: flex; align-items: center; padding: 0 4px;
+    color: var(--border-bright); font-size: 16px; flex-shrink: 0;
+  }
+
+  /* ===== TABLE ===== */
+  .arch-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .arch-table th {
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    padding: 8px 12px;
+    border-bottom: 2px solid var(--border-bright);
+  }
+  .arch-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    overflow-wrap: break-word;
+  }
+  .arch-table tr:last-child td { border-bottom: none; }
+  .arch-table code {
+    font-family: var(--font-mono); font-size: 11px;
+    background: var(--navy-dim); color: var(--navy);
+    padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ===== TIMING BADGE ===== */
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+    padding: 2px 8px; border-radius: 4px;
+  }
+
+  /* ===== DETAILS/SUMMARY ===== */
+  details {
+    margin-bottom: 12px;
+  }
+  details summary {
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-dim);
+    padding: 6px 0;
+    list-style: none;
+  }
+  details summary::before {
+    content: '+ ';
+    color: var(--gold);
+    font-weight: 700;
+  }
+  details[open] summary::before {
+    content: '- ';
+  }
+  details summary::-webkit-details-marker { display: none; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<nav class="toc" id="toc">
+  <div class="toc-title">Contents</div>
+  <a href="#s1">1. Overview</a>
+  <a href="#s2">2. System Topology</a>
+  <a href="#s3">3. Write Paths</a>
+  <a href="#s4">4. DB Watching</a>
+  <a href="#s5">5. Sync Flow</a>
+  <a href="#s6">6. Compaction</a>
+  <a href="#s7">7. IPC Events</a>
+  <a href="#s8">8. Key Files</a>
+</nav>
+
+<div class="main">
+
+<h1 class="anim" style="--i:0">Single-Writer SQLite/Yjs Architecture</h1>
+<p class="subtitle anim" style="--i:1">NOXR-eueslset &mdash; branch: single-write-hail-mary</p>
+<p class="lead anim" style="--i:2">
+  This branch eliminated the <strong>dual-write path</strong> (markdown + SQLite) from fp-core.
+  SQLite/Yjs is now the single source of truth. The desktop app reads from the database via
+  main-process IPC, detects cross-process changes via <strong>PRAGMA data_version polling</strong>,
+  and uses <strong>optimistic mutations</strong> for instant UI feedback. Y.Doc compaction keeps
+  the update table bounded.
+</p>
+
+<!-- ============ S1: OVERVIEW ============ -->
+<div id="s1" class="sec-head anim c-gold" style="--i:3">
+  <span class="num bg-gold c-gold">1</span> What Changed
+</div>
+
+<div class="grid-3 anim" style="--i:4">
+  <div class="ve-card b-rust">
+    <div class="card-label c-rust"><span class="dot" style="background:var(--rust)"></span> Removed</div>
+    <ul class="step-list" style="font-size:12px">
+      <li style="padding-left:0; border-bottom-color:var(--border)">Markdown file writes for issues and comments</li>
+      <li style="padding-left:0; border-bottom-color:var(--border)">fs.watch() file watcher in desktop app</li>
+      <li style="padding-left:0; border-bottom-color:var(--border)">Post-sync materialization to markdown</li>
+      <li style="padding-left:0; border-bottom-color:var(--border)"><code style="background:var(--rust-dim);color:var(--rust)">experimental_issue_db</code> feature flag</li>
+      <li style="padding-left:0">Legacy <code style="background:var(--rust-dim);color:var(--rust)">fp db</code> command group</li>
+    </ul>
+  </div>
+  <div class="ve-card b-sage">
+    <div class="card-label c-sage"><span class="dot" style="background:var(--sage)"></span> Added</div>
+    <ul class="step-list" style="font-size:12px">
+      <li style="padding-left:0; border-bottom-color:var(--border)">DatabasePoller (PRAGMA data_version)</li>
+      <li style="padding-left:0; border-bottom-color:var(--border)">Optimistic mutation helper with seq-guarded rollback</li>
+      <li style="padding-left:0; border-bottom-color:var(--border)">Y.Doc snapshot compaction (threshold: 50 updates)</li>
+      <li style="padding-left:0; border-bottom-color:var(--border)">Denormalized <code>issues_index</code> table</li>
+      <li style="padding-left:0">Granular ISSUES_PATCH events</li>
+    </ul>
+  </div>
+  <div class="ve-card b-navy">
+    <div class="card-label c-navy"><span class="dot" style="background:var(--navy)"></span> Key Decisions</div>
+    <ul class="step-list" style="font-size:12px">
+      <li style="padding-left:0; border-bottom-color:var(--border)">No Y.Docs in renderer &mdash; main process only</li>
+      <li style="padding-left:0; border-bottom-color:var(--border)">Renderer sends edit intents over IPC</li>
+      <li style="padding-left:0; border-bottom-color:var(--border)">Zustand remains reactive store in renderer</li>
+      <li style="padding-left:0; border-bottom-color:var(--border)">300ms poll interval for cross-process detection</li>
+      <li style="padding-left:0">Monotonic seq for gap detection</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ============ S2: SYSTEM TOPOLOGY ============ -->
+<div id="s2" class="sec-head anim c-navy" style="--i:5">
+  <span class="num bg-navy c-navy">2</span> System Topology
+</div>
+
+<div class="mermaid-wrap anim" style="--i:6">
+  <div class="zoom-controls">
+    <button onclick="zoom(this, 1.2)" title="Zoom in">+</button>
+    <button onclick="zoom(this, 0.8)" title="Zoom out">&minus;</button>
+    <button onclick="resetZoom(this)" title="Reset">R</button>
+  </div>
+  <div class="mermaid-viewport">
+    <pre class="mermaid">
+flowchart TD
+  subgraph CLI["CLI Process (apps/fp)"]
+    CLIW["writes.ts\ncreateIssue / updateIssue / deleteIssue"]
+    CLISYNC["syncIssues\none-shot sync"]
+  end
+
+  subgraph Desktop["Desktop App (apps/desktop)"]
+    subgraph Main["Main Process"]
+      IPC["IPC Handler\nissue-handler.ts"]
+      OPT["optimisticMutation\nseq-guarded broadcast"]
+      WATCHER["DatabasePoller\nPRAGMA data_version\n300ms poll"]
+      PUSH["enqueuePushUpdates\nbuffered push queue"]
+    end
+
+    subgraph Sync["Sync Utility Process"]
+      SLOOP["Sync Loop\n5min dormant cycle"]
+      SOPS["syncIssues\nCRDT merge"]
+    end
+
+    subgraph Renderer["Renderer Process"]
+      ZUST["Zustand Store\nissues map + details"]
+      HOOK["useIssueSync\nevent listener"]
+    end
+  end
+
+  subgraph Storage["SQLite — fp.db"]
+    YJS["yjs_updates\nbinary CRDT deltas"]
+    SNAP["yjs_snapshots\ncompacted state"]
+    IDX["issues_index\ndenormalized cache"]
+  end
+
+  SERVER["Fiberplane Server\nFpProjectSyncDO"]
+
+  CLIW -->|"saveUpdateStrict + upsertIndex"| YJS
+  CLIW -->|"best-effort"| IDX
+  CLISYNC <-->|"WebSocket handshake"| SERVER
+
+  IPC -->|"edit intent"| OPT
+  OPT -->|"ISSUES_PATCH (optimistic)"| HOOK
+  OPT -->|"persist via fp-core"| YJS
+  OPT -->|"issue IDs"| PUSH
+  PUSH -->|"PUSH_UPDATES msg"| SLOOP
+
+  SLOOP --> SOPS
+  SOPS <-->|"WebSocket sync"| SERVER
+  SOPS -->|"saveLocalUpdate"| YJS
+  SOPS -->|"SYNC_UPDATE / NEW_ISSUE"| IPC
+
+  WATCHER -->|"poll data_version"| YJS
+  WATCHER -->|"ISSUES_PATCH (cross-proc)"| HOOK
+
+  HOOK --> ZUST
+
+  classDef cli fill:#b5761422,stroke:#b57614,stroke-width:2px
+  classDef main fill:#1e3a5f22,stroke:#1e3a5f,stroke-width:2px
+  classDef sync fill:#6e3a6e22,stroke:#6e3a6e,stroke-width:2px
+  classDef renderer fill:#0e7c6b22,stroke:#0e7c6b,stroke-width:2px
+  classDef storage fill:#4a7c3f22,stroke:#4a7c3f,stroke-width:2px
+  classDef server fill:#9e3a1a22,stroke:#9e3a1a,stroke-width:2px
+
+  class CLIW,CLISYNC cli
+  class IPC,OPT,WATCHER,PUSH main
+  class SLOOP,SOPS sync
+  class ZUST,HOOK renderer
+  class YJS,SNAP,IDX storage
+  class SERVER server
+    </pre>
+  </div>
+</div>
+
+<div class="legend anim" style="--i:7">
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--gold-dim);border:1px solid var(--gold)"></div>CLI</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--navy-dim);border:1px solid var(--navy)"></div>Main Process</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--plum-dim);border:1px solid var(--plum)"></div>Sync Worker</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--teal-dim);border:1px solid var(--teal)"></div>Renderer</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--sage-dim);border:1px solid var(--sage)"></div>SQLite</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:var(--rust-dim);border:1px solid var(--rust)"></div>Server</div>
+</div>
+
+
+<!-- ============ S3: WRITE PATHS ============ -->
+<div id="s3" class="sec-head anim c-gold" style="--i:8">
+  <span class="num bg-gold c-gold">3</span> Write Paths
+</div>
+
+<div class="grid-2 anim" style="--i:9">
+  <!-- CLI Write Path -->
+  <div class="ve-card b-gold">
+    <div class="card-label c-gold"><span class="dot" style="background:var(--gold)"></span> CLI Write Path</div>
+    <ol class="step-list">
+      <li><span class="step-num c-gold">1</span>User runs <code>fp issue create</code> or <code>fp issue update</code></li>
+      <li><span class="step-num c-gold">2</span>Calls <code>createIssue()</code> / <code>updateIssue()</code> in writes.ts</li>
+      <li><span class="step-num c-gold">3</span>Load Y.Doc from SQLite, mutate in memory</li>
+      <li><span class="step-num c-gold">4</span>Compute delta: <code>Y.encodeStateAsUpdate(doc, sv)</code></li>
+      <li><span class="step-num c-gold">5</span><code>saveUpdateStrict()</code> &mdash; INSERT into <code>yjs_updates</code></li>
+      <li><span class="step-num c-gold">6</span><code>upsertIndex()</code> &mdash; UPDATE <code>issues_index</code> (best-effort)</li>
+      <li><span class="step-num c-gold">7</span>Recompute child counts if parent changed</li>
+    </ol>
+    <div class="callout" style="margin-top:12px;border-left-color:var(--gold)">
+      <strong>Cross-process effect:</strong> CLI writes increment SQLite's <code>PRAGMA data_version</code>,
+      which the desktop's DatabasePoller detects within ~350ms (300ms poll + 50ms settle).
+    </div>
+  </div>
+
+  <!-- Desktop Write Path -->
+  <div class="ve-card b-navy">
+    <div class="card-label c-navy"><span class="dot" style="background:var(--navy)"></span> Desktop Write Path</div>
+    <ol class="step-list">
+      <li><span class="step-num c-navy">1</span>Renderer sends edit intent via IPC RPC</li>
+      <li><span class="step-num c-navy">2</span>Main process handler calls <code>optimisticMutation()</code></li>
+      <li><span class="step-num c-navy">3</span>Build optimistic IssueSummary, bump <code>patchSeq</code></li>
+      <li><span class="step-num c-navy">4</span>Broadcast <code>ISSUES_PATCH</code> immediately &mdash; <span class="badge bg-teal c-teal">&lt;1ms</span></li>
+      <li><span class="step-num c-navy">5</span>Persist to SQLite in background (same writes.ts path)</li>
+      <li><span class="step-num c-navy">6</span>Call <code>skipNextUpdate(issueId)</code> on DatabasePoller</li>
+      <li><span class="step-num c-navy">7</span>Enqueue <code>PUSH_UPDATES</code> to sync worker</li>
+    </ol>
+    <div class="callout" style="margin-top:12px;border-left-color:var(--navy)">
+      <strong>Rollback guard:</strong> If persist fails and <code>patchSeq</code> hasn't advanced
+      (no concurrent edits), the optimistic patch is rolled back to cached state.
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ S4: DB WATCHING ============ -->
+<div id="s4" class="sec-head anim c-teal" style="--i:10">
+  <span class="num bg-teal c-teal">4</span> Database Watching
+</div>
+
+<h2 class="anim" style="--i:11;margin-bottom:16px">How cross-process changes reach the UI</h2>
+
+<div class="mermaid-wrap anim" style="--i:12">
+  <div class="zoom-controls">
+    <button onclick="zoom(this, 1.2)" title="Zoom in">+</button>
+    <button onclick="zoom(this, 0.8)" title="Zoom out">&minus;</button>
+    <button onclick="resetZoom(this)" title="Reset">R</button>
+  </div>
+  <div class="mermaid-viewport">
+    <pre class="mermaid">
+sequenceDiagram
+  participant CLI as CLI Process
+  participant DB as fp.db (SQLite)
+  participant POLL as DatabasePoller
+  participant MAIN as Main Process
+  participant REND as Renderer
+
+  CLI->>DB: saveUpdateStrict INSERT yjs_updates
+  Note over DB: data_version increments
+
+  loop Every 300ms
+    POLL->>DB: PRAGMA data_version
+    POLL->>POLL: Compare with last known version
+  end
+
+  POLL->>DB: Detected change! Wait 50ms settle
+  POLL->>DB: SELECT id, issue_id FROM yjs_updates WHERE id > lastSeenId
+  POLL->>POLL: Filter out own-process writes via recentOwnWrites map
+
+  POLL->>MAIN: Emit issues-patched event with changedIds
+  MAIN->>MAIN: Read full issues from SQLite
+  MAIN->>MAIN: Build IssueSummary array, bump patchSeq
+  MAIN->>REND: Broadcast ISSUES_PATCH with seq + updates
+  REND->>REND: useIssueSync merges into Zustand store
+  REND->>REND: React re-renders with new data
+    </pre>
+  </div>
+</div>
+
+<div class="ve-card ve-card--recessed anim b-teal" style="--i:13">
+  <div class="card-label c-teal"><span class="dot" style="background:var(--teal)"></span> DatabasePoller Details</div>
+  <div class="grid-2">
+    <div>
+      <table class="arch-table">
+        <tr><th>Parameter</th><th>Value</th></tr>
+        <tr><td>Poll interval</td><td><span class="badge bg-teal c-teal">300ms</span></td></tr>
+        <tr><td>Settle delay</td><td><span class="badge bg-teal c-teal">50ms</span></td></tr>
+        <tr><td>Own-write suppress window</td><td><span class="badge bg-gold c-gold">750ms</span></td></tr>
+        <tr><td>Max consecutive errors</td><td>10 (then stops)</td></tr>
+        <tr><td>Ref counting</td><td>Multiple windows can watch same DB</td></tr>
+      </table>
+    </div>
+    <div>
+      <div style="font-size:13px;margin-bottom:8px;font-weight:600">Own-write suppression</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.6">
+        When the main process writes to SQLite (via optimisticMutation), it calls
+        <code>skipNextUpdate(issueId)</code> which adds the issue ID to a
+        <code>recentOwnWrites</code> map with a 750ms TTL. The poller filters these
+        out during <code>processChanges()</code> to prevent re-broadcasting changes
+        the main process already broadcast optimistically.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="callout anim" style="--i:14;border-left-color:var(--teal)">
+  <strong>Why PRAGMA data_version?</strong> &mdash; SQLite's <code>sqlite3_update_hook</code> only fires
+  for same-connection writes. Since the CLI runs in a separate process with its own connection,
+  <code>PRAGMA data_version</code> (which changes whenever <em>any</em> connection modifies the database)
+  is the only reliable cross-process change detector. It's extremely cheap &mdash; no table scan, just
+  reading a counter from the database header.
+</div>
+
+
+<!-- ============ S5: SYNC FLOW ============ -->
+<div id="s5" class="sec-head anim c-plum" style="--i:15">
+  <span class="num bg-gold c-gold">5</span> Remote Sync Flow
+</div>
+
+<div class="mermaid-wrap anim" style="--i:16">
+  <div class="zoom-controls">
+    <button onclick="zoom(this, 1.2)" title="Zoom in">+</button>
+    <button onclick="zoom(this, 0.8)" title="Zoom out">&minus;</button>
+    <button onclick="resetZoom(this)" title="Reset">R</button>
+  </div>
+  <div class="mermaid-viewport">
+    <pre class="mermaid">
+flowchart TD
+  subgraph Push["Push: Local to Server"]
+    A1["Local write completes"] --> A2["enqueuePushUpdates\nbuffer issue IDs"]
+    A2 --> A3["PUSH_UPDATES message\nto sync worker"]
+    A3 --> A4["syncIssues one-shot\nWebSocket handshake"]
+    A4 --> A5["Server merges CRDT"]
+  end
+
+  subgraph Pull["Pull: Server to Local"]
+    B1["Sync loop triggers\n5min dormant cycle"] --> B2["syncIssues one-shot\nload local SVs"]
+    B2 --> B3["Server sends new updates"]
+    B3 --> B4["saveLocalUpdate\nINSERT yjs_updates + reindex"]
+    B4 --> B5["SYNC_UPDATE message\nto main process"]
+    B5 --> B6["handleSyncIssueUpdate\nskipNextUpdate + broadcast"]
+    B6 --> B7["ISSUES_PATCH\nto all renderers"]
+  end
+
+  classDef push fill:#4a7c3f22,stroke:#4a7c3f,stroke-width:2px
+  classDef pull fill:#6e3a6e22,stroke:#6e3a6e,stroke-width:2px
+
+  class A1,A2,A3,A4,A5 push
+  class B1,B2,B3,B4,B5,B6,B7 pull
+    </pre>
+  </div>
+</div>
+
+<div class="grid-2 anim" style="--i:17">
+  <div class="inner-card">
+    <div class="title">Sync Callbacks (fp-core)</div>
+    <div class="desc">
+      The sync worker provides 4 callbacks to <code>syncIssues()</code>:
+      <code>loadLocalDoc</code> loads Y.Doc from SQLite,
+      <code>saveLocalUpdate</code> saves delta + reindexes,
+      <code>createLocalDoc</code> creates new Y.Doc,
+      <code>persistSyncHash</code> stores state vector hash for next handshake.
+    </div>
+  </div>
+  <div class="inner-card">
+    <div class="title">Avoiding Double Processing</div>
+    <div class="desc">
+      When sync saves remote updates to SQLite, it sends <code>SYNC_UPDATE</code> to main.
+      Main calls <code>skipNextUpdate()</code> before broadcasting, so the DatabasePoller
+      won't re-process those same rows. Without this, every synced change would be broadcast twice.
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ S6: COMPACTION ============ -->
+<div id="s6" class="sec-head anim c-sage" style="--i:18">
+  <span class="num bg-sage c-sage">6</span> Y.Doc Compaction
+</div>
+
+<div class="ve-card ve-card--hero anim b-sage" style="--i:19">
+  <div class="card-label c-sage"><span class="dot" style="background:var(--sage)"></span> Compaction Pipeline</div>
+
+  <div class="pipeline" style="margin-bottom:16px">
+    <div class="pipeline-step" style="border-color:var(--sage-dim)">
+      <div class="step-name" style="color:var(--sage)">Capture max ID</div>
+      <div class="step-detail">MAX(id) from<br>yjs_updates</div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step" style="border-color:var(--sage-dim)">
+      <div class="step-name" style="color:var(--sage)">Count updates</div>
+      <div class="step-detail">Skip if fewer<br>than threshold</div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step" style="border-color:var(--sage-dim)">
+      <div class="step-name" style="color:var(--sage)">Load full Y.Doc</div>
+      <div class="step-detail">Apply snapshot<br>+ all updates</div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step" style="border-color:var(--sage-dim)">
+      <div class="step-name" style="color:var(--sage)">Encode snapshot</div>
+      <div class="step-detail">Y.encodeStateAsUpdate<br>single blob</div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step" style="border-color:var(--gold-dim)">
+      <div class="step-name" style="color:var(--gold)">Transaction</div>
+      <div class="step-detail">UPSERT snapshot<br>DELETE old updates</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px">When does it trigger?</div>
+      <table class="arch-table">
+        <tr><th>Trigger</th><th>Details</th></tr>
+        <tr>
+          <td><strong>Desktop boot</strong></td>
+          <td><code>getNodeDbLayer()</code> launches <code>compactAllSnapshots({ threshold: 50 })</code> as a fire-and-forget daemon</td>
+        </tr>
+        <tr>
+          <td><strong>Auto-rerun</strong></td>
+          <td>Per-storageDir cooldown: <span class="badge bg-sage c-sage">10 min</span> after success, <span class="badge bg-rust c-rust">2 min</span> after failure</td>
+        </tr>
+        <tr>
+          <td><strong>CLI manual</strong></td>
+          <td><code>fp project db compact</code> command triggers on demand</td>
+        </tr>
+        <tr>
+          <td><strong>Max retries</strong></td>
+          <td>2 retries with exponential backoff per storageDir</td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px">Concurrency safety</div>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.6;margin-bottom:10px">
+        Compaction captures <code>MAX(id)</code> before reading, so concurrent writes that arrive
+        during compaction are preserved. The final DELETE only removes updates
+        <code>WHERE id &lt;= maxUpdateId</code>.
+      </p>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.6;margin-bottom:10px">
+        The snapshot stores <code>last_update_id</code> as a foreign key.
+        <code>loadIssue()</code> reads the snapshot and then applies only updates
+        <code>WHERE id &gt; last_update_id</code>, so it always sees a consistent state.
+      </p>
+      <p style="font-size:12px;color:var(--text-dim);line-height:1.6">
+        An idempotency guard skips if another process already compacted past this point.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ S7: IPC EVENTS ============ -->
+<div id="s7" class="sec-head anim c-navy" style="--i:20">
+  <span class="num bg-navy c-navy">7</span> IPC Event Architecture
+</div>
+
+<div class="ve-card anim b-navy" style="--i:21">
+  <div class="card-label c-navy"><span class="dot" style="background:var(--navy)"></span> Event Flow</div>
+  <table class="arch-table">
+    <tr>
+      <th>Event</th>
+      <th>Source</th>
+      <th>Payload</th>
+      <th>Renderer Action</th>
+    </tr>
+    <tr>
+      <td><code>ISSUES_PATCH</code></td>
+      <td>optimisticMutation, DatabasePoller, sync handler</td>
+      <td><code>{ seq, updates: IssueSummary[], deleted: string[] }</code></td>
+      <td>Merge into Zustand <code>issues</code> map, check seq for gaps</td>
+    </tr>
+    <tr>
+      <td><code>ISSUES_CHANGED</code></td>
+      <td>Bulk fallback (sync complete with newForClient &gt; 0)</td>
+      <td><code>undefined</code></td>
+      <td>Full refetch of all issues</td>
+    </tr>
+    <tr>
+      <td><code>COMMENTS_UPDATED</code></td>
+      <td>Comment create/delete handlers</td>
+      <td><code>{ issueId }</code></td>
+      <td>Invalidate detail cache, refetch comments</td>
+    </tr>
+    <tr>
+      <td><code>ISSUE_DETAIL_UPDATED</code></td>
+      <td>Story mutations, detail changes</td>
+      <td><code>{ issueId }</code></td>
+      <td>Refetch issue detail</td>
+    </tr>
+    <tr>
+      <td><code>SYNC_STATUS_CHANGED</code></td>
+      <td>Sync status store</td>
+      <td><code>{ projectStatus }</code></td>
+      <td>Update SyncStatusIndicator UI</td>
+    </tr>
+  </table>
+</div>
+
+<div class="ve-card ve-card--recessed anim" style="--i:22">
+  <div class="card-label c-teal"><span class="dot" style="background:var(--teal)"></span> Sequence Gap Detection</div>
+  <div class="grid-2">
+    <div>
+      <p style="font-size:13px;line-height:1.6">
+        The main process maintains a monotonically increasing <code>patchSeq</code> counter
+        in AppState. Every <code>ISSUES_PATCH</code> event carries the current seq.
+      </p>
+      <p style="font-size:13px;line-height:1.6;margin-top:8px">
+        The renderer's <code>useIssueSync</code> hook compares each incoming seq against
+        its last known value. If it detects a gap (missed patches), it schedules a
+        <strong>full sync on next window focus</strong> to recover.
+      </p>
+    </div>
+    <div class="code-block"><span class="cm">// useIssueSync.ts — gap detection</span>
+<span class="kw">const</span> onSeqUpdate = (seq: number) => {
+  <span class="kw">const</span> expected = lastSeq + 1;
+  <span class="kw">if</span> (seq > expected) {
+    <span class="cm">// Missed patches — schedule full sync</span>
+    <span class="fn">scheduleFullSync</span>();
+  }
+  setLastSeq(seq);
+};</div>
+  </div>
+</div>
+
+
+<!-- ============ S8: KEY FILES ============ -->
+<div id="s8" class="sec-head anim c-gold" style="--i:23">
+  <span class="num bg-gold c-gold">8</span> Key Files
+</div>
+
+<div class="ve-card anim" style="--i:24">
+  <table class="arch-table">
+    <tr>
+      <th>Component</th>
+      <th>File</th>
+      <th>Key exports</th>
+    </tr>
+    <tr>
+      <td style="font-weight:600">Core write logic</td>
+      <td><code>packages/fp-core/src/storage/writes.ts</code></td>
+      <td>createIssue, updateIssue, deleteIssue, createComment</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">Y.Doc storage</td>
+      <td><code>packages/fp-core/src/storage/database/yjs-docs.ts</code></td>
+      <td>saveUpdateStrict, loadIssue, compactIssueSnapshot, compactAllSnapshots</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">Issues index</td>
+      <td><code>packages/fp-core/src/storage/database/issues-index.ts</code></td>
+      <td>upsertIndex, listFromIndex, reindexAll, detectStaleIndex</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">DatabasePoller</td>
+      <td><code>apps/desktop/src/main/watcher.ts</code></td>
+      <td>DatabasePoller, watch, poll, processChanges, skipNextUpdate</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">IPC handlers</td>
+      <td><code>apps/desktop/src/main/rpc/issue-handler.ts</code></td>
+      <td>handleIssueCreate, handleIssueUpdate, handleCommentAdd</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">Optimistic helper</td>
+      <td><code>apps/desktop/src/main/rpc/optimistic-mutation.ts</code></td>
+      <td>optimisticMutation</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">Push queue</td>
+      <td><code>apps/desktop/src/main/push-updates.ts</code></td>
+      <td>enqueuePushUpdates, flushPendingPushUpdates</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">Sync operation</td>
+      <td><code>apps/desktop/src/main/sync/sync-operation.ts</code></td>
+      <td>ProjectSyncOperationLive</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">IPC event types</td>
+      <td><code>apps/desktop/src/shared/ipc.ts</code></td>
+      <td>IPC_EVENTS, IpcEventPayloadMap, IpcHandlerMap</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">Renderer sync hook</td>
+      <td><code>apps/desktop/src/renderer/hooks/useIssueSync.ts</code></td>
+      <td>useIssueSync</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">Zustand issue store</td>
+      <td><code>apps/desktop/src/renderer/store/issues.ts</code></td>
+      <td>setIssues, mergeIssues, updateDetail</td>
+    </tr>
+    <tr>
+      <td style="font-weight:600">Desktop DB init</td>
+      <td><code>apps/desktop/src/main/database.ts</code></td>
+      <td>getNodeDbLayer (launches compaction daemon)</td>
+    </tr>
+  </table>
+</div>
+
+</div><!-- /main -->
+</div><!-- /wrap -->
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    look: 'classic',
+    themeVariables: {
+      primaryColor: isDark ? '#2a2722' : '#fffdf9',
+      primaryBorderColor: isDark ? '#d4a73a' : '#b5761a',
+      primaryTextColor: isDark ? '#e8e2d9' : '#1e1b16',
+      secondaryColor: isDark ? '#1c1a17' : '#f6f4f1',
+      secondaryBorderColor: isDark ? '#7aafdb' : '#1e3a5f',
+      secondaryTextColor: isDark ? '#e8e2d9' : '#1e1b16',
+      tertiaryColor: isDark ? '#252320' : '#efecea',
+      tertiaryBorderColor: isDark ? '#9e9588' : '#807668',
+      tertiaryTextColor: isDark ? '#e8e2d9' : '#1e1b16',
+      lineColor: isDark ? '#9e9588' : '#807668',
+      fontSize: '15px',
+      fontFamily: "'DM Sans', system-ui, sans-serif",
+      noteBkgColor: isDark ? '#252320' : '#fffdf9',
+      noteTextColor: isDark ? '#e8e2d9' : '#1e1b16',
+      noteBorderColor: isDark ? '#d4a73a' : '#b5761a',
+    }
+  });
+</script>
+
+<script>
+// Zoom controls
+const zoomState = new WeakMap();
+
+function getState(btn) {
+  const wrap = btn.closest('.mermaid-wrap');
+  const vp = wrap.querySelector('.mermaid-viewport');
+  const m = vp.querySelector('.mermaid');
+  if (!zoomState.has(wrap)) {
+    zoomState.set(wrap, { scale: 1, x: 0, y: 0 });
+  }
+  return { wrap, vp, m, state: zoomState.get(wrap) };
+}
+
+function applyTransform(m, state) {
+  m.style.transform = `scale(${state.scale}) translate(${state.x}px, ${state.y}px)`;
+}
+
+function zoom(btn, factor) {
+  const { m, state } = getState(btn);
+  state.scale = Math.max(0.3, Math.min(4, state.scale * factor));
+  applyTransform(m, state);
+}
+
+function resetZoom(btn) {
+  const { m, state } = getState(btn);
+  state.scale = 1; state.x = 0; state.y = 0;
+  applyTransform(m, state);
+}
+
+// Ctrl/Cmd + scroll zoom on mermaid wraps
+document.querySelectorAll('.mermaid-wrap').forEach(wrap => {
+  const vp = wrap.querySelector('.mermaid-viewport');
+  const m = vp.querySelector('.mermaid');
+
+  if (!zoomState.has(wrap)) {
+    zoomState.set(wrap, { scale: 1, x: 0, y: 0 });
+  }
+
+  wrap.addEventListener('wheel', e => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const state = zoomState.get(wrap);
+      const factor = e.deltaY < 0 ? 1.1 : 0.9;
+      state.scale = Math.max(0.3, Math.min(4, state.scale * factor));
+      applyTransform(m, state);
+    }
+  }, { passive: false });
+
+  // Drag to pan when zoomed
+  let dragging = false, startX, startY;
+  vp.addEventListener('mousedown', e => {
+    const state = zoomState.get(wrap);
+    if (state.scale > 1) {
+      dragging = true;
+      startX = e.clientX - state.x;
+      startY = e.clientY - state.y;
+      vp.style.cursor = 'grabbing';
+    }
+  });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const state = zoomState.get(wrap);
+    state.x = e.clientX - startX;
+    state.y = e.clientY - startY;
+    applyTransform(m, state);
+  });
+  document.addEventListener('mouseup', () => {
+    if (dragging) {
+      dragging = false;
+      vp.style.cursor = zoomState.get(wrap).scale > 1 ? 'grab' : '';
+    }
+  });
+});
+
+// Scroll spy for TOC
+(function() {
+  const toc = document.getElementById('toc');
+  const links = toc.querySelectorAll('a');
+  const sections = [];
+
+  links.forEach(link => {
+    const id = link.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) sections.push({ id, el, link });
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const match = sections.find(s => s.el === entry.target);
+        if (match) {
+          match.link.classList.add('active');
+          if (window.innerWidth <= 1000) {
+            match.link.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
+        }
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px' });
+
+  sections.forEach(s => observer.observe(s.el));
+
+  links.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', '#' + id);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
