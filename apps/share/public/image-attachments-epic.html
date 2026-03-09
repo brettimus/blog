@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Attachments Epic — NOXR-fiaxqahj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── Theme ─── */
+:root {
+  --font-body: 'Sora', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+
+  --bg: #0b0e17;
+  --bg-alt: #0f1320;
+  --surface: #141926;
+  --surface-elevated: #1a2030;
+  --surface-glass: rgba(20, 25, 38, 0.7);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-bright: rgba(255, 255, 255, 0.12);
+  --text: #e4e8f0;
+  --text-dim: #7a8399;
+  --text-muted: #4a5568;
+
+  /* Phase palette */
+  --phase1: #22d3ee;
+  --phase1-dim: rgba(34, 211, 238, 0.12);
+  --phase1-glow: rgba(34, 211, 238, 0.25);
+  --phase2: #34d399;
+  --phase2-dim: rgba(52, 211, 153, 0.12);
+  --phase2-glow: rgba(52, 211, 153, 0.25);
+  --phase3: #fbbf24;
+  --phase3-dim: rgba(251, 191, 36, 0.10);
+  --phase3-glow: rgba(251, 191, 36, 0.25);
+  --phase4: #a78bfa;
+  --phase4-dim: rgba(167, 139, 250, 0.12);
+  --phase4-glow: rgba(167, 139, 250, 0.25);
+
+  --checkpoint: #f472b6;
+  --checkpoint-dim: rgba(244, 114, 182, 0.12);
+  --high: #f87171;
+  --medium: #fbbf24;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+  line-height: 1.6;
+}
+
+/* ─── Background atmosphere ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 15% 10%, var(--phase1-dim) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 30%, var(--phase3-dim) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 80%, var(--phase4-dim) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Dot grid */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+.page { position: relative; z-index: 1; }
+
+/* ─── Container ─── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── Hero ─── */
+.hero {
+  padding: 80px 0 60px;
+  text-align: center;
+  position: relative;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+}
+
+.epic-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--phase1);
+  background: var(--phase1-dim);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  border-radius: 20px;
+  padding: 6px 16px;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.epic-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--phase1);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hero h1 {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--text) 0%, var(--phase1) 50%, var(--phase2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 16px;
+  color: var(--text-dim);
+  max-width: 700px;
+  margin: 0 auto 32px;
+  line-height: 1.7;
+}
+
+/* ─── Stats row ─── */
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--font-mono);
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+}
+
+/* ─── Goals ─── */
+.goals-section {
+  padding: 48px 0;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-label::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--text-dim);
+}
+
+.goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.goal-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.2s ease;
+}
+
+.goal-card:hover {
+  border-color: var(--border-bright);
+  transform: translateY(-2px);
+}
+
+.goal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
+.goal-card:nth-child(1)::before { background: var(--phase1); }
+.goal-card:nth-child(2)::before { background: var(--phase2); }
+.goal-card:nth-child(3)::before { background: var(--phase3); }
+.goal-card:nth-child(4)::before { background: var(--phase4); }
+
+.goal-card .goal-icon {
+  font-size: 24px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.goal-card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.goal-card p {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ─── Architecture ─── */
+.arch-section {
+  padding: 48px 0;
+}
+
+.arch-diagram {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.arch-diagram::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 40%, var(--phase1-dim) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, var(--phase3-dim) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.arch-layers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.arch-layer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.arch-layer-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  min-width: 20px;
+  text-align: center;
+}
+
+.arch-node {
+  background: var(--bg-alt);
+  border: 1px solid var(--border-bright);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  text-align: center;
+  min-width: 120px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.arch-node:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.arch-node--cyan { border-color: rgba(34, 211, 238, 0.3); color: var(--phase1); }
+.arch-node--green { border-color: rgba(52, 211, 153, 0.3); color: var(--phase2); }
+.arch-node--amber { border-color: rgba(251, 191, 36, 0.3); color: var(--phase3); }
+.arch-node--purple { border-color: rgba(167, 139, 250, 0.3); color: var(--phase4); }
+
+.arch-connector {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0;
+}
+
+.arch-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-family: var(--font-mono);
+}
+
+.arch-arrow svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--text-muted);
+  fill: none;
+  stroke-width: 1.5;
+}
+
+/* ─── Phase Timeline ─── */
+.timeline-section {
+  padding: 48px 0 24px;
+}
+
+.phase-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.phase-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.phase-pill:hover { transform: scale(1.05); }
+
+.phase-pill--1 { background: var(--phase1-dim); border-color: rgba(34,211,238,0.3); color: var(--phase1); }
+.phase-pill--2 { background: var(--phase2-dim); border-color: rgba(52,211,153,0.3); color: var(--phase2); }
+.phase-pill--3 { background: var(--phase3-dim); border-color: rgba(251,191,36,0.3); color: var(--phase3); }
+.phase-pill--4 { background: var(--phase4-dim); border-color: rgba(167,139,250,0.3); color: var(--phase4); }
+
+.phase-arrow {
+  color: var(--text-muted);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.checkpoint-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 24px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px dashed rgba(244, 114, 182, 0.4);
+  background: var(--checkpoint-dim);
+  color: var(--checkpoint);
+  white-space: nowrap;
+}
+
+/* ─── Phase Cards ─── */
+.phases-grid {
+  display: grid;
+  gap: 32px;
+}
+
+.phase-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+.phase-card:nth-child(1) { animation-delay: 0.1s; }
+.phase-card:nth-child(2) { animation-delay: 0.2s; }
+.phase-card:nth-child(3) { animation-delay: 0.3s; }
+.phase-card:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.phase-card:hover {
+  border-color: var(--border-bright);
+}
+
+.phase-header {
+  padding: 24px 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.phase-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.phase-card--1 .phase-header::before { background: linear-gradient(135deg, var(--phase1-dim) 0%, transparent 60%); }
+.phase-card--2 .phase-header::before { background: linear-gradient(135deg, var(--phase2-dim) 0%, transparent 60%); }
+.phase-card--3 .phase-header::before { background: linear-gradient(135deg, var(--phase3-dim) 0%, transparent 60%); }
+.phase-card--4 .phase-header::before { background: linear-gradient(135deg, var(--phase4-dim) 0%, transparent 60%); }
+
+.phase-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 800;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.phase-card--1 .phase-number { background: var(--phase1-dim); color: var(--phase1); border: 1px solid rgba(34,211,238,0.25); }
+.phase-card--2 .phase-number { background: var(--phase2-dim); color: var(--phase2); border: 1px solid rgba(52,211,153,0.25); }
+.phase-card--3 .phase-number { background: var(--phase3-dim); color: var(--phase3); border: 1px solid rgba(251,191,36,0.25); }
+.phase-card--4 .phase-number { background: var(--phase4-dim); color: var(--phase4); border: 1px solid rgba(167,139,250,0.25); }
+
+.phase-info {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.phase-info h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.phase-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.phase-id {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.priority-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.priority-badge--high { background: rgba(248, 113, 113, 0.15); color: var(--high); }
+.priority-badge--medium { background: rgba(251, 191, 36, 0.15); color: var(--medium); }
+
+.status-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.06);
+  color: var(--text-dim);
+}
+
+.phase-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ─── Subtask list ─── */
+.subtask-list {
+  padding: 0 28px 24px;
+}
+
+.subtask {
+  display: grid;
+  grid-template-columns: 6px 1fr auto;
+  gap: 12px;
+  align-items: start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease;
+}
+
+.subtask:last-child {
+  border-bottom: none;
+}
+
+.subtask-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.phase-card--1 .subtask-indicator { background: var(--phase1); }
+.phase-card--2 .subtask-indicator { background: var(--phase2); }
+.phase-card--3 .subtask-indicator { background: var(--phase3); }
+.phase-card--4 .subtask-indicator { background: var(--phase4); }
+
+.subtask-content {
+  min-width: 0;
+}
+
+.subtask-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.subtask-id {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-right: 6px;
+}
+
+.subtask-details {
+  list-style: none;
+  padding: 0;
+  margin-top: 8px;
+}
+
+.subtask-details li {
+  font-size: 12px;
+  color: var(--text-dim);
+  padding: 2px 0 2px 14px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.subtask-details li::before {
+  content: '\203A';
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.subtask-badges {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* ─── Checkpoint cards ─── */
+.subtask--checkpoint {
+  background: var(--checkpoint-dim);
+  border-radius: 10px;
+  border: 1px dashed rgba(244, 114, 182, 0.3) !important;
+  padding: 14px 16px !important;
+  margin: 8px 0;
+  border-bottom: 1px dashed rgba(244, 114, 182, 0.3) !important;
+}
+
+.subtask--checkpoint .subtask-indicator {
+  background: var(--checkpoint) !important;
+  width: 8px;
+  height: 8px;
+  box-shadow: 0 0 8px var(--checkpoint);
+}
+
+.subtask--checkpoint .subtask-title {
+  color: var(--checkpoint);
+}
+
+.checkpoint-icon {
+  display: inline-block;
+  margin-right: 4px;
+}
+
+/* ─── Connector between phases ─── */
+.phase-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  position: relative;
+}
+
+.phase-connector::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--border-bright), var(--text-muted), var(--border-bright));
+}
+
+.connector-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  background: var(--bg);
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Architecture Decisions ─── */
+.decisions-section {
+  padding: 48px 0;
+}
+
+.decisions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+.decision-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  transition: border-color 0.3s ease;
+}
+
+.decision-card:hover {
+  border-color: var(--border-bright);
+}
+
+.decision-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  background: var(--phase1-dim);
+}
+
+.decision-card:nth-child(2) .decision-icon { background: var(--phase2-dim); }
+.decision-card:nth-child(3) .decision-icon { background: var(--phase3-dim); }
+.decision-card:nth-child(4) .decision-icon { background: var(--phase1-dim); }
+.decision-card:nth-child(5) .decision-icon { background: var(--phase4-dim); }
+.decision-card:nth-child(6) .decision-icon { background: var(--phase2-dim); }
+
+.decision-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.decision-text h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.decision-text p {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.decision-text code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: rgba(255,255,255,0.06);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--phase1);
+}
+
+/* ─── Mermaid ─── */
+.mermaid-section {
+  padding: 48px 0;
+}
+
+.mermaid-wrap {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 24px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.mermaid-wrap::-webkit-scrollbar { width: 6px; height: 6px; }
+.mermaid-wrap::-webkit-scrollbar-track { background: transparent; }
+.mermaid-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.mermaid-wrap .mermaid { zoom: 1.3; }
+
+.zoom-controls {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 2px;
+  z-index: 10;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.zoom-controls button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.zoom-controls button:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+.mermaid .nodeLabel { color: var(--text) !important; }
+.mermaid .edgeLabel { color: var(--text-dim) !important; background-color: var(--bg) !important; }
+.mermaid .edgeLabel rect { fill: var(--bg) !important; }
+.mermaid .edge-pattern-solid { stroke-width: 1.5px; }
+.mermaid .nodeLabel { font-family: var(--font-body) !important; font-size: 14px !important; }
+.mermaid .edgeLabel { font-family: var(--font-mono) !important; font-size: 12px !important; }
+
+/* ─── Footer ─── */
+.footer {
+  padding: 48px 0 32px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  margin-top: 32px;
+}
+
+.footer p {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .hero { padding: 48px 0 40px; }
+  .hero h1 { font-size: 24px; }
+  .stats-row { gap: 20px; }
+  .phase-header { flex-direction: column; gap: 12px; }
+  .subtask { grid-template-columns: 6px 1fr; }
+  .subtask-badges { grid-column: 2; }
+  .decisions-grid { grid-template-columns: 1fr; }
+  .phase-flow { gap: 6px; }
+  .arch-layer { flex-direction: column; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phase-card { opacity: 1; transform: none; animation: none; }
+  .epic-badge .dot { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ─── Hero ─── -->
+  <div class="hero">
+    <div class="container">
+      <div class="epic-badge"><span class="dot"></span> NOXR-fiaxqahj</div>
+      <h1>Image Attachments for Issues &amp; Comments</h1>
+      <p class="hero-subtitle">
+        End-to-end attachment support across CLI, desktop, and sync &mdash;
+        local-first asset storage with content-addressed naming, logical URI references in markdown,
+        and out-of-band binary sync for linked projects.
+      </p>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-value">4</div>
+          <div class="stat-label">Phases</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">14</div>
+          <div class="stat-label">Subtasks</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">3</div>
+          <div class="stat-label">Checkpoints</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">0%</div>
+          <div class="stat-label">Complete</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Goals ─── -->
+  <section class="goals-section">
+    <div class="container">
+      <div class="section-label">Epic Goals</div>
+      <div class="goals-grid">
+        <div class="goal-card">
+          <span class="goal-icon">&#128247;</span>
+          <h3>Attach &amp; Render Screenshots</h3>
+          <p>Insert and display image attachments inside issue descriptions and comments from both CLI and desktop.</p>
+        </div>
+        <div class="goal-card">
+          <span class="goal-icon">&#128190;</span>
+          <h3>Local-First Storage</h3>
+          <p>Assets stored on the local filesystem by default under <code>.fp/assets/</code> with content-addressed SHA-256 naming.</p>
+        </div>
+        <div class="goal-card">
+          <span class="goal-icon">&#128259;</span>
+          <h3>Out-of-Band Sync</h3>
+          <p>Sync binary assets to remote object storage independently of Yjs issue sync frames &mdash; no binary blobs in WebSocket protocol.</p>
+        </div>
+        <div class="goal-card">
+          <span class="goal-icon">&#128196;</span>
+          <h3>Markdown Source of Truth</h3>
+          <p>Use <code>fp-asset://&lt;id&gt;</code> logical URIs in markdown. Shared resolver renders consistently across all surfaces.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Architecture Decisions ─── -->
+  <section class="decisions-section">
+    <div class="container">
+      <div class="section-label">Key Architecture Decisions</div>
+      <div class="decisions-grid">
+        <div class="decision-card">
+          <div class="decision-icon">&#128451;</div>
+          <div class="decision-text">
+            <h4>Content-Addressed Storage</h4>
+            <p>Binary files stored under <code>.fp/assets/</code> with SHA-256 hash filenames and MIME/size metadata in SQLite.</p>
+          </div>
+        </div>
+        <div class="decision-card">
+          <div class="decision-icon">&#128279;</div>
+          <div class="decision-text">
+            <h4>Logical URI Scheme</h4>
+            <p><code>fp-asset://&lt;asset-id&gt;</code> replaces raw <code>file://</code> URLs in markdown for portable, resolver-agnostic references.</p>
+          </div>
+        </div>
+        <div class="decision-card">
+          <div class="decision-icon">&#128200;</div>
+          <div class="decision-text">
+            <h4>Derived Asset Indexes</h4>
+            <p>Local and remote tables track which issues/comments reference which assets &mdash; driven from Y.Doc state, not command handlers.</p>
+          </div>
+        </div>
+        <div class="decision-card">
+          <div class="decision-icon">&#128274;</div>
+          <div class="decision-text">
+            <h4>Authenticated Asset API</h4>
+            <p>Project-scoped upload/download via Worker routes backed by R2 object storage. Separate from WebSocket Yjs protocol.</p>
+          </div>
+        </div>
+        <div class="decision-card">
+          <div class="decision-icon">&#128260;</div>
+          <div class="decision-text">
+            <h4>Sidecar Reconciliation</h4>
+            <p>Asset reconcile pass runs after issue sync converges. Upload/download queue handles races and retries independently.</p>
+          </div>
+        </div>
+        <div class="decision-card">
+          <div class="decision-icon">&#127912;</div>
+          <div class="decision-text">
+            <h4>Shared Markdown Resolver</h4>
+            <p>One resolver pipeline for <code>fp-asset://</code> refs across desktop, fp-ui review, and console &mdash; no per-surface forks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Architecture Diagram ─── -->
+  <section class="arch-section">
+    <div class="container">
+      <div class="section-label">System Architecture</div>
+      <div class="mermaid-wrap">
+        <div class="zoom-controls">
+          <button onclick="zoomDiagram(this, 1.2)" title="Zoom in">+</button>
+          <button onclick="zoomDiagram(this, 0.8)" title="Zoom out">&minus;</button>
+          <button onclick="resetZoom(this)" title="Reset zoom">&#8634;</button>
+        </div>
+        <pre class="mermaid">
+graph TD
+    subgraph LOCAL["Local Storage"]
+        ASSETS[".fp/assets/\nContent-Addressed Files"]
+        SQLITE["SQLite\nMetadata + Ref Indexes"]
+    end
+
+    subgraph MARKDOWN["Markdown Layer"]
+        URI["fp-asset:// URIs\nin Issue/Comment Markdown"]
+    end
+
+    subgraph RESOLVER["Shared Resolver"]
+        PIPE["Attachment-Aware\nMarkdown Pipeline"]
+    end
+
+    subgraph SURFACES["Rendering Surfaces"]
+        CLI["CLI"]
+        DESKTOP["Desktop"]
+        CONSOLE["Console Web"]
+    end
+
+    subgraph SYNC["Asset Sync Layer"]
+        QUEUE["Reconcile Queue"]
+        API["Worker Asset API\nAuthenticated Routes"]
+        R2["R2 Object Storage"]
+    end
+
+    ASSETS --> URI
+    SQLITE --> URI
+    URI --> PIPE
+    PIPE --> CLI
+    PIPE --> DESKTOP
+    PIPE --> CONSOLE
+    ASSETS -.->|upload| QUEUE
+    QUEUE -->|HTTP| API
+    API --> R2
+    R2 -->|download| QUEUE
+    QUEUE -.->|hydrate| ASSETS
+
+    classDef localStyle fill:#22d3ee11,stroke:#22d3ee44,stroke-width:2px
+    classDef mdStyle fill:#34d39911,stroke:#34d39944,stroke-width:2px
+    classDef resolverStyle fill:#fbbf2411,stroke:#fbbf2444,stroke-width:2px
+    classDef surfaceStyle fill:#a78bfa11,stroke:#a78bfa44,stroke-width:2px
+    classDef syncStyle fill:#f4728011,stroke:#f4728044,stroke-width:2px
+
+    class ASSETS,SQLITE localStyle
+    class URI mdStyle
+    class PIPE resolverStyle
+    class CLI,DESKTOP,CONSOLE surfaceStyle
+    class QUEUE,API,R2 syncStyle
+        </pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Phase Timeline ─── -->
+  <section class="timeline-section">
+    <div class="container">
+      <div class="section-label">Implementation Flow</div>
+      <div class="phase-flow">
+        <div class="phase-pill phase-pill--1">Phase 1 &middot; Foundations</div>
+        <span class="phase-arrow">&rarr;</span>
+        <div class="phase-pill phase-pill--2">Phase 2 &middot; Local Workflows</div>
+        <span class="phase-arrow">&rarr;</span>
+        <div class="checkpoint-pill">&#9873; Local Checkpoint</div>
+        <span class="phase-arrow">&rarr;</span>
+        <div class="phase-pill phase-pill--3">Phase 3 &middot; Asset Sync</div>
+        <span class="phase-arrow">&rarr;</span>
+        <div class="checkpoint-pill">&#9873; Sync Checkpoint</div>
+        <span class="phase-arrow">&rarr;</span>
+        <div class="phase-pill phase-pill--4">Phase 4 &middot; Hardening</div>
+        <span class="phase-arrow">&rarr;</span>
+        <div class="checkpoint-pill">&#9873; Final Regression</div>
+      </div>
+
+      <div class="phases-grid">
+
+        <!-- ═══ PHASE 1 ═══ -->
+        <div class="phase-card phase-card--1">
+          <div class="phase-header">
+            <div class="phase-number">1</div>
+            <div class="phase-info">
+              <div class="phase-meta">
+                <span class="phase-id">NOXR-utgfvrkk</span>
+                <span class="priority-badge priority-badge--high">High</span>
+                <span class="status-badge">Todo</span>
+              </div>
+              <h2>Attachment Foundations &amp; Shared Primitives</h2>
+              <p class="phase-desc">Lock down asset identity, local storage layout, and logical markdown URI rules. Build shared rendering and derived-data machinery once.</p>
+            </div>
+          </div>
+          <div class="subtask-list">
+
+            <div class="subtask">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="subtask-id">NOXR-qccjjwzw</span> Define asset model, filesystem layout &amp; URI format</div>
+                <ul class="subtask-details">
+                  <li><code>.fp/assets/</code> layout with content-addressed naming</li>
+                  <li>SQLite metadata tables for assets and derived reference indexes</li>
+                  <li><code>fp-asset://</code> URI syntax definition</li>
+                  <li>Placeholder/error states for missing, pending, unauthorized assets</li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--high">High</span>
+              </div>
+            </div>
+
+            <div class="subtask">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="subtask-id">NOXR-gjeqjgwk</span> Build shared markdown image resolver pipeline</div>
+                <ul class="subtask-details">
+                  <li>Single shared resolver contract for <code>fp-asset://</code> refs</li>
+                  <li>Used by desktop, fp-ui review, and console markdown consumers</li>
+                  <li>Handles pending, missing, unauthorized states consistently</li>
+                  <li>Normal <code>http(s)</code> images pass through unchanged</li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--medium">Med</span>
+              </div>
+            </div>
+
+            <div class="subtask">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="subtask-id">NOXR-qqsuxvop</span> Maintain derived asset-reference indexes</div>
+                <ul class="subtask-details">
+                  <li>Local derived index for attachment refs keyed by issue + logical location</li>
+                  <li>Issue-level reindex function from Y.Doc</li>
+                  <li>Wired into createIssue, updateIssue, createComment, deleteComment, deleteIssue, and sync callbacks</li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--medium">Med</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="phase-connector">
+          <span class="connector-label">Phase 1 complete &rarr; Phase 2 begins</span>
+        </div>
+
+        <!-- ═══ PHASE 2 ═══ -->
+        <div class="phase-card phase-card--2">
+          <div class="phase-header">
+            <div class="phase-number">2</div>
+            <div class="phase-info">
+              <div class="phase-meta">
+                <span class="phase-id">NOXR-djpgrzyw</span>
+                <span class="priority-badge priority-badge--medium">Medium</span>
+                <span class="status-badge">Todo</span>
+              </div>
+              <h2>Local Attachment Workflows</h2>
+              <p class="phase-desc">Let users ingest local images and place logical attachment refs into issue/comment markdown. Local-only projects work without sync.</p>
+            </div>
+          </div>
+          <div class="subtask-list">
+
+            <div class="subtask">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="subtask-id">NOXR-vnuguytv</span> Add CLI attachment workflows</div>
+                <ul class="subtask-details">
+                  <li><code>fp attach &lt;file&gt;</code> command &mdash; ingest, hash, print markdown reference</li>
+                  <li><code>--attach</code> flag on issue create/update/comment</li>
+                  <li>Linked vs unlinked project handling</li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--medium">Med</span>
+              </div>
+            </div>
+
+            <div class="subtask">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="subtask-id">NOXR-ndyvpbkb</span> Auto-detect local image paths in markdown</div>
+                <ul class="subtask-details">
+                  <li>Auto-rewrite local file paths to <code>fp-asset://</code> URIs</li>
+                  <li>Skip existing <code>fp-asset://</code> and <code>http(s)</code> refs</li>
+                  <li>Convenience layer on top of explicit <code>fp attach</code></li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--medium">Med</span>
+              </div>
+            </div>
+
+            <div class="subtask">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="subtask-id">NOXR-xcegicoy</span> Desktop attachment ingestion &amp; compose UX</div>
+                <ul class="subtask-details">
+                  <li>Paperclip, paste, drag-drop flows</li>
+                  <li>Electron-specific protocol/IPC for shared resolver</li>
+                  <li>Upload/download pending states and preview sizing</li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--medium">Med</span>
+              </div>
+            </div>
+
+            <div class="subtask subtask--checkpoint">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="checkpoint-icon">&#9873;</span><span class="subtask-id">NOXR-xfkywlhw</span> Checkpoint: Verify local attachment workflows</div>
+                <ul class="subtask-details">
+                  <li>First E2E sweep before remote sync work begins</li>
+                  <li>CLI, review UI, and desktop surfaces exercised</li>
+                  <li>Uses repo QA scripts and Playwright infrastructure</li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--high">High</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="phase-connector">
+          <span class="connector-label">Local checkpoint passed &rarr; Phase 3 begins</span>
+        </div>
+
+        <!-- ═══ PHASE 3 ═══ -->
+        <div class="phase-card phase-card--3">
+          <div class="phase-header">
+            <div class="phase-number">3</div>
+            <div class="phase-info">
+              <div class="phase-meta">
+                <span class="phase-id">NOXR-ndvhgjbe</span>
+                <span class="priority-badge priority-badge--high">High</span>
+                <span class="status-badge">Todo</span>
+              </div>
+              <h2>Asset Sync Layer for Linked Projects</h2>
+              <p class="phase-desc">Keep binary asset movement outside Yjs frames. Make linked projects converge attachment bytes independently of markdown state.</p>
+            </div>
+          </div>
+          <div class="subtask-list">
+
+            <div class="subtask">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="subtask-id">NOXR-ldpjgifm</span> Specify asset sync protocol &amp; reconcile semantics</div>
+                <ul class="subtask-details">
+                  <li>Canonical asset identity + manifest/reconcile shapes</li>
+                  <li>Upload, download, skip, retry, missing states</li>
+                  <li>Sidecar HTTP vs protocol changes decision</li>
+                  <li>Race and failure semantics</li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--high">High</span>
+              </div>
+            </div>
+
+            <div class="subtask">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="subtask-id">NOXR-imrgklti</span> Implement project asset API &amp; object storage</div>
+                <ul class="subtask-details">
+                  <li>Worker routes for authenticated upload/download/reconcile</li>
+                  <li>Object storage bindings + metadata tables</li>
+                  <li>Project-scoped access control</li>
+                  <li>Presigned vs Worker-proxied upload decision</li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--high">High</span>
+              </div>
+            </div>
+
+            <div class="subtask">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="subtask-id">NOXR-itbogrpr</span> Integrate reconciliation with project sync &amp; desktop</div>
+                <ul class="subtask-details">
+                  <li>Asset reconcile/upload/download in <code>fp project sync</code></li>
+                  <li>Asset queue in desktop persistent sync</li>
+                  <li>Fresh clone convergence</li>
+                  <li>Markdown-before-bytes race handling</li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--high">High</span>
+              </div>
+            </div>
+
+            <div class="subtask subtask--checkpoint">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="checkpoint-icon">&#9873;</span><span class="subtask-id">NOXR-takuanxa</span> Checkpoint: Verify linked-project attachment sync</div>
+                <ul class="subtask-details">
+                  <li>Two linked clients creating/syncing attachments</li>
+                  <li>Race/failure case exercise</li>
+                  <li>Sync logs + browser/desktop evidence</li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--high">High</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="phase-connector">
+          <span class="connector-label">Sync checkpoint passed &rarr; Phase 4 begins</span>
+        </div>
+
+        <!-- ═══ PHASE 4 ═══ -->
+        <div class="phase-card phase-card--4">
+          <div class="phase-header">
+            <div class="phase-number">4</div>
+            <div class="phase-info">
+              <div class="phase-meta">
+                <span class="phase-id">NOXR-lfpeoyar</span>
+                <span class="priority-badge priority-badge--medium">Medium</span>
+                <span class="status-badge">Todo</span>
+              </div>
+              <h2>Harden Security, Cleanup, Recovery &amp; Tests</h2>
+              <p class="phase-desc">Close the loop on correctness and operability. Enforce validation, define GC, add recovery, run final regression.</p>
+            </div>
+          </div>
+          <div class="subtask-list">
+
+            <div class="subtask">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="subtask-id">NOXR-snoxmqaf</span> Enforce validation, authorization &amp; access policy</div>
+                <ul class="subtask-details">
+                  <li>MIME/extension/size policy at all boundaries</li>
+                  <li>Project-scoped read/write auth</li>
+                  <li>Blocked/unauthorized placeholder states</li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--high">High</span>
+              </div>
+            </div>
+
+            <div class="subtask">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="subtask-id">NOXR-pwieiqpy</span> Define retention, cleanup &amp; recovery behavior</div>
+                <ul class="subtask-details">
+                  <li>GC for unreferenced local and remote assets</li>
+                  <li>Missing/corrupt blob handling</li>
+                  <li>Recovery path for re-download/re-ingest</li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--medium">Med</span>
+              </div>
+            </div>
+
+            <div class="subtask subtask--checkpoint">
+              <div class="subtask-indicator"></div>
+              <div class="subtask-content">
+                <div class="subtask-title"><span class="checkpoint-icon">&#9873;</span><span class="subtask-id">NOXR-ivqxrclg</span> Checkpoint: Final attachment regression</div>
+                <ul class="subtask-details">
+                  <li>Full regression sweep across CLI, sync, browser, and desktop</li>
+                  <li>Extends existing QA scenarios</li>
+                  <li>Recorded run with evidence in <code>packages/qa-scripts/results/</code></li>
+                </ul>
+              </div>
+              <div class="subtask-badges">
+                <span class="priority-badge priority-badge--medium">Med</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /phases-grid -->
+    </div>
+  </section>
+
+  <!-- ─── Footer ─── -->
+  <div class="footer">
+    <div class="container">
+      <p>NOXR-fiaxqahj &middot; 4 phases &middot; 14 subtasks &middot; 3 checkpoints &middot; all todo</p>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    look: 'classic',
+    themeVariables: {
+      primaryColor: '#141926',
+      primaryBorderColor: '#22d3ee',
+      primaryTextColor: '#e4e8f0',
+      secondaryColor: '#141926',
+      secondaryBorderColor: '#34d399',
+      secondaryTextColor: '#e4e8f0',
+      tertiaryColor: '#141926',
+      tertiaryBorderColor: '#fbbf24',
+      tertiaryTextColor: '#e4e8f0',
+      lineColor: '#4a5568',
+      fontSize: '14px',
+      fontFamily: "'Sora', system-ui, sans-serif",
+      noteBkgColor: '#1a2030',
+      noteTextColor: '#e4e8f0',
+      noteBorderColor: '#fbbf24',
+    }
+  });
+</script>
+
+<script>
+  function zoomDiagram(btn, factor) {
+    const wrap = btn.closest('.mermaid-wrap');
+    const mermaidEl = wrap.querySelector('.mermaid');
+    const currentZoom = parseFloat(mermaidEl.style.zoom) || 1.3;
+    const newZoom = Math.max(0.3, Math.min(3, currentZoom * factor));
+    mermaidEl.style.zoom = newZoom;
+  }
+
+  function resetZoom(btn) {
+    const wrap = btn.closest('.mermaid-wrap');
+    const mermaidEl = wrap.querySelector('.mermaid');
+    mermaidEl.style.zoom = 1.3;
+  }
+</script>
+
+</body>
+</html>
