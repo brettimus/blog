@@ -16,12 +16,104 @@ canvas { display: block; }
   animation: pulse 0.5s ease-in-out infinite alternate;
 }
 @keyframes pulse { from { opacity: 0.5; } to { opacity: 1; } }
+@keyframes loadBone {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(15deg) scale(1.1); }
+  50% { transform: rotate(0deg) scale(1); }
+  75% { transform: rotate(-15deg) scale(1.1); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+#loading .bone { display: inline-block; animation: loadBone 0.6s ease-in-out infinite; font-size: 4rem; }
+#mute-btn {
+  position: fixed; bottom: 20px; right: 20px; z-index: 50;
+  background: none; border: none; cursor: pointer;
+  font-size: 2.5rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  transition: transform 0.2s;
+}
+#mute-btn:hover { transform: scale(1.2); }
+#mute-btn.muted { opacity: 0.4; }
 </style>
 </head>
 <body>
-<div id="loading">🐕 WOOF LOADING... 🐕</div>
+<div id="loading"><div class="bone">🦴</div><br>🐕 WOOF LOADING... 🐕</div>
+<button id="mute-btn" title="Toggle sounds">🦴🔊</button>
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script>
+
+// === AUDIO SYSTEM ===
+let audioCtx = null;
+let isMuted = false;
+const muteBtn = document.getElementById('mute-btn');
+
+function initAudio() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+function bark() {
+  if (!audioCtx || isMuted) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  const baseFreq = 150 + Math.random() * 200;
+  osc.frequency.setValueAtTime(baseFreq, audioCtx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.5, audioCtx.currentTime + 0.15);
+  gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.2);
+}
+
+function boing() {
+  if (!audioCtx || isMuted) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'sine';
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.1);
+  gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.15);
+}
+
+function woosh() {
+  if (!audioCtx || isMuted) return;
+  const bufferSize = audioCtx.sampleRate * 0.3;
+  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize);
+  const source = audioCtx.createBufferSource();
+  source.buffer = buffer;
+  const gain = audioCtx.createGain();
+  gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'bandpass';
+  filter.frequency.value = 1000;
+  source.connect(filter);
+  filter.connect(gain);
+  gain.connect(audioCtx.destination);
+  source.start();
+}
+
+muteBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  initAudio();
+  isMuted = !isMuted;
+  muteBtn.textContent = isMuted ? '🦴🔇' : '🦴🔊';
+  muteBtn.classList.toggle('muted', isMuted);
+});
+
+// Init audio on first interaction
+document.addEventListener('click', () => initAudio(), { once: true });
+document.addEventListener('touchstart', () => initAudio(), { once: true });
+
+// Random barks
+setInterval(() => { if (Math.random() < 0.3) bark(); }, 3000);
 
 // Scene setup
 const scene = new THREE.Scene();
@@ -229,18 +321,23 @@ function createPawPrint(x, y, z) {
 }
 
 let lastPawTime = 0;
-window.addEventListener('mousemove', (e) => {
+function handlePawMove(clientX, clientY) {
   const now = Date.now();
   if (now - lastPawTime < 150) return;
   lastPawTime = now;
-  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  mouse.x = (clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(clientY / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera(mouse, camera);
   const hits = raycaster.intersectObject(ground);
   if (hits.length > 0) {
     createPawPrint(hits[0].point.x, hits[0].point.y, hits[0].point.z);
   }
-});
+}
+window.addEventListener('mousemove', (e) => handlePawMove(e.clientX, e.clientY));
+window.addEventListener('touchmove', (e) => {
+  e.preventDefault();
+  handlePawMove(e.touches[0].clientX, e.touches[0].clientY);
+}, { passive: false });
 
 // === CLICK TO SPAWN TREATS ===
 const treats = [];
@@ -249,9 +346,9 @@ const treatMat = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
 const boneGeo = new THREE.BoxGeometry(0.6, 0.2, 0.2);
 const boneMat = new THREE.MeshLambertMaterial({ color: 0xfff8dc });
 
-window.addEventListener('click', (e) => {
-  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+function spawnTreatAt(clientX, clientY) {
+  mouse.x = (clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(clientY / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera(mouse, camera);
   const dir = raycaster.ray.direction.clone().multiplyScalar(8);
   const pos = camera.position.clone().add(dir);
@@ -274,6 +371,12 @@ window.addEventListener('click', (e) => {
   treat.castShadow = true;
   scene.add(treat);
   treats.push(treat);
+  bark();
+}
+window.addEventListener('click', (e) => spawnTreatAt(e.clientX, e.clientY));
+window.addEventListener('touchstart', (e) => {
+  if (e.target === muteBtn) return;
+  spawnTreatAt(e.touches[0].clientX, e.touches[0].clientY);
 });
 
 // === GOLDEN PARTICLE EXPLOSION ===
@@ -285,6 +388,8 @@ let reformTimer = 0;
 function explodeDog() {
   isExploded = true;
   dogGroup.visible = false;
+  woosh();
+  bark(); bark();
   const particleCount = 80;
   for (let i = 0; i < particleCount; i++) {
     const size = 0.1 + Math.random() * 0.2;
@@ -419,6 +524,7 @@ function animate() {
       b.position.y = 0.3;
       b.userData.vy = Math.abs(b.userData.vy) * 0.6;
       b.userData.bounces++;
+      if (b.userData.bounces <= 2) boing();
       if (b.userData.bounces > 4) {
         scene.remove(b);
         balls.splice(i, 1);
