@@ -132,38 +132,379 @@ dogGroup.add(tongue);
 
 scene.add(dogGroup);
 
+// === TENNIS BALLS RAIN ===
+const balls = [];
+const ballGeo = new THREE.SphereGeometry(0.3, 12, 12);
+const ballMat = new THREE.MeshLambertMaterial({ color: 0xccff00 });
+// Fuzzy line on tennis ball
+const ballLineMat = new THREE.MeshLambertMaterial({ color: 0xaadd00 });
+
+function spawnBall() {
+  const ball = new THREE.Mesh(ballGeo, ballMat);
+  ball.position.set(
+    (Math.random() - 0.5) * 20,
+    15 + Math.random() * 10,
+    (Math.random() - 0.5) * 20
+  );
+  ball.castShadow = true;
+  ball.userData.vy = -0.05 - Math.random() * 0.1;
+  ball.userData.vx = (Math.random() - 0.5) * 0.1;
+  ball.userData.vz = (Math.random() - 0.5) * 0.1;
+  ball.userData.spin = (Math.random() - 0.5) * 0.2;
+  ball.userData.bounces = 0;
+  scene.add(ball);
+  balls.push(ball);
+}
+
+// Spawn balls periodically
+setInterval(spawnBall, 800);
+for (let i = 0; i < 5; i++) spawnBall();
+
+// === BORK TEXT EXPLOSIONS ===
+const borkWords = ['BORK', 'WOOF', 'ARF', 'BORK BORK', 'HENLO', 'FREN', 'GOOD BOY', 'MUCH WOW', 'VERY CHASE', 'SUCH BALL'];
+const borkMeshes = [];
+
+function createBorkText() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 256;
+  canvas.height = 128;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6b8a', '#c084fc'][Math.floor(Math.random() * 6)];
+  ctx.font = 'bold 48px "Comic Sans MS", cursive';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(borkWords[Math.floor(Math.random() * borkWords.length)], 128, 64);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true });
+  const sprite = new THREE.Sprite(spriteMat);
+  sprite.scale.set(3, 1.5, 1);
+  sprite.position.set(
+    (Math.random() - 0.5) * 15,
+    2 + Math.random() * 8,
+    (Math.random() - 0.5) * 15
+  );
+  sprite.userData.vy = 0.02 + Math.random() * 0.02;
+  sprite.userData.rotSpeed = (Math.random() - 0.5) * 0.05;
+  sprite.userData.life = 0;
+  sprite.userData.maxLife = 3 + Math.random() * 3;
+  scene.add(sprite);
+  borkMeshes.push(sprite);
+}
+
+setInterval(createBorkText, 1200);
+for (let i = 0; i < 3; i++) createBorkText();
+
+// === PAW PRINT CURSOR TRAIL ===
+const pawPrints = [];
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+function createPawPrint(x, y, z) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 64;
+  canvas.height = 64;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#8B4513';
+  // Main pad
+  ctx.beginPath();
+  ctx.ellipse(32, 38, 12, 10, 0, 0, Math.PI * 2);
+  ctx.fill();
+  // Toe beans!
+  [[20, 22, 6], [32, 18, 6], [44, 22, 6], [26, 28, 5], [38, 28, 5]].forEach(([tx, ty, r]) => {
+    ctx.beginPath();
+    ctx.arc(tx, ty, r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  const texture = new THREE.CanvasTexture(canvas);
+  const mat = new THREE.SpriteMaterial({ map: texture, transparent: true, opacity: 0.8 });
+  const sprite = new THREE.Sprite(mat);
+  sprite.scale.set(0.8, 0.8, 0.8);
+  sprite.position.set(x, 0.01, z);
+  sprite.rotation.z = Math.random() * 0.4 - 0.2;
+  sprite.userData.life = 0;
+  scene.add(sprite);
+  pawPrints.push(sprite);
+}
+
+let lastPawTime = 0;
+window.addEventListener('mousemove', (e) => {
+  const now = Date.now();
+  if (now - lastPawTime < 150) return;
+  lastPawTime = now;
+  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  const hits = raycaster.intersectObject(ground);
+  if (hits.length > 0) {
+    createPawPrint(hits[0].point.x, hits[0].point.y, hits[0].point.z);
+  }
+});
+
+// === CLICK TO SPAWN TREATS ===
+const treats = [];
+const treatGeo = new THREE.BoxGeometry(0.4, 0.15, 0.3);
+const treatMat = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+const boneGeo = new THREE.BoxGeometry(0.6, 0.2, 0.2);
+const boneMat = new THREE.MeshLambertMaterial({ color: 0xfff8dc });
+
+window.addEventListener('click', (e) => {
+  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  const dir = raycaster.ray.direction.clone().multiplyScalar(8);
+  const pos = camera.position.clone().add(dir);
+
+  const isBone = Math.random() > 0.5;
+  const treat = new THREE.Mesh(isBone ? boneGeo : treatGeo, isBone ? boneMat : treatMat);
+  if (isBone) {
+    // Add bone ends
+    const endGeo = new THREE.SphereGeometry(0.15, 8, 8);
+    const end1 = new THREE.Mesh(endGeo, boneMat);
+    end1.position.x = 0.35;
+    treat.add(end1);
+    const end2 = new THREE.Mesh(endGeo, boneMat);
+    end2.position.x = -0.35;
+    treat.add(end2);
+  }
+  treat.position.copy(pos);
+  treat.userData.vy = 0;
+  treat.userData.spin = (Math.random() - 0.5) * 0.3;
+  treat.castShadow = true;
+  scene.add(treat);
+  treats.push(treat);
+});
+
+// === GOLDEN PARTICLE EXPLOSION ===
+let explosionParticles = [];
+let explosionTimer = 8 + Math.random() * 7;
+let isExploded = false;
+let reformTimer = 0;
+
+function explodeDog() {
+  isExploded = true;
+  dogGroup.visible = false;
+  const particleCount = 80;
+  for (let i = 0; i < particleCount; i++) {
+    const size = 0.1 + Math.random() * 0.2;
+    const geo = new THREE.BoxGeometry(size, size, size);
+    const mat = new THREE.MeshLambertMaterial({
+      color: new THREE.Color().setHSL(0.12 + Math.random() * 0.05, 0.8, 0.5 + Math.random() * 0.3)
+    });
+    const particle = new THREE.Mesh(geo, mat);
+    particle.position.set(
+      (Math.random() - 0.5) * 2,
+      1.5 + Math.random() * 2,
+      (Math.random() - 0.5) * 2
+    );
+    particle.userData.vx = (Math.random() - 0.5) * 0.3;
+    particle.userData.vy = Math.random() * 0.3;
+    particle.userData.vz = (Math.random() - 0.5) * 0.3;
+    particle.userData.spin = Math.random() * 0.2;
+    scene.add(particle);
+    explosionParticles.push(particle);
+  }
+  reformTimer = 2.5;
+}
+
+// === ZOOMIES MODE ===
+let zoomiesMode = false;
+let zoomiesTimer = 0;
+let shakeIntensity = 0;
+let mouseVelocity = 0;
+let lastMouseX = 0;
+let lastMouseY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  const dx = e.clientX - lastMouseX;
+  const dy = e.clientY - lastMouseY;
+  mouseVelocity = Math.sqrt(dx * dx + dy * dy);
+  lastMouseX = e.clientX;
+  lastMouseY = e.clientY;
+  if (mouseVelocity > 50 && !zoomiesMode) {
+    zoomiesMode = true;
+    zoomiesTimer = 5;
+    document.title = 'ZOOMIES!!!!!!';
+  }
+});
+
+// Device shake detection
+let lastAccel = { x: 0, y: 0, z: 0 };
+window.addEventListener('devicemotion', (e) => {
+  const a = e.accelerationIncludingGravity;
+  if (!a) return;
+  const delta = Math.abs(a.x - lastAccel.x) + Math.abs(a.y - lastAccel.y) + Math.abs(a.z - lastAccel.z);
+  lastAccel = { x: a.x, y: a.y, z: a.z };
+  if (delta > 30 && !zoomiesMode) {
+    zoomiesMode = true;
+    zoomiesTimer = 5;
+  }
+});
+
+// === SURPRISE REDIRECT ===
+let totalTime = 0;
+let surpriseTriggered = false;
+const overlay = document.createElement('div');
+overlay.style.cssText = 'position:fixed;inset:0;background:#000;color:#ffd700;display:flex;align-items:center;justify-content:center;font-family:"Comic Sans MS",cursive;font-size:4rem;z-index:200;opacity:0;transition:opacity 2s;pointer-events:none;flex-direction:column;gap:1rem;';
+overlay.innerHTML = '<div>good boy</div><div style="font-size:1.5rem;opacity:0.6">13/10 would pet</div>';
+document.body.appendChild(overlay);
+
 // Hide loading
 document.getElementById('loading').style.display = 'none';
 
 // Animation
 const clock = new THREE.Clock();
+const speedMultiplier = () => zoomiesMode ? 4 : 1;
 
 function animate() {
   requestAnimationFrame(animate);
+  const dt = clock.getDelta();
   const t = clock.getElapsedTime();
+  const speed = speedMultiplier();
+  totalTime += dt;
 
   // Dog wobble
-  dogGroup.rotation.y = Math.sin(t * 0.5) * 0.3;
-  dogGroup.position.y = Math.sin(t * 2) * 0.15;
+  if (!isExploded) {
+    dogGroup.rotation.y += dt * speed * 0.5;
+    dogGroup.position.y = Math.sin(t * 2 * speed) * 0.15;
 
-  // Tail wag!!! (the most important part)
-  tail.rotation.z = Math.sin(t * 8) * 0.5;
+    // Tail wag!!! (the most important part)
+    tail.rotation.z = Math.sin(t * 8 * speed) * 0.5;
 
-  // Ear flop
-  dogGroup.children.forEach(child => {
-    if (child.geometry === earGeo) {
-      child.rotation.z = Math.sin(t * 3 + child.position.z) * 0.2;
-    }
-  });
+    // Ear flop
+    dogGroup.children.forEach(child => {
+      if (child.geometry === earGeo) {
+        child.rotation.z = Math.sin(t * 3 * speed + child.position.z) * 0.2;
+      }
+    });
 
-  // Tongue wiggle
-  tongue.position.x = 2.1 + Math.sin(t * 4) * 0.05;
-  tongue.scale.y = 1 + Math.sin(t * 3) * 0.3;
+    // Tongue wiggle
+    tongue.position.x = 2.1 + Math.sin(t * 4 * speed) * 0.05;
+    tongue.scale.y = 1 + Math.sin(t * 3) * 0.3;
+  }
 
-  // Camera gentle orbit
-  camera.position.x = Math.sin(t * 0.3) * 8;
-  camera.position.z = Math.cos(t * 0.3) * 8;
+  // Camera orbit
+  const camSpeed = zoomiesMode ? 2 : 0.3;
+  camera.position.x = Math.sin(t * camSpeed) * 8;
+  camera.position.z = Math.cos(t * camSpeed) * 8;
+  camera.position.y = 3 + (zoomiesMode ? Math.sin(t * 5) * 1.5 : 0);
   camera.lookAt(0, 1.5, 0);
+
+  // Camera shake in zoomies
+  if (zoomiesMode) {
+    shakeIntensity = 0.3;
+    camera.position.x += (Math.random() - 0.5) * shakeIntensity;
+    camera.position.y += (Math.random() - 0.5) * shakeIntensity;
+    zoomiesTimer -= dt;
+    if (zoomiesTimer <= 0) {
+      zoomiesMode = false;
+      document.title = 'DISTRACTION';
+    }
+    // Spawn extra balls during zoomies
+    if (Math.random() < 0.1) spawnBall();
+  }
+
+  // Tennis ball physics
+  for (let i = balls.length - 1; i >= 0; i--) {
+    const b = balls[i];
+    b.userData.vy -= 0.005 * speed;
+    b.position.y += b.userData.vy * speed;
+    b.position.x += b.userData.vx * speed;
+    b.position.z += b.userData.vz * speed;
+    b.rotation.x += b.userData.spin * speed;
+    b.rotation.z += b.userData.spin * 0.5 * speed;
+
+    if (b.position.y < 0.3) {
+      b.position.y = 0.3;
+      b.userData.vy = Math.abs(b.userData.vy) * 0.6;
+      b.userData.bounces++;
+      if (b.userData.bounces > 4) {
+        scene.remove(b);
+        balls.splice(i, 1);
+      }
+    }
+  }
+
+  // BORK text animation
+  for (let i = borkMeshes.length - 1; i >= 0; i--) {
+    const b = borkMeshes[i];
+    b.userData.life += dt;
+    b.position.y += b.userData.vy * speed;
+    b.material.rotation += b.userData.rotSpeed * speed;
+    b.material.opacity = 1 - (b.userData.life / b.userData.maxLife);
+    if (b.userData.life > b.userData.maxLife) {
+      scene.remove(b);
+      borkMeshes.splice(i, 1);
+    }
+  }
+
+  // Paw print fade
+  for (let i = pawPrints.length - 1; i >= 0; i--) {
+    const p = pawPrints[i];
+    p.userData.life += dt;
+    p.material.opacity = Math.max(0, 0.8 - p.userData.life * 0.3);
+    // Wiggle!
+    p.scale.x = 0.8 + Math.sin(p.userData.life * 5) * 0.05;
+    p.scale.y = 0.8 + Math.cos(p.userData.life * 5) * 0.05;
+    if (p.userData.life > 3) {
+      scene.remove(p);
+      pawPrints.splice(i, 1);
+    }
+  }
+
+  // Treat physics
+  for (let i = treats.length - 1; i >= 0; i--) {
+    const tr = treats[i];
+    tr.userData.vy -= 0.008;
+    tr.position.y += tr.userData.vy;
+    tr.rotation.x += tr.userData.spin;
+    tr.rotation.z += tr.userData.spin * 0.7;
+    if (tr.position.y < 0.1) {
+      tr.position.y = 0.1;
+      tr.userData.vy = 0;
+      tr.userData.spin *= 0.9;
+    }
+  }
+
+  // Explosion particles
+  for (let i = explosionParticles.length - 1; i >= 0; i--) {
+    const p = explosionParticles[i];
+    p.position.x += p.userData.vx;
+    p.position.y += p.userData.vy;
+    p.position.z += p.userData.vz;
+    p.userData.vy -= 0.008;
+    p.rotation.x += p.userData.spin;
+    p.rotation.y += p.userData.spin;
+  }
+
+  // Explosion timer
+  if (!isExploded) {
+    explosionTimer -= dt;
+    if (explosionTimer <= 0) {
+      explodeDog();
+    }
+  } else {
+    reformTimer -= dt;
+    if (reformTimer <= 0) {
+      // Reform!
+      explosionParticles.forEach(p => scene.remove(p));
+      explosionParticles = [];
+      dogGroup.visible = true;
+      isExploded = false;
+      explosionTimer = 10 + Math.random() * 10;
+    }
+  }
+
+  // Surprise after 45 seconds
+  if (totalTime > 45 && !surpriseTriggered) {
+    surpriseTriggered = true;
+    overlay.style.opacity = '1';
+    overlay.style.pointerEvents = 'all';
+    setTimeout(() => {
+      window.location.href = 'https://blog.boots.lol';
+    }, 4000);
+  }
 
   renderer.render(scene, camera);
 }
