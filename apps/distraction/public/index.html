@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DISTRACTION</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #1a0a00; }
+canvas { display: block; }
+#loading {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: #1a0a00; color: #ffd700; font-family: 'Comic Sans MS', cursive;
+  font-size: 3rem; z-index: 100;
+  animation: pulse 0.5s ease-in-out infinite alternate;
+}
+@keyframes pulse { from { opacity: 0.5; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+<div id="loading">🐕 WOOF LOADING... 🐕</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+
+// Scene setup
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x87CEEB);
+scene.fog = new THREE.Fog(0x87CEEB, 20, 80);
+
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 3, 8);
+camera.lookAt(0, 1, 0);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+document.body.appendChild(renderer.domElement);
+
+// Lights
+const ambientLight = new THREE.AmbientLight(0xffeedd, 0.6);
+scene.add(ambientLight);
+const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+dirLight.position.set(5, 10, 5);
+dirLight.castShadow = true;
+scene.add(dirLight);
+
+// Ground - grassy
+const groundGeo = new THREE.PlaneGeometry(100, 100);
+const groundMat = new THREE.MeshLambertMaterial({ color: 0x4a7c3f });
+const ground = new THREE.Mesh(groundGeo, groundMat);
+ground.rotation.x = -Math.PI / 2;
+ground.receiveShadow = true;
+scene.add(ground);
+
+// === GOLDEN RETRIEVER (blocky low-poly) ===
+const dogGroup = new THREE.Group();
+const goldenColor = 0xDAA520;
+const darkGolden = 0xB8860B;
+
+// Body
+const bodyGeo = new THREE.BoxGeometry(2.2, 1.2, 1.4);
+const bodyMat = new THREE.MeshLambertMaterial({ color: goldenColor });
+const body = new THREE.Mesh(bodyGeo, bodyMat);
+body.position.y = 1.8;
+body.castShadow = true;
+dogGroup.add(body);
+
+// Head
+const headGeo = new THREE.BoxGeometry(1, 1, 1);
+const head = new THREE.Mesh(headGeo, bodyMat);
+head.position.set(1.4, 2.4, 0);
+head.castShadow = true;
+dogGroup.add(head);
+
+// Snout
+const snoutGeo = new THREE.BoxGeometry(0.6, 0.4, 0.5);
+const snoutMat = new THREE.MeshLambertMaterial({ color: darkGolden });
+const snout = new THREE.Mesh(snoutGeo, snoutMat);
+snout.position.set(2, 2.2, 0);
+dogGroup.add(snout);
+
+// Nose
+const noseGeo = new THREE.SphereGeometry(0.12, 8, 8);
+const noseMat = new THREE.MeshLambertMaterial({ color: 0x1a1a1a });
+const nose = new THREE.Mesh(noseGeo, noseMat);
+nose.position.set(2.3, 2.3, 0);
+dogGroup.add(nose);
+
+// Eyes
+const eyeGeo = new THREE.SphereGeometry(0.1, 8, 8);
+const eyeMat = new THREE.MeshLambertMaterial({ color: 0x2a1506 });
+[-0.25, 0.25].forEach(z => {
+  const eye = new THREE.Mesh(eyeGeo, eyeMat);
+  eye.position.set(1.9, 2.6, z);
+  dogGroup.add(eye);
+});
+
+// Ears (floppy!)
+const earGeo = new THREE.BoxGeometry(0.3, 0.6, 0.4);
+const earMat = new THREE.MeshLambertMaterial({ color: darkGolden });
+[-0.55, 0.55].forEach(z => {
+  const ear = new THREE.Mesh(earGeo, earMat);
+  ear.position.set(1.2, 2.6, z);
+  ear.rotation.x = z > 0 ? 0.3 : -0.3;
+  dogGroup.add(ear);
+});
+
+// Legs
+const legGeo = new THREE.BoxGeometry(0.4, 1, 0.4);
+[[-0.7, -0.5], [-0.7, 0.5], [0.7, -0.5], [0.7, 0.5]].forEach(([x, z]) => {
+  const leg = new THREE.Mesh(legGeo, bodyMat);
+  leg.position.set(x, 0.7, z);
+  leg.castShadow = true;
+  dogGroup.add(leg);
+});
+
+// Tail (wagging!)
+const tailGeo = new THREE.BoxGeometry(0.8, 0.25, 0.25);
+const tail = new THREE.Mesh(tailGeo, bodyMat);
+tail.position.set(-1.5, 2.2, 0);
+tail.geometry.translate(0.4, 0, 0);
+dogGroup.add(tail);
+
+// Tongue
+const tongueGeo = new THREE.BoxGeometry(0.3, 0.15, 0.2);
+const tongueMat = new THREE.MeshLambertMaterial({ color: 0xff6b8a });
+const tongue = new THREE.Mesh(tongueGeo, tongueMat);
+tongue.position.set(2.1, 1.95, 0);
+dogGroup.add(tongue);
+
+scene.add(dogGroup);
+
+// Hide loading
+document.getElementById('loading').style.display = 'none';
+
+// Animation
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+
+  // Dog wobble
+  dogGroup.rotation.y = Math.sin(t * 0.5) * 0.3;
+  dogGroup.position.y = Math.sin(t * 2) * 0.15;
+
+  // Tail wag!!! (the most important part)
+  tail.rotation.z = Math.sin(t * 8) * 0.5;
+
+  // Ear flop
+  dogGroup.children.forEach(child => {
+    if (child.geometry === earGeo) {
+      child.rotation.z = Math.sin(t * 3 + child.position.z) * 0.2;
+    }
+  });
+
+  // Tongue wiggle
+  tongue.position.x = 2.1 + Math.sin(t * 4) * 0.05;
+  tongue.scale.y = 1 + Math.sin(t * 3) * 0.3;
+
+  // Camera gentle orbit
+  camera.position.x = Math.sin(t * 0.3) * 8;
+  camera.position.z = Math.cos(t * 0.3) * 8;
+  camera.lookAt(0, 1.5, 0);
+
+  renderer.render(scene, camera);
+}
+animate();
+
+// Resize
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+</body>
+</html>
