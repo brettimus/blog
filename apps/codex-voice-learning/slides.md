@@ -61,7 +61,7 @@ Brett Beutell · @lastgoodhandle
 
 <div class="flex flex-col items-center gap-3">
   <div class="w-32 h-32 rounded-2xl" style="background: url('/fp-logo.png') center / cover no-repeat; border: 1px solid var(--line-strong);"></div>
-  <a href="https://fp.dev" target="_blank" class="text-sm font-mono no-underline" style="color: var(--ink-mute);">fp.dev</a>
+  <a href="https://fiberplane.com" target="_blank" class="text-sm font-mono no-underline" style="color: var(--ink-mute);">fiberplane.com</a>
 </div>
 
 </div>
@@ -148,7 +148,7 @@ class: section
 <v-clicks>
 
 - Set up a project on a remote machine
-- Ask for an Anki-style SRSS setup to create and review study cards
+- Ask for an Anki-style SRS setup to create and review study cards
 - Use a SQLite DB to track those cards and your study sessions
 - Connect the remote machine to your phone
 - Launch voice on your phone, connected to the remote
@@ -171,7 +171,7 @@ class: section
 ### Benefits
 
 - You are forced to talk through problems and your understanding
-- Review granularity is much more flexible than traditional SRSS
+- Review granularity is much more flexible than traditional SRS
 
 </div>
 
