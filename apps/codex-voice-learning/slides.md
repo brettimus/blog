@@ -40,39 +40,6 @@ Brett Beutell · @lastgoodhandle
 
 ---
 
-<div class="kicker">Who am I</div>
-
-# Hi, I'm Brett
-
-<div class="mt-7 grid grid-cols-[1fr_auto] gap-12 items-center">
-
-<div class="space-y-4" style="max-width: 52ch;">
-
-<v-clicks>
-
-- Based in Amsterdam
-- Working on software factory tooling @ [Fiberplane](https://fiberplane.com)
-- Learning inference engineering
-- But most relevantly...
-
-</v-clicks>
-
-</div>
-
-<div class="flex flex-col items-center gap-3">
-  <div class="w-32 h-32 rounded-2xl" style="background: url('/fp-logo.png') center / cover no-repeat; border: 1px solid var(--line-strong);"></div>
-  <a href="https://fiberplane.com" target="_blank" class="text-sm font-mono no-underline" style="color: var(--ink-mute);">fiberplane.com</a>
-</div>
-
-</div>
-
-<!--
-Swap the fp-logo square for a personal photo if Brett wants a headshot
-instead (drop it in public/ and point the background url at it).
--->
-
----
-
 <div class="kicker">Takeaways</div>
 
 # What to take away
@@ -88,13 +55,6 @@ instead (drop it in public/ and point the background url at it).
 </v-clicks>
 
 </div>
-
----
-layout: default
-class: section
----
-
-<h1 style="font-size: 7rem; letter-spacing: -0.04em;">MOTIVATION</h1>
 
 ---
 
@@ -129,6 +89,35 @@ class: section
 <!--
 Photo sequence: public/ella-stage-0.jpeg .. ella-stage-4.jpeg
 -->
+
+
+---
+
+<div class="kicker">Who am I</div>
+
+# Hi, I'm Brett
+
+<div class="mt-7 grid grid-cols-[1fr_auto] gap-12 items-center">
+
+<div class="space-y-4" style="max-width: 52ch;">
+
+<v-clicks>
+
+- Based in Amsterdam
+- Working on software factory tooling @ [Fiberplane](https://fiberplane.com)
+- Learning inference engineering
+- But most relevantly...
+
+</v-clicks>
+
+</div>
+
+<div class="flex flex-col items-center gap-3">
+  <div class="w-32 h-32 rounded-2xl" style="background: url('/fp-logo.png') center / cover no-repeat; border: 1px solid var(--line-strong);"></div>
+  <a href="https://fiberplane.com" target="_blank" class="text-sm font-mono no-underline" style="color: var(--ink-mute);">fiberplane.com</a>
+</div>
+
+</div>
 
 ---
 layout: default
