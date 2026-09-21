@@ -59,15 +59,15 @@ class: section
 
 - She is great
 - She must be walked a lot, otherwise she goes crazy
-- Walks are dead time — unless you bring a tutor
+- Walks are dead time. Unless you bring a tutor
 
 </v-clicks>
 
 </div>
 
 <!--
-Placeholder slide — Brett will flesh this out.
-Photo slot: public/dog-1.jpg
+Placeholder slide. Brett will flesh this out.
+Photo slot: public/dog-1.jpg (Ella)
 -->
 
 ---
@@ -92,7 +92,7 @@ class: section
 - Use a SQLite DB to track those cards and your study sessions
 - Connect the remote machine to your phone
 - Launch voice on your phone, connected to the remote
-- Go on a walk — Codex progressively grades you on the concepts you want to learn
+- Go on a walk. Codex progressively grades you on the concepts you want to learn
 
 </v-clicks>
 
@@ -120,7 +120,7 @@ class: section
 
 ### Drawbacks
 
-- Voice mode does not understand the context of the world around you — it won't get it if you yell at your dog or talk to someone you meet on the street
+- Voice mode does not understand the context of the world around you. It won't get it if you yell at your dog or talk to someone you meet on the street
 
 </div>
 
@@ -153,8 +153,8 @@ class: section
 </div>
 
 <!--
-Placeholder slide — Brett will flesh this out.
-Photo slot: public/dog-2.jpg (optional second dog photo)
+Placeholder slide. Brett will flesh this out.
+Photo slot: public/dog-2.jpg (optional second Ella photo)
 -->
 
 ---
@@ -164,7 +164,7 @@ Photo slot: public/dog-2.jpg (optional second dog photo)
 # Learn while you walk.
 
 <div class="mt-6 text-xl" style="color: var(--ink-mute); max-width: 44ch;">
-Placeholder closing — the dog does the scheduling, the voice does the grading.
+Placeholder closing: the dog does the scheduling, the voice does the grading.
 </div>
 
 <div class="mt-8">
