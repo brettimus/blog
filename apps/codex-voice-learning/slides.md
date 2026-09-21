@@ -1,6 +1,6 @@
 ---
 theme: default
-title: Learning on the walk
+title: Walk and talk with Codex
 info: |
   Work-in-progress slides for the codex-voice-learning talk.
 favicon: https://fav.farm/🚶
@@ -19,10 +19,10 @@ class: cover
 
 <div class="pill mb-8">Work in progress · boots.lol</div>
 
-# Learning on<br>the walk
+# Walk and talk<br>with Codex
 
 <div class="mt-5 text-2xl" style="color: var(--ink-mute); max-width: 36ch;">
-A voice-driven study system, powered by Codex and a dog who needs to go outside.
+Building a hyperpersonal voice agent study system.
 </div>
 
 <div class="mt-10 flex items-center gap-3">
@@ -49,7 +49,8 @@ Brett Beutell · @lastgoodhandle
 <v-clicks>
 
 - You can build a tool to learn new things
-- You can use it while you walk, clean, etc. Like an interactive podcast, kinda
+- You can use it while you walk, clean, etc
+- Like an interactive podcast, kinda
 
 </v-clicks>
 
@@ -82,7 +83,7 @@ class: section
 
 ---
 
-# Being outside is the best
+# Because being outside is the best
 
 <div class="mt-8" style="width: 380px; height: 380px; background: url('/ella-stage-3.jpeg') center / cover no-repeat; border: 1px solid var(--line-strong); border-radius: 14px;" aria-label="Ella outside, happy"></div>
 
@@ -162,29 +163,19 @@ class: section
 
 <div class="kicker">Level 2</div>
 
-# Less plumbing, more studying
+# Mo plumbing, mo studying
 
 <div class="mt-7 space-y-4" style="max-width: 56ch;">
 
 <v-clicks>
 
-- exe.dev to host MCP and a WebUI
-- Review with ChatGPT voice mode
-- Also review without voice mode
+- [exe.dev](https://exe.dev) to host a plugin (MCP) and a web ui
+- Review with ChatGPT voice mode OR Codex
 - Doesn't require a remote connection
 
 </v-clicks>
 
 </div>
-
----
-layout: default
-class: section
----
-
-<div class="kicker">The demo</div>
-
-# DEMO
 
 ---
 layout: default
