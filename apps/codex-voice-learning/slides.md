@@ -58,6 +58,34 @@ Brett Beutell · @lastgoodhandle
 
 ---
 
+<div class="kicker">Who am I</div>
+
+# Hi, I'm Brett
+
+<div class="mt-7 grid grid-cols-[1fr_auto] gap-12 items-center">
+
+<div class="space-y-4" style="max-width: 52ch;">
+
+<v-clicks>
+
+- Based in Amsterdam
+- Working on software factory tooling @ [Fiberplane](https://fiberplane.com)
+- Learning inference engineering
+- But most relevantly...
+
+</v-clicks>
+
+</div>
+
+<div class="flex flex-col items-center gap-3">
+  <div class="w-32 h-32 rounded-2xl" style="background: url('/fp-logo.png') center / cover no-repeat; border: 1px solid var(--line-strong);"></div>
+  <a href="https://fiberplane.com" target="_blank" class="text-sm font-mono no-underline" style="color: var(--ink-mute);">fiberplane.com</a>
+</div>
+
+</div>
+
+---
+
 # I have a dog
 
 <div class="mt-8" style="width: 380px; height: 380px; background: url('/ella-stage-0.jpeg') center / cover no-repeat; border: 1px solid var(--line-strong); border-radius: 14px;" aria-label="Ella"></div>
@@ -90,34 +118,6 @@ Brett Beutell · @lastgoodhandle
 Photo sequence: public/ella-stage-0.jpeg .. ella-stage-4.jpeg
 -->
 
-
----
-
-<div class="kicker">Who am I</div>
-
-# Hi, I'm Brett
-
-<div class="mt-7 grid grid-cols-[1fr_auto] gap-12 items-center">
-
-<div class="space-y-4" style="max-width: 52ch;">
-
-<v-clicks>
-
-- Based in Amsterdam
-- Working on software factory tooling @ [Fiberplane](https://fiberplane.com)
-- Learning inference engineering
-- But most relevantly...
-
-</v-clicks>
-
-</div>
-
-<div class="flex flex-col items-center gap-3">
-  <div class="w-32 h-32 rounded-2xl" style="background: url('/fp-logo.png') center / cover no-repeat; border: 1px solid var(--line-strong);"></div>
-  <a href="https://fiberplane.com" target="_blank" class="text-sm font-mono no-underline" style="color: var(--ink-mute);">fiberplane.com</a>
-</div>
-
-</div>
 
 ---
 layout: default
