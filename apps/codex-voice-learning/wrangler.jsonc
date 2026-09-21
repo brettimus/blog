@@ -1,0 +1,24 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "codex-voice-learning",
+	"main": "worker/index.ts",
+	"compatibility_date": "2025-01-30",
+	"routes": [
+		{ "pattern": "codex-voice-learning.boots.lol", "custom_domain": true }
+	],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": "./dist",
+		"not_found_handling": "single-page-application",
+		// Let the worker see /api/* before the SPA asset router can swallow
+		// the WebSocket upgrade at /api/reactions/ws.
+		"run_worker_first": ["/api/*"]
+	},
+	"durable_objects": {
+		"bindings": [{ "name": "REACTIONS", "class_name": "ReactionRoom" }]
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["ReactionRoom"] }],
+	"observability": {
+		"enabled": true
+	}
+}

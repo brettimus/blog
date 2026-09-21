@@ -1,0 +1,567 @@
+/* ============================================================
+   codex-voice-learning — Engineering Notebook
+   Light, graph-paper aesthetic synthesized from fiberplane.com
+   and fp.dev. Geist + Geist Mono, black ink, one blue spark.
+   See docs/design-language.md
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap");
+
+:root {
+	/* Paper + ink */
+	--paper: #f4f4f2;
+	--paper-pure: #ffffff;
+	--ink: #0a0a0a;
+	--ink-soft: #3f3f43;
+	--ink-mute: #71717a;
+	--ink-faint: #a1a1aa;
+
+	/* Lines */
+	--line: #e4e4e1;
+	--line-strong: #d4d4d1;
+
+	/* The one blue spark */
+	--accent: #1a5cff;
+	--accent-glow: #2f6bff;
+	--accent-soft: rgba(26, 92, 255, 0.08);
+	--accent-border: rgba(26, 92, 255, 0.22);
+
+	/* Graph-paper grid */
+	--grid: rgba(10, 10, 10, 0.045);
+	--grid-size: 32px;
+
+	/* Muted semantic chips (small chips only — never fills) */
+	--green: #15803d;
+	--green-bg: rgba(21, 128, 61, 0.08);
+	--green-border: rgba(21, 128, 61, 0.22);
+	--amber: #b45309;
+	--amber-bg: rgba(180, 83, 9, 0.08);
+	--amber-border: rgba(180, 83, 9, 0.22);
+	--red: #b91c1c;
+	--red-bg: rgba(185, 28, 28, 0.08);
+	--red-border: rgba(185, 28, 28, 0.22);
+	--violet: #6d28d9;
+	--violet-bg: rgba(109, 40, 217, 0.08);
+	--violet-border: rgba(109, 40, 217, 0.22);
+
+	/* Fonts */
+	--font-sans: "Geist", -apple-system, BlinkMacSystemFont, sans-serif;
+	--font-mono: "Geist Mono", "SF Mono", Menlo, monospace;
+
+	/* Slidev theme hooks */
+	--slidev-slide-container-background: var(--paper);
+	--slidev-code-background: var(--paper-pure);
+	--slidev-code-font-size: 0.82em;
+
+	color-scheme: light;
+}
+
+/* ---------- Base slide ---------- */
+.slidev-layout {
+	background-color: var(--paper);
+	/* Graph-paper grid */
+	background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+		linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+	background-size: var(--grid-size) var(--grid-size);
+	background-position: -1px -1px;
+	color: var(--ink-soft);
+	font-family: var(--font-sans);
+	font-feature-settings: "ss01", "cv01";
+	padding: 2.5rem 3rem;
+}
+
+/* ---------- Typography ---------- */
+.slidev-layout h1 {
+	font-family: var(--font-sans);
+	font-weight: 600;
+	font-size: 2.4rem;
+	letter-spacing: -0.025em;
+	line-height: 1.08;
+	color: var(--ink);
+	margin-bottom: 1rem;
+}
+
+.slidev-layout h2 {
+	font-family: var(--font-sans);
+	font-weight: 500;
+	font-size: 1.6rem;
+	letter-spacing: -0.015em;
+	line-height: 1.2;
+	color: var(--ink);
+	margin-bottom: 0.6rem;
+}
+
+/* H3 = mono uppercase section label (STATUS / PRIORITY / LABELS) */
+.slidev-layout h3 {
+	font-family: var(--font-mono);
+	font-weight: 500;
+	font-size: 0.78rem;
+	letter-spacing: 0.09em;
+	text-transform: uppercase;
+	color: var(--ink-mute);
+	margin-bottom: 0.6rem;
+}
+
+.slidev-layout p,
+.slidev-layout li {
+	font-size: 1.05rem;
+	line-height: 1.55;
+	color: var(--ink-soft);
+}
+
+.slidev-layout strong {
+	color: var(--ink);
+	font-weight: 600;
+}
+
+.slidev-layout em {
+	color: var(--ink-mute);
+	font-style: normal;
+}
+
+/* ---------- Mono kicker / eyebrow ---------- */
+/* Use: <div class="kicker">01 — Working Frame</div> */
+.slidev-layout .kicker {
+	font-family: var(--font-mono);
+	font-weight: 500;
+	font-size: 0.72rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--accent);
+	margin-bottom: 0.85rem;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.slidev-layout .kicker::before {
+	content: "";
+	width: 7px;
+	height: 7px;
+	background: var(--accent);
+	display: inline-block;
+}
+
+/* ---------- Pill tag ---------- */
+.slidev-layout .pill {
+	display: inline-block;
+	font-family: var(--font-mono);
+	font-size: 0.78rem;
+	letter-spacing: 0.02em;
+	color: var(--ink-soft);
+	background: var(--paper-pure);
+	border: 1px solid var(--line-strong);
+	border-radius: 999px;
+	padding: 0.3rem 0.85rem;
+}
+
+/* ---------- Lists ---------- */
+.slidev-layout ul,
+.slidev-layout ol {
+	margin: 0.5rem 0;
+	padding-left: 1.3rem;
+}
+
+.slidev-layout li {
+	margin: 0.4rem 0;
+	padding-left: 0.15rem;
+}
+
+.slidev-layout ul > li::marker {
+	content: "▪  ";
+	color: var(--accent);
+}
+
+.slidev-layout ol > li::marker {
+	color: var(--ink-mute);
+	font-family: var(--font-mono);
+}
+
+/* ---------- Links ---------- */
+.slidev-layout a {
+	color: var(--accent);
+	text-decoration: none;
+	border-bottom: 1px solid var(--accent-border);
+	transition: border-color 0.15s ease;
+}
+
+.slidev-layout a:hover {
+	border-bottom-color: var(--accent);
+}
+
+.slidev-layout a.no-underline {
+	border-bottom: none;
+}
+
+/* ---------- Code ---------- */
+.slidev-layout pre,
+.slidev-layout code {
+	font-family: var(--font-mono);
+}
+
+.slidev-layout :not(pre) > code {
+	background: var(--accent-soft);
+	color: var(--accent);
+	padding: 0.12em 0.4em;
+	border-radius: 4px;
+	font-size: 0.88em;
+}
+
+.slidev-layout .slidev-code {
+	background: var(--paper-pure);
+	border: 1px solid var(--line-strong);
+	border-radius: 12px;
+	padding: 1rem 1.15rem;
+	box-shadow: 0 1px 2px rgba(10, 10, 10, 0.03);
+}
+
+.slidev-layout .shiki {
+	background: transparent !important;
+}
+
+/* ---------- Cards ---------- */
+.slidev-layout .card,
+.slidev-layout .bg-neutral-800,
+.slidev-layout [class*="bg-blue-500"],
+.slidev-layout [class*="bg-green-500"],
+.slidev-layout [class*="bg-purple-500"],
+.slidev-layout [class*="bg-orange-500"],
+.slidev-layout [class*="bg-yellow-500"],
+.slidev-layout [class*="bg-red-500"] {
+	background: var(--paper-pure);
+	border: 1px solid var(--line-strong);
+	border-radius: 14px;
+	box-shadow: 0 1px 2px rgba(10, 10, 10, 0.03);
+}
+
+/* Card label accent stripes — keep the semantic hue as a small left rule */
+.slidev-layout [class*="bg-blue-500"] h3 {
+	color: var(--accent);
+}
+.slidev-layout [class*="bg-green-500"] h3 {
+	color: var(--green);
+}
+.slidev-layout [class*="bg-purple-500"] h3 {
+	color: var(--violet);
+}
+.slidev-layout [class*="bg-orange-500"] h3 {
+	color: var(--amber);
+}
+.slidev-layout [class*="bg-red-500"] h3 {
+	color: var(--red);
+}
+
+/* Black statement card */
+.slidev-layout .card-dark {
+	background: var(--ink);
+	border: 1px solid var(--ink);
+	border-radius: 14px;
+	color: var(--paper);
+	padding: 1.5rem;
+}
+.slidev-layout .card-dark h1,
+.slidev-layout .card-dark h2,
+.slidev-layout .card-dark strong {
+	color: #ffffff;
+}
+.slidev-layout .card-dark p,
+.slidev-layout .card-dark li {
+	color: #d4d4d1;
+}
+.slidev-layout .card-dark h3 {
+	color: var(--accent-glow);
+}
+
+/* ---------- Pixel-square cluster (decorative) ---------- */
+/* Use: <div class="pixels"></div> */
+.slidev-layout .pixels {
+	display: grid;
+	grid-template-columns: repeat(3, 10px);
+	grid-template-rows: repeat(3, 10px);
+	gap: 4px;
+}
+.slidev-layout .pixels::before {
+	content: none;
+}
+.slidev-layout .pixels > i {
+	background: var(--line-strong);
+	display: block;
+}
+.slidev-layout .pixels > i.lit {
+	background: var(--accent);
+}
+
+/* ---------- Cover ---------- */
+.slidev-layout.cover {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.slidev-layout.cover h1 {
+	font-size: 4rem;
+	font-weight: 600;
+	letter-spacing: -0.04em;
+	line-height: 0.98;
+}
+
+/* ---------- Section / divider ---------- */
+.slidev-layout.section {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+}
+.slidev-layout.section h1 {
+	font-size: 3.4rem;
+	font-weight: 600;
+	letter-spacing: -0.03em;
+	line-height: 1.02;
+	color: var(--ink);
+	max-width: 18ch;
+}
+.slidev-layout.section p {
+	font-size: 1.25rem;
+	color: var(--ink-mute);
+	margin-top: 0.5rem;
+}
+
+/* center layout stays available but left-aligned text inside */
+.slidev-layout.center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+/* ---------- Blockquote ---------- */
+.slidev-layout blockquote {
+	border-left: 3px solid var(--accent);
+	padding: 0.25rem 0 0.25rem 1rem;
+	margin: 1rem 0;
+	color: var(--ink-soft);
+	font-style: normal;
+}
+
+/* ---------- Tables ---------- */
+.slidev-layout table {
+	border-collapse: collapse;
+	width: 100%;
+	font-size: 0.9rem;
+}
+.slidev-layout th {
+	font-family: var(--font-mono);
+	font-weight: 500;
+	font-size: 0.75rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--ink-mute);
+	text-align: left;
+	padding: 0.5rem 0.75rem;
+	border-bottom: 1px solid var(--line-strong);
+}
+.slidev-layout td {
+	padding: 0.5rem 0.75rem;
+	border-bottom: 1px solid var(--line);
+	color: var(--ink-soft);
+}
+.slidev-layout tr:hover td {
+	background: var(--accent-soft);
+}
+
+/* ---------- Page number ---------- */
+.slidev-page-number {
+	color: var(--ink-faint);
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.04em;
+}
+
+/* abs-br helper text */
+.slidev-layout .abs-br {
+	color: var(--ink-mute);
+	font-family: var(--font-mono);
+}
+
+/* ---------- v-click motion ---------- */
+.slidev-vclick-target {
+	transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.slidev-vclick-hidden {
+	opacity: 0;
+	transform: translateY(6px);
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+::-webkit-scrollbar-track {
+	background: var(--paper);
+}
+::-webkit-scrollbar-thumb {
+	background: var(--line-strong);
+	border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: var(--ink-faint);
+}
+
+/* ============================================================
+   Terminal / command samples — blue $ prompt on white
+   ============================================================ */
+.slidev-layout .terminal {
+	background: var(--paper-pure);
+	border: 1px solid var(--line-strong);
+	border-radius: 12px;
+	padding: 1rem 1.15rem;
+	font-family: var(--font-mono);
+	font-size: 0.85rem;
+	line-height: 1.7;
+	box-shadow: 0 1px 2px rgba(10, 10, 10, 0.03);
+}
+.slidev-layout .terminal .dots {
+	display: flex;
+	gap: 6px;
+	margin-bottom: 0.75rem;
+}
+.slidev-layout .terminal .dots i {
+	width: 11px;
+	height: 11px;
+	border-radius: 50%;
+	display: inline-block;
+	background: var(--line-strong);
+}
+.bash-cmd,
+.git-log,
+.fp-diff,
+.file-tree {
+	font-family: var(--font-mono);
+	font-size: 0.85rem;
+	line-height: 1.7;
+	color: var(--ink-soft);
+}
+.bash-cmd .prompt,
+.fp-diff .prompt {
+	color: var(--accent);
+	font-weight: 600;
+	margin-right: 0.5rem;
+}
+.bash-cmd .comment {
+	color: var(--ink-faint);
+}
+.cmd-indent {
+	padding-left: 1.25rem;
+	color: var(--ink-soft);
+}
+
+/* file tree */
+.tree-line {
+	color: var(--ink-soft);
+}
+.tree-line .dir {
+	color: var(--accent);
+	font-weight: 500;
+}
+.tree-line .file {
+	color: var(--ink-soft);
+}
+.tree-line .stale {
+	color: var(--ink-faint);
+	font-style: italic;
+	margin-left: 0.5rem;
+}
+
+/* git log */
+.log-line {
+	color: var(--ink-soft);
+}
+.log-count {
+	color: var(--ink-mute);
+	font-weight: 500;
+}
+.log-hash {
+	color: var(--amber);
+}
+.log-type {
+	font-weight: 500;
+}
+.log-type.feat {
+	color: var(--green);
+}
+.log-type.fix {
+	color: var(--red);
+}
+.log-type.refactor {
+	color: var(--accent);
+}
+
+/* fp diff */
+.diff-header {
+	color: var(--ink-mute);
+	margin-top: 0.5rem;
+}
+.diff-id {
+	color: var(--accent);
+	font-weight: 600;
+}
+.diff-count {
+	color: var(--amber);
+	font-weight: 500;
+}
+.diff-files {
+	margin-top: 0.75rem;
+}
+.diff-line {
+	color: var(--ink-soft);
+}
+.diff-file {
+	color: var(--ink-soft);
+}
+.diff-add {
+	color: var(--green);
+}
+
+/* session grid */
+.session-grid {
+	display: flex;
+	align-items: flex-start;
+	gap: 1rem;
+	margin-top: 0.5rem;
+}
+.session-col {
+	flex: 1;
+}
+.session-header {
+	font-family: var(--font-mono);
+	font-weight: 500;
+	font-size: 0.78rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--ink-mute);
+	text-align: center;
+	margin-bottom: 0.5rem;
+}
+.session-arrow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--accent);
+	font-size: 1.5rem;
+	font-weight: 300;
+	padding-top: 3rem;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 768px) {
+	.slidev-layout {
+		padding: 1.5rem 1.75rem;
+	}
+	.slidev-layout h1 {
+		font-size: 1.9rem;
+	}
+	.slidev-layout.section h1,
+	.slidev-layout.cover h1 {
+		font-size: 2.4rem;
+	}
+}
