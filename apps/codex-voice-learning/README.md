@@ -1,6 +1,6 @@
 # codex-voice-learning
 
-A Slidev talk deployed to `codex-voice-learning.boots.lol`.
+A Slidev talk deployed to `walks.boots.lol`.
 
 ## Development
 

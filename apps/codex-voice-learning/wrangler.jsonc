@@ -4,7 +4,7 @@
 	"main": "worker/index.ts",
 	"compatibility_date": "2025-01-30",
 	"routes": [
-		{ "pattern": "codex-voice-learning.boots.lol", "custom_domain": true }
+		{ "pattern": "walks.boots.lol", "custom_domain": true }
 	],
 	"assets": {
 		"binding": "ASSETS",

@@ -1,6 +1,6 @@
 # codex-voice-learning
 
-Slidev talk deployed to `codex-voice-learning.boots.lol`. Light
+Slidev talk deployed to `walks.boots.lol`. Light
 engineering-notebook aesthetic (Geist + Geist Mono, graph-paper canvas, one blue
 accent). Issue tracking is handled by fp at the monorepo root — do not create a
 nested fp project here.
@@ -32,7 +32,7 @@ the deck never drift apart.
 bun install
 bun run dev      # dev server (fast iteration)
 bun run build    # build SPA to dist/
-bun run deploy   # build + wrangler deploy to codex-voice-learning.boots.lol
+bun run deploy   # build + wrangler deploy to walks.boots.lol
 bun run export   # PDF export
 ```
 

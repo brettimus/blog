@@ -3,7 +3,7 @@ theme: default
 title: Learning on the walk
 info: |
   Work-in-progress slides for the codex-voice-learning talk.
-favicon: https://fav.farm/🐕
+favicon: https://fav.farm/🚶
 drawings:
   persist: false
 transition: slide-left
@@ -31,11 +31,28 @@ A voice-driven study system, powered by Codex and a dog who needs to go outside.
     <i></i><i class="lit"></i><i></i>
     <i class="lit"></i><i></i><i></i>
   </div>
-  <span class="text-sm font-mono" style="color: var(--ink-faint);">codex-voice-learning.boots.lol</span>
+  <span class="text-sm font-mono" style="color: var(--ink-faint);">walks.boots.lol</span>
 </div>
 
 <div class="abs-br m-6 text-sm">
 Brett Beutell · @lastgoodhandle
+</div>
+
+---
+
+<div class="kicker">Takeaways</div>
+
+# What to take away
+
+<div class="mt-7 space-y-4" style="max-width: 56ch;">
+
+<v-clicks>
+
+- You can build a tool to learn new things
+- You can use it while you walk, clean, etc. Like an interactive podcast, kinda
+
+</v-clicks>
+
 </div>
 
 ---
@@ -120,7 +137,6 @@ class: section
 ### Benefits
 
 - You are forced to talk through problems and your understanding
-- <!-- TODO --> Ask… (placeholder)
 - Review granularity is much more flexible than traditional SRSS
 
 </div>
@@ -161,25 +177,20 @@ class: section
 
 </div>
 
-<!--
-Placeholder slide. Brett will flesh this out.
-Photo slot: public/dog-2.jpg (optional second Ella photo)
--->
-
+---
+layout: default
+class: section
 ---
 
-<div class="kicker">The takeaway</div>
+<div class="kicker">The demo</div>
 
-# Learn while you walk.
+# DEMO
 
-<div class="mt-6 text-xl" style="color: var(--ink-mute); max-width: 44ch;">
-Placeholder closing: the dog does the scheduling, the voice does the grading.
-</div>
+---
+layout: default
+class: section
+---
 
-<div class="mt-8">
-  <div class="pixels">
-    <i class="lit"></i><i></i><i class="lit"></i>
-    <i></i><i class="lit"></i><i></i>
-    <i class="lit"></i><i></i><i class="lit"></i>
-  </div>
-</div>
+<div class="kicker">The demo</div>
+
+# DEMO
