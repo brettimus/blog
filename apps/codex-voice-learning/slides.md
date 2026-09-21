@@ -47,93 +47,33 @@ class: section
 
 ---
 
-<div class="kicker">Motivation · 01</div>
-
 # I have a dog
 
-<div class="mt-6 grid grid-cols-[1fr_340px] gap-10 items-center">
-
-<div class="text-xl" style="color: var(--ink-soft); max-width: 30ch;">
-
-She is great.
-
-</div>
-
-<div class="shrink-0" style="width: 340px; height: 340px; background: url('/ella-stage-0.jpeg') center / cover no-repeat; border: 1px solid var(--line-strong); border-radius: 14px;" aria-label="Ella"></div>
-
-</div>
+<div class="mt-8" style="width: 380px; height: 380px; background: url('/ella-stage-0.jpeg') center / cover no-repeat; border: 1px solid var(--line-strong); border-radius: 14px;" aria-label="Ella"></div>
 
 ---
-
-<div class="kicker">Motivation · 02</div>
 
 # She needs to go outside a lot
 
-<div class="mt-6 grid grid-cols-[340px_1fr] gap-10 items-center">
-
-<div class="shrink-0" style="width: 340px; height: 340px; background: url('/ella-stage-1.jpeg') center / cover no-repeat; border: 1px solid var(--line-strong); border-radius: 14px;" aria-label="Ella outside"></div>
-
-<div class="text-xl" style="color: var(--ink-soft); max-width: 30ch;">
-
-A lot. Otherwise she goes crazy.
-
-</div>
-
-</div>
+<div class="mt-8" style="width: 380px; height: 380px; background: url('/ella-stage-1.jpeg') center / cover no-repeat; border: 1px solid var(--line-strong); border-radius: 14px;" aria-label="Ella outside"></div>
 
 ---
-
-<div class="kicker">Motivation · 03</div>
 
 # She doesn't care if I'm coding
 
-<div class="mt-6 grid grid-cols-[1fr_340px] gap-10 items-center">
-
-<div class="text-xl" style="color: var(--ink-soft); max-width: 30ch;">
-
-Deadlines are nothing compared to walk time.
-
-</div>
-
-<div class="shrink-0" style="width: 340px; height: 340px; background: url('/ella-stage-2.jpeg') center / cover no-repeat; border: 1px solid var(--line-strong); border-radius: 14px;" aria-label="Ella not caring about code"></div>
-
-</div>
+<div class="mt-8" style="width: 380px; height: 380px; background: url('/ella-stage-2.jpeg') center / cover no-repeat; border: 1px solid var(--line-strong); border-radius: 14px;" aria-label="Ella not caring about code"></div>
 
 ---
-
-<div class="kicker">Motivation · 04</div>
 
 # Being outside is the best
 
-<div class="mt-6 grid grid-cols-[340px_1fr] gap-10 items-center">
-
-<div class="shrink-0" style="width: 340px; height: 340px; background: url('/ella-stage-3.jpeg') center / cover no-repeat; border: 1px solid var(--line-strong); border-radius: 14px;" aria-label="Ella outside, happy"></div>
-
-<div class="text-xl" style="color: var(--ink-soft); max-width: 30ch;">
-
-For both of us, honestly.
-
-</div>
-
-</div>
+<div class="mt-8" style="width: 380px; height: 380px; background: url('/ella-stage-3.jpeg') center / cover no-repeat; border: 1px solid var(--line-strong); border-radius: 14px;" aria-label="Ella outside, happy"></div>
 
 ---
 
-<div class="kicker">Motivation · 05</div>
-
 # Because then she is like this
 
-<div class="mt-6 grid grid-cols-[1fr_340px] gap-10 items-center">
-
-<div class="text-xl" style="color: var(--ink-soft); max-width: 30ch;">
-
-Walks are dead time. Unless you bring a tutor.
-
-</div>
-
-<div class="shrink-0" style="width: 340px; height: 340px; background: url('/ella-stage-4.jpeg') center / cover no-repeat; border: 1px solid var(--line-strong); border-radius: 14px;" aria-label="Ella, satisfied"></div>
-
-</div>
+<div class="mt-8" style="width: 380px; height: 380px; background: url('/ella-stage-4.jpeg') center / cover no-repeat; border: 1px solid var(--line-strong); border-radius: 14px;" aria-label="Ella, satisfied"></div>
 
 <!--
 Photo sequence: public/ella-stage-0.jpeg .. ella-stage-4.jpeg
